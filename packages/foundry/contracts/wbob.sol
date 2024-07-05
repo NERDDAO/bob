@@ -7,51 +7,53 @@ import {SafeERC20Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ER
 import {ERC20Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 
 // solhint-disable-next-line max-line-length
-import {ERC20PermitUpgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/draft-ERC20PermitUpgradeable.sol";
+import {ERC20PermitUpgradeable} from "../lib/openzeppelin-contracts-upgradeable/contracts//token/ERC20/extensions/draft-ERC20PermitUpgradeable.sol";
 
 /**
- * @title WAMPL (Wrapped AMPL).
+ * @title WCBDC (Wrapped CBDC).
  *
- * @dev A fixed-balance ERC-20 wrapper for the AMPL rebasing token.
+ * @dev A fixed-balance ERC-20 wrapper for the CBDC rebasing token.
  *
- *      Users deposit AMPL into this contract and are minted wAMPL.
+ *      Users deposit CBDC into this contract and are minted wCBDC.
  *
- *      Each account's wAMPL balance represents the fixed percentage ownership
- *      of AMPL's market cap.
+ *      Each account's wCBDC balance represents the fixed percentage ownership
+ *      of CBDC's market cap.
  *
- *      For example: 100K wAMPL => 1% of the AMPL market cap
- *        when the AMPL supply is 100M, 100K wAMPL will be redeemable for 1M AMPL
- *        when the AMPL supply is 500M, 100K wAMPL will be redeemable for 5M AMPL
- *        and so on.
+ *      For excbdc: 100K wCBDC => 1% of the CBDC market cap
+ *        when the CBDC supply is 100M, 100K wCBDC will be redeemable for 1M CBDC
+ *        when the CBDC supply is 500M, 100K wCBDC will be redeemable for 5M CBDC
+ *        and so o.
  *
- *      We call wAMPL the "wrapper" token and AMPL the "underlying" or "wrapped" token.
+ *      We call wCBDC the "wrapper" token and CBDC the "underlying" or "wrapped" token.
  */
-contract WAMPL is ERC20Upgradeable, ERC20PermitUpgradeable {
+contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable {
     using SafeERC20Upgradeable for IERC20Upgradeable;
 
     //--------------------------------------------------------------------------
     // Constants
 
-    /// @dev The maximum wAMPL supply.
-    uint256 public constant MAX_WAMPL_SUPPLY = 10000000 * (10 ** 18); // 10 M
+    /// @dev The maximum wCBDC supply.
+    uint256 public constant MAX_WCBDC_SUPPLY = 10000000 * (10 ** 18); // 10 M
+
+    uint256 private _taxRate; // Represented as basis points (e.g., 100 = 1%)
 
     //--------------------------------------------------------------------------
     // Attributes
 
-    /// @dev The reference to the AMPL token.
-    address private immutable _ampl;
+    /// @dev The reference to the CBDC token.
+    address private immutable _cbdc;
 
     //--------------------------------------------------------------------------
 
     /// @notice Contract constructor.
-    /// @param ampl The AMPL ERC20 token address.
-    constructor(address ampl) {
-        _ampl = ampl;
+    /// @param cbdc The CBDC ERC20 token address.
+    constructor(address cbdc) {
+        _cbdc = cbdc;
     }
 
     /// @notice Contract state initialization.
-    /// @param name_ The wAMPL ERC20 name.
-    /// @param symbol_ The wAMPL ERC20 symbol.
+    /// @param name_ The wCBDC ERC20 name.
+    /// @param symbol_ The wCBDC ERC20 symbol.
     function init(
         string memory name_,
         string memory symbol_
@@ -61,175 +63,189 @@ contract WAMPL is ERC20Upgradeable, ERC20PermitUpgradeable {
     }
 
     //--------------------------------------------------------------------------
-    // WAMPL write methods
+    // WCBDC write methods
 
-    /// @notice Transfers AMPLs from {msg.sender} and mints wAMPLs.
-    ///
-    /// @param wamples The amount of wAMPLs to mint.
-    /// @return The amount of AMPLs deposited.
-    function mint(uint256 wamples) external returns (uint256) {
-        uint256 amples = _wampleToAmple(wamples, _queryAMPLSupply());
-        _deposit(_msgSender(), _msgSender(), amples, wamples);
-        return amples;
+    function setTaxRate(uint256 newTaxRate) external onlyOwner {
+        require(newTaxRate <= 10000, "Tax rate cannot exceed 100%");
+        _taxRate = newTaxRate;
     }
 
-    /// @notice Transfers AMPLs from {msg.sender} and mints wAMPLs,
+    function setTaxRecipient(address newTaxRecipient) external onlyOwner {
+        require(newTaxRecipient != address(0), "Invalid tax recipient");
+        taxRecipient = newTaxRecipient;
+    }
+
+    /// @notice Transfers CBDCs from {msg.sender} and mints wCBDCs.
+    ///
+    /// @param wcbdcs The amount of wCBDCs to mint.
+    /// @return The amount of CBDCs deposited.
+    function mint(uint256 wcbdcs) external returns (uint256) {
+        uint256 cbdcs = _wcbdceToAmple(wcbdcs, _queryCBDCSupply());
+        uint256 taxAmount = (cbdcs * _taxRate) / 10000;
+        uint256 totalcbdcs = cbdcs + taxAmount;
+        _deposit(_msgSender(), _msgSender(), totalcbdcs, wcbdcs);
+        return totalcbdcs;
+    }
+
+    /// @notice Transfers CBDCs from {msg.sender} and mints wCBDCs,
     ///         to the specified beneficiary.
     ///
     /// @param to The beneficiary wallet.
-    /// @param wamples The amount of wAMPLs to mint.
-    /// @return The amount of AMPLs deposited.
-    function mintFor(address to, uint256 wamples) external returns (uint256) {
-        uint256 amples = _wampleToAmple(wamples, _queryAMPLSupply());
-        _deposit(_msgSender(), to, amples, wamples);
-        return amples;
+    /// @param wcbdcs The amount of wCBDCs to mint.
+    /// @return The amount of CBDCs deposited.
+    function mintFor(address to, uint256 wcbdcs) external returns (uint256) {
+        uint256 cbdcs = _wcbdcToCBDC(wcdbcs, _queryCBDCSupply());
+        _deposit(_msgSender(), to, cbdcs, wcbdcs);
+        return cbdcs;
     }
 
-    /// @notice Burns wAMPLs from {msg.sender} and transfers AMPLs back.
+    /// @notice Burns wCBDCs from {msg.sender} and transfers CBDCs back.
     ///
-    /// @param wamples The amount of wAMPLs to burn.
-    /// @return The amount of AMPLs withdrawn.
-    function burn(uint256 wamples) external returns (uint256) {
-        uint256 amples = _wampleToAmple(wamples, _queryAMPLSupply());
-        _withdraw(_msgSender(), _msgSender(), amples, wamples);
-        return amples;
+    /// @param wcbdcs The amount of wCBDCs to burn.
+    /// @return The amount of CBDCs withdrawn.
+    function burn(uint256 wcbdcs) external returns (uint256) {
+        uint256 cbdcs = _wcbdceToAmple(wcbdcs, _queryCBDCSupply());
+        uint256 taxAmount = (cbdcs * _taxRate) / 10000;
+        uint256 netcbdcs = cbdcs - taxAmount;
+        _withdraw(_msgSender(), _msgSender(), cbdcs, wcbdcs);
+        return netcbdcs;
     }
 
-    /// @notice Burns wAMPLs from {msg.sender} and transfers AMPLs back,
+    /// @notice Burns wCBDCs from {msg.sender} and transfers CBDCs back,
     ///         to the specified beneficiary.
     ///
     /// @param to The beneficiary wallet.
-    /// @param wamples The amount of wAMPLs to burn.
-    /// @return The amount of AMPLs withdrawn.
-    function burnTo(address to, uint256 wamples) external returns (uint256) {
-        uint256 amples = _wampleToAmple(wamples, _queryAMPLSupply());
-        _withdraw(_msgSender(), to, amples, wamples);
-        return amples;
+    /// @param wcbdcs The amount of wCBDCs to burn.
+    /// @return The amount of CBDCs withdrawn.
+    function burnTo(address to, uint256 wcbdcs) external returns (uint256) {
+        uint256 cbdcs = _wcbdcToCBDC(wcdbcs, _queryCBDCSupply());
+        _withdraw(_msgSender(), to, cbdcs, wcbdcs);
+        return cbdcs;
     }
 
-    /// @notice Burns all wAMPLs from {msg.sender} and transfers AMPLs back.
+    /// @notice Burns all wCBDCs from {msg.sender} and transfers CBDCs back.
     ///
-    /// @return The amount of AMPLs withdrawn.
+    /// @return The amount of CBDCs withdrawn.
     function burnAll() external returns (uint256) {
-        uint256 wamples = balanceOf(_msgSender());
-        uint256 amples = _wampleToAmple(wamples, _queryAMPLSupply());
-        _withdraw(_msgSender(), _msgSender(), amples, wamples);
-        return amples;
+        uint256 wcbdcs = balanceOf(_msgSender());
+        uint256 cbdcs = _wcbdcToCBDC(wcdbcs, _queryCBDCSupply());
+        _withdraw(_msgSender(), _msgSender(), cbdcs, wcbdcs);
+        return cbdcs;
     }
 
-    /// @notice Burns all wAMPLs from {msg.sender} and transfers AMPLs back,
+    /// @notice Burns all wCBDCs from {msg.sender} and transfers CBDCs back,
     ///         to the specified beneficiary.
     ///
     /// @param to The beneficiary wallet.
-    /// @return The amount of AMPLs withdrawn.
+    /// @return The amount of CBDCs withdrawn.
     function burnAllTo(address to) external returns (uint256) {
-        uint256 wamples = balanceOf(_msgSender());
-        uint256 amples = _wampleToAmple(wamples, _queryAMPLSupply());
-        _withdraw(_msgSender(), to, amples, wamples);
-        return amples;
+        uint256 wcbdcs = balanceOf(_msgSender());
+        uint256 cbdcs = _wcbdcToCBDC(wcdbcs, _queryCBDCSupply());
+        _withdraw(_msgSender(), to, cbdcs, wcbdcs);
+        return cbdcs;
     }
 
-    /// @notice Transfers AMPLs from {msg.sender} and mints wAMPLs.
+    /// @notice Transfers CBDCs from {msg.sender} and mints wCBDCs.
     ///
-    /// @param amples The amount of AMPLs to deposit.
-    /// @return The amount of wAMPLs minted.
-    function deposit(uint256 amples) external returns (uint256) {
-        uint256 wamples = _ampleToWample(amples, _queryAMPLSupply());
-        _deposit(_msgSender(), _msgSender(), amples, wamples);
-        return wamples;
+    /// @param cbdcs The amount of CBDCs to deposit.
+    /// @return The amount of wCBDCs minted.
+    function deposit(uint256 cbdcs) external returns (uint256) {
+        uint256 wcbdcs = _cbdcToWcbdc(cbdcs, _queryCBDCSupply());
+        _deposit(_msgSender(), _msgSender(), cbdcs, wcbdcs);
+        return wcbdcs;
     }
 
-    /// @notice Transfers AMPLs from {msg.sender} and mints wAMPLs,
+    /// @notice Transfers CBDCs from {msg.sender} and mints wCBDCs,
     ///         to the specified beneficiary.
     ///
     /// @param to The beneficiary wallet.
-    /// @param amples The amount of AMPLs to deposit.
-    /// @return The amount of wAMPLs minted.
-    function depositFor(address to, uint256 amples) external returns (uint256) {
-        uint256 wamples = _ampleToWample(amples, _queryAMPLSupply());
-        _deposit(_msgSender(), to, amples, wamples);
-        return wamples;
+    /// @param cbdcs The amount of CBDCs to deposit.
+    /// @return The amount of wCBDCs minted.
+    function depositFor(address to, uint256 cbdcs) external returns (uint256) {
+        uint256 wcbdcs = _cbdcToWcbdc(cbdcs, _queryCBDCSupply());
+        _deposit(_msgSender(), to, cbdcs, wcbdcs);
+        return wcbdcs;
     }
 
-    /// @notice Burns wAMPLs from {msg.sender} and transfers AMPLs back.
+    /// @notice Burns wCBDCs from {msg.sender} and transfers CBDCs back.
     ///
-    /// @param amples The amount of AMPLs to withdraw.
-    /// @return The amount of burnt wAMPLs.
-    function withdraw(uint256 amples) external returns (uint256) {
-        uint256 wamples = _ampleToWample(amples, _queryAMPLSupply());
-        _withdraw(_msgSender(), _msgSender(), amples, wamples);
-        return wamples;
+    /// @param cbdcs The amount of CBDCs to withdraw.
+    /// @return The amount of burnt wCBDCs.
+    function withdraw(uint256 cbdcs) external returns (uint256) {
+        uint256 wcbdcs = _cbdcToWcbdc(cbdcs, _queryCBDCSupply());
+        _withdraw(_msgSender(), _msgSender(), cbdcs, wcbdcs);
+        return wcbdcs;
     }
 
-    /// @notice Burns wAMPLs from {msg.sender} and transfers AMPLs back,
+    /// @notice Burns wCBDCs from {msg.sender} and transfers CBDCs back,
     ///         to the specified beneficiary.
     ///
     /// @param to The beneficiary wallet.
-    /// @param amples The amount of AMPLs to withdraw.
-    /// @return The amount of burnt wAMPLs.
-    function withdrawTo(address to, uint256 amples) external returns (uint256) {
-        uint256 wamples = _ampleToWample(amples, _queryAMPLSupply());
-        _withdraw(_msgSender(), to, amples, wamples);
-        return wamples;
+    /// @param cbdcs The amount of CBDCs to withdraw.
+    /// @return The amount of burnt wCBDCs.
+    function withdrawTo(address to, uint256 cbdcs) external returns (uint256) {
+        uint256 wcbdcs = _cbdcToWcbdc(cbdcs, _queryCBDCSupply());
+        _withdraw(_msgSender(), to, cbdcs, wcbdcs);
+        return wcbdcs;
     }
 
-    /// @notice Burns all wAMPLs from {msg.sender} and transfers AMPLs back.
+    /// @notice Burns all wCBDCs from {msg.sender} and transfers CBDCs back.
     ///
-    /// @return The amount of burnt wAMPLs.
+    /// @return The amount of burnt wCBDCs.
     function withdrawAll() external returns (uint256) {
-        uint256 wamples = balanceOf(_msgSender());
-        uint256 amples = _wampleToAmple(wamples, _queryAMPLSupply());
-        _withdraw(_msgSender(), _msgSender(), amples, wamples);
-        return wamples;
+        uint256 wcbdcs = balanceOf(_msgSender());
+        uint256 cbdcs = _wcbdcToCBDC(wcdbcs, _queryCBDCSupply());
+        _withdraw(_msgSender(), _msgSender(), cbdcs, wcbdcs);
+        return wcbdcs;
     }
 
-    /// @notice Burns all wAMPLs from {msg.sender} and transfers AMPLs back,
+    /// @notice Burns all wCBDCs from {msg.sender} and transfers CBDCs back,
     ///         to the specified beneficiary.
     ///
     /// @param to The beneficiary wallet.
-    /// @return The amount of burnt wAMPLs.
+    /// @return The amount of burnt wCBDCs.
     function withdrawAllTo(address to) external returns (uint256) {
-        uint256 wamples = balanceOf(_msgSender());
-        uint256 amples = _wampleToAmple(wamples, _queryAMPLSupply());
-        _withdraw(_msgSender(), to, amples, wamples);
-        return wamples;
+        uint256 wcbdcs = balanceOf(_msgSender());
+        uint256 cbdcs = _wcbdcToCBDC(wcdbcs, _queryCBDCSupply());
+        _withdraw(_msgSender(), to, cbdcs, wcbdcs);
+        return wcbdcs;
     }
 
     //--------------------------------------------------------------------------
-    // WAMPL view methods
+    // WCBDC view methods
 
-    /// @return The address of the underlying "wrapped" token ie) AMPL.
+    /// @return The address of the underlying "wrapped" token ie) CBDC.
     function underlying() external view returns (address) {
-        return _ampl;
+        return _cbdc;
     }
 
-    /// @return The total AMPLs held by this contract.
+    /// @return The total CBDCs held by this contract.
     function totalUnderlying() external view returns (uint256) {
-        return _wampleToAmple(totalSupply(), _queryAMPLSupply());
+        return _wcbdcToCBDC(totalSupply(), _queryCBDCSupply());
     }
 
     /// @param owner The account address.
-    /// @return The AMPL balance redeemable by the owner.
+    /// @return The CBDC balance redeemable by the owner.
     function balanceOfUnderlying(
         address owner
     ) external view returns (uint256) {
-        return _wampleToAmple(balanceOf(owner), _queryAMPLSupply());
+        return _wcbdcToCBDC(balanceOf(owner), _queryCBDCSupply());
     }
 
-    /// @param amples The amount of AMPL tokens.
-    /// @return The amount of wAMPL tokens exchangeable.
+    /// @param cbdcs The amount of CBDC tokens.
+    /// @return The amount of wCBDC tokens exchangeable.
     function underlyingToWrapper(
-        uint256 amples
+        uint256 cbdcs
     ) external view returns (uint256) {
-        return _ampleToWample(amples, _queryAMPLSupply());
+        return _cbdcToWcbdc(cbdcs, _queryCBDCSupply());
     }
 
-    /// @param wamples The amount of wAMPL tokens.
-    /// @return The amount of AMPL tokens exchangeable.
+    /// @param wcbdcs The amount of wCBDC tokens.
+    /// @return The amount of CBDC tokens exchangeable.
     function wrapperToUnderlying(
-        uint256 wamples
+        uint256 wcbdcs
     ) external view returns (uint256) {
-        return _wampleToAmple(wamples, _queryAMPLSupply());
+        return _wcbdcToCBDC(wcbdcs, _queryCBDCSupply());
     }
 
     //--------------------------------------------------------------------------
@@ -238,57 +254,66 @@ contract WAMPL is ERC20Upgradeable, ERC20PermitUpgradeable {
     /// @dev Internal helper function to handle deposit state change.
     /// @param from The initiator wallet.
     /// @param to The beneficiary wallet.
-    /// @param amples The amount of AMPLs to deposit.
-    /// @param wamples The amount of wAMPLs to mint.
+    /// @param cbdcs The amount of CBDCs to deposit.
+    /// @param wcbdcs The amount of wCBDCs to mint.
     function _deposit(
         address from,
         address to,
-        uint256 amples,
-        uint256 wamples
+        uint256 cbdcs,
+        uint256 wcbdcs
     ) private {
-        IERC20Upgradeable(_ampl).safeTransferFrom(from, address(this), amples);
+        uint256 taxAmount = (cbdcs * _taxRate) / 10000;
+        uint256 netcbdcs = cbdcs - taxAmount;
 
-        _mint(to, wamples);
+        IERC20Upgradeable(_cbdc).safeTransferFrom(from, address(this), cbdcs);
+        _mint(to, wcbdcs);
+
+        // Transfer tax to a designated address or burn it
+        if (taxAmount > 0) {
+            IERC20Upgradeable(_cbdc).safeTransfer(taxRecipient, taxAmount);
+        }
     }
 
     /// @dev Internal helper function to handle withdraw state change.
     /// @param from The initiator wallet.
     /// @param to The beneficiary wallet.
-    /// @param amples The amount of AMPLs to withdraw.
-    /// @param wamples The amount of wAMPLs to burn.
+    /// @param cbdcs The amount of CBDCs to withdraw.
+    /// @param wcbdcs The amount of wCBDCs to burn.
+
     function _withdraw(
         address from,
         address to,
-        uint256 amples,
-        uint256 wamples
+        uint256 cbdcs,
+        uint256 wcbdcs
     ) private {
-        _burn(from, wamples);
+        uint256 taxAmount = (cbdcs * _taxRate) / 10000;
+        uint256 netcbdcs = cbdcs - taxAmount;
 
-        IERC20Upgradeable(_ampl).safeTransfer(to, amples);
-    }
+        _burn(from, wcbdcs);
+        IERC20Upgradeable(_cbdc).safeTransfer(to, netcbdcs);
 
-    /// @dev Queries the current total supply of AMPL.
-    /// @return The current AMPL supply.
-    function _queryAMPLSupply() private view returns (uint256) {
-        return IERC20Upgradeable(_ampl).totalSupply();
+        // Transfer tax to a designated address or burn it
+        if (taxAmount > 0) {
+            IERC20Upgradeable(_cbdc).safeTransfer(taxRecipient, taxAmount);
+        }
     }
 
     //--------------------------------------------------------------------------
     // Pure methods
 
-    /// @dev Converts AMPLs to wAMPL amount.
-    function _ampleToWample(
-        uint256 amples,
-        uint256 totalAMPLSupply
+    /// @dev Converts CBDCs to wCBDC amount.
+    function _cbdcToWcbdc(
+        uint256 cbdcs,
+        uint256 totalCBDCSupply
     ) private pure returns (uint256) {
-        return (amples * MAX_WAMPL_SUPPLY) / totalAMPLSupply;
+        return (cbdcs * MAX_WCBDC_SUPPLY) / totalCBDCSupply;
     }
 
-    /// @dev Converts wAMPLs amount to AMPLs.
-    function _wampleToAmple(
-        uint256 wamples,
-        uint256 totalAMPLSupply
+    /// @dev Converts wCBDCs amount to CBDCs.
+    function _wcbdcToCBDC(
+        uint256 wcbdcs,
+        uint256 totalCBDCSupply
     ) private pure returns (uint256) {
-        return (wamples * totalAMPLSupply) / MAX_WAMPL_SUPPLY;
+        return (wcbdcs * totalCBDCSupply) / MAX_WCBDC_SUPPLY;
     }
 }
