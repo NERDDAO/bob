@@ -1,8 +1,8 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import "../contracts/wbob.sol";
-import "../contracts/bob.sol";
+import {WBOB} from "../contracts/WBOB.sol";
+import {RebaseToken} from "../contracts/RebaseToken.sol";
 import "./DeployHelpers.s.sol";
 
 contract DeployScript is ScaffoldETHDeploy {
@@ -17,16 +17,14 @@ contract DeployScript is ScaffoldETHDeploy {
         }
         vm.startBroadcast(deployerPrivateKey);
 
-        RebaseToken Bob = new RebaseToken(vm.addr(deployerPrivateKey));
+        RebaseToken Bob = new RebaseToken();
 
-        WBOB BOBWrapper = new WBOB(
-            vm.addr(deployerPrivateKey),
-            vm.toString(address(Bob))
-        );
+        WBOB BOBWrapper = new WBOB(vm.addr(deployerPrivateKey));
 
         console.logString(
             string.concat(
                 "YourContract deployed at: ",
+                vm.toString(address(Bob)),
                 vm.toString(address(BOBWrapper))
             )
         );

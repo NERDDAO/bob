@@ -7,7 +7,8 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 import {ERC20Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 
 // solhint-disable-next-line max-line-length
-import {ERC20PermitUpgradeable} from "../lib/openzeppelin-contracts-upgradeable/contracts//token/ERC20/extensions/ERC20PermitUpgradeable.sol";
+import {ERC20PermitUpgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PermitUpgradeable.sol";
+import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
 /**
  * @title WCBDC (Wrapped CBDC).
@@ -26,7 +27,7 @@ import {ERC20PermitUpgradeable} from "../lib/openzeppelin-contracts-upgradeable/
  *
  *      We call wCBDC the "wrapper" token and CBDC the "underlying" or "wrapped" token.
  */
-contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable {
+contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable, OwnableUpgradeable {
     using SafeERC20 for IERC20;
 
     //--------------------------------------------------------------------------
@@ -36,6 +37,8 @@ contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable {
     uint256 public constant MAX_WCBDC_SUPPLY = 10000000 * (10 ** 18); // 10 M
 
     uint256 private _taxRate; // Represented as basis points (e.g., 100 = 1%)
+
+    address taxRecipient;
 
     //--------------------------------------------------------------------------
     // Attributes
@@ -80,7 +83,7 @@ contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable {
     /// @param wcbdcs The amount of wCBDCs to mint.
     /// @return The amount of CBDCs deposited.
     function mint(uint256 wcbdcs) external returns (uint256) {
-        uint256 cbdcs = _wcbdceToAmple(wcbdcs, _queryCBDCSupply());
+        uint256 cbdcs = _wcbdcToCBDC(wcbdcs, _queryCBDCSupply());
         uint256 taxAmount = (cbdcs * _taxRate) / 10000;
         uint256 totalcbdcs = cbdcs + taxAmount;
         _deposit(_msgSender(), _msgSender(), totalcbdcs, wcbdcs);
@@ -94,7 +97,7 @@ contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable {
     /// @param wcbdcs The amount of wCBDCs to mint.
     /// @return The amount of CBDCs deposited.
     function mintFor(address to, uint256 wcbdcs) external returns (uint256) {
-        uint256 cbdcs = _wcbdcToCBDC(wcdbcs, _queryCBDCSupply());
+        uint256 cbdcs = _wcbdcToCBDC(wcbdcs, _queryCBDCSupply());
         _deposit(_msgSender(), to, cbdcs, wcbdcs);
         return cbdcs;
     }
@@ -104,7 +107,7 @@ contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable {
     /// @param wcbdcs The amount of wCBDCs to burn.
     /// @return The amount of CBDCs withdrawn.
     function burn(uint256 wcbdcs) external returns (uint256) {
-        uint256 cbdcs = _wcbdceToAmple(wcbdcs, _queryCBDCSupply());
+        uint256 cbdcs = _wcbdcToCBDC(wcbdcs, _queryCBDCSupply());
         uint256 taxAmount = (cbdcs * _taxRate) / 10000;
         uint256 netcbdcs = cbdcs - taxAmount;
         _withdraw(_msgSender(), _msgSender(), cbdcs, wcbdcs);
@@ -118,7 +121,7 @@ contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable {
     /// @param wcbdcs The amount of wCBDCs to burn.
     /// @return The amount of CBDCs withdrawn.
     function burnTo(address to, uint256 wcbdcs) external returns (uint256) {
-        uint256 cbdcs = _wcbdcToCBDC(wcdbcs, _queryCBDCSupply());
+        uint256 cbdcs = _wcbdcToCBDC(wcbdcs, _queryCBDCSupply());
         _withdraw(_msgSender(), to, cbdcs, wcbdcs);
         return cbdcs;
     }
@@ -128,7 +131,7 @@ contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable {
     /// @return The amount of CBDCs withdrawn.
     function burnAll() external returns (uint256) {
         uint256 wcbdcs = balanceOf(_msgSender());
-        uint256 cbdcs = _wcbdcToCBDC(wcdbcs, _queryCBDCSupply());
+        uint256 cbdcs = _wcbdcToCBDC(wcbdcs, _queryCBDCSupply());
         _withdraw(_msgSender(), _msgSender(), cbdcs, wcbdcs);
         return cbdcs;
     }
@@ -140,7 +143,7 @@ contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable {
     /// @return The amount of CBDCs withdrawn.
     function burnAllTo(address to) external returns (uint256) {
         uint256 wcbdcs = balanceOf(_msgSender());
-        uint256 cbdcs = _wcbdcToCBDC(wcdbcs, _queryCBDCSupply());
+        uint256 cbdcs = _wcbdcToCBDC(wcbdcs, _queryCBDCSupply());
         _withdraw(_msgSender(), to, cbdcs, wcbdcs);
         return cbdcs;
     }
@@ -194,7 +197,7 @@ contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable {
     /// @return The amount of burnt wCBDCs.
     function withdrawAll() external returns (uint256) {
         uint256 wcbdcs = balanceOf(_msgSender());
-        uint256 cbdcs = _wcbdcToCBDC(wcdbcs, _queryCBDCSupply());
+        uint256 cbdcs = _wcbdcToCBDC(wcbdcs, _queryCBDCSupply());
         _withdraw(_msgSender(), _msgSender(), cbdcs, wcbdcs);
         return wcbdcs;
     }
@@ -206,7 +209,7 @@ contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable {
     /// @return The amount of burnt wCBDCs.
     function withdrawAllTo(address to) external returns (uint256) {
         uint256 wcbdcs = balanceOf(_msgSender());
-        uint256 cbdcs = _wcbdcToCBDC(wcdbcs, _queryCBDCSupply());
+        uint256 cbdcs = _wcbdcToCBDC(wcbdcs, _queryCBDCSupply());
         _withdraw(_msgSender(), to, cbdcs, wcbdcs);
         return wcbdcs;
     }
@@ -265,12 +268,12 @@ contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable {
         uint256 taxAmount = (cbdcs * _taxRate) / 10000;
         uint256 netcbdcs = cbdcs - taxAmount;
 
-        IERC20Upgradeable(_cbdc).safeTransferFrom(from, address(this), cbdcs);
+        IERC20(_cbdc).safeTransferFrom(from, address(this), cbdcs);
         _mint(to, wcbdcs);
 
         // Transfer tax to a designated address or burn it
         if (taxAmount > 0) {
-            IERC20Upgradeable(_cbdc).safeTransfer(taxRecipient, taxAmount);
+            IERC20(_cbdc).safeTransfer(taxRecipient, taxAmount);
         }
     }
 
@@ -290,12 +293,18 @@ contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable {
         uint256 netcbdcs = cbdcs - taxAmount;
 
         _burn(from, wcbdcs);
-        IERC20Upgradeable(_cbdc).safeTransfer(to, netcbdcs);
+        IERC20(_cbdc).safeTransfer(to, netcbdcs);
 
         // Transfer tax to a designated address or burn it
         if (taxAmount > 0) {
-            IERC20Upgradeable(_cbdc).safeTransfer(taxRecipient, taxAmount);
+            IERC20(_cbdc).safeTransfer(taxRecipient, taxAmount);
         }
+    }
+
+    /// @dev Queries the current total supply of AMPL.
+    /// @return The current AMPL supply.
+    function _queryCBDCSupply() private view returns (uint256) {
+        return IERC20(_cbdc).totalSupply();
     }
 
     //--------------------------------------------------------------------------
