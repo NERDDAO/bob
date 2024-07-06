@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-pragma solidity 0.8.4;
+pragma solidity 0.8.20;
 
-import {IERC20Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
+import {IERC20} from "@openzeppelin/contracts/interfaces/IERC20.sol";
 // solhint-disable-next-line max-line-length
-import {SafeERC20Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol";
+import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {ERC20Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 
 // solhint-disable-next-line max-line-length
-import {ERC20PermitUpgradeable} from "../lib/openzeppelin-contracts-upgradeable/contracts//token/ERC20/extensions/draft-ERC20PermitUpgradeable.sol";
+import {ERC20PermitUpgradeable} from "../lib/openzeppelin-contracts-upgradeable/contracts//token/ERC20/extensions/ERC20PermitUpgradeable.sol";
 
 /**
  * @title WCBDC (Wrapped CBDC).
@@ -27,7 +27,7 @@ import {ERC20PermitUpgradeable} from "../lib/openzeppelin-contracts-upgradeable/
  *      We call wCBDC the "wrapper" token and CBDC the "underlying" or "wrapped" token.
  */
 contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable {
-    using SafeERC20Upgradeable for IERC20Upgradeable;
+    using SafeERC20 for IERC20;
 
     //--------------------------------------------------------------------------
     // Constants

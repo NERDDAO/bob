@@ -45,7 +45,7 @@ FOLLOW @x_BASED_GOD_x ON X FOR MORE VIRAL DROPS. DONT BE THE LAST TO KNOW.
 FOLLOW @x_BASED_GOD_x ON X FOR MORE VIRAL DROPS. DONT BE THE LAST TO KNOW.
 
 */
-pragma solidity 0.8.19;
+pragma solidity 0.8.20;
 
 library SafeMath {
     /**

@@ -1,9 +1,9 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import "../contracts/YourContract.sol";
+import "../contracts/wbob.sol";
+import "../contracts/bob.sol";
 import "./DeployHelpers.s.sol";
-
 
 contract DeployScript is ScaffoldETHDeploy {
     error InvalidPrivateKey(string);
@@ -17,19 +17,21 @@ contract DeployScript is ScaffoldETHDeploy {
         }
         vm.startBroadcast(deployerPrivateKey);
 
-        YourContract yourContract = new YourContract(
-            vm.addr(deployerPrivateKey)
+        RebaseToken Bob = new RebaseToken(vm.addr(deployerPrivateKey));
+
+        WBOB BOBWrapper = new WBOB(
+            vm.addr(deployerPrivateKey),
+            vm.toString(address(Bob))
         );
+
         console.logString(
             string.concat(
                 "YourContract deployed at: ",
-                vm.toString(address(yourContract))
+                vm.toString(address(BOBWrapper))
             )
         );
 
         vm.stopBroadcast();
-
-        
 
         /**
          * This function generates the file containing the contracts Abi definitions.
@@ -41,3 +43,4 @@ contract DeployScript is ScaffoldETHDeploy {
 
     function test() public {}
 }
+
