@@ -2,8 +2,9 @@
 pragma solidity ^0.8.19;
 
 import {WBOB} from "../contracts/WBOB.sol";
-import {RebaseToken} from "../contracts/RebaseToken.sol";
+import "../contracts/RebaseToken.sol";
 import "./DeployHelpers.s.sol";
+import "../contracts/MonetaryPolicy.sol";
 
 contract DeployScript is ScaffoldETHDeploy {
     error InvalidPrivateKey(string);
@@ -19,13 +20,20 @@ contract DeployScript is ScaffoldETHDeploy {
 
         RebaseToken Bob = new RebaseToken();
 
-        WBOB BOBWrapper = new WBOB(vm.addr(deployerPrivateKey));
+        WBOB BOBWrapper = new WBOB(address(Bob));
+
+        MonetaryPolicy Mpol = new MonetaryPolicy(
+            address(Bob), //token address
+            address(Bob), // Univ2 Pair
+            1000 // Rebase period
+        );
 
         console.logString(
             string.concat(
                 "YourContract deployed at: ",
                 vm.toString(address(Bob)),
-                vm.toString(address(BOBWrapper))
+                vm.toString(address(BOBWrapper)),
+                vm.toString(address(Mpol))
             )
         );
 

@@ -36,9 +36,9 @@ contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable, OwnableUpgradeable {
     /// @dev The maximum wCBDC supply.
     uint256 public constant MAX_WCBDC_SUPPLY = 10000000 * (10 ** 18); // 10 M
 
-    uint256 private _taxRate; // Represented as basis points (e.g., 100 = 1%)
+    uint256 public _taxRate = 100; // Represented as basis points (e.g., 100 = 1%)
 
-    address taxRecipient;
+    address public taxRecipient;
 
     //--------------------------------------------------------------------------
     // Attributes
@@ -50,8 +50,9 @@ contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable, OwnableUpgradeable {
 
     /// @notice Contract constructor.
     /// @param cbdc The CBDC ERC20 token address.
-    constructor(address cbdc) {
+    constructor(address cbdc) OwnableUpgradeable() {
         _cbdc = cbdc;
+        taxRecipient = msg.sender;
     }
 
     /// @notice Contract state initialization.
@@ -63,6 +64,7 @@ contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable, OwnableUpgradeable {
     ) public initializer {
         __ERC20_init(name_, symbol_);
         __ERC20Permit_init(name_);
+        __Ownable_init(msg.sender);
     }
 
     //--------------------------------------------------------------------------
@@ -265,19 +267,27 @@ contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable, OwnableUpgradeable {
         uint256 cbdcs,
         uint256 wcbdcs
     ) private {
-        uint256 taxAmount = (cbdcs * _taxRate) / 10000;
-        uint256 netcbdcs = cbdcs - taxAmount;
+        require(cbdcs > 0 && wcbdcs > 0, "Invalid amounts");
+        // Transfer full amount of CBDCs to the contract
+        IERC20(_cbdc).transferFrom(from, address(this), cbdcs);
 
-        IERC20(_cbdc).safeTransferFrom(from, address(this), cbdcs);
-        _mint(to, wcbdcs);
+        uint256 taxAmount = (wcbdcs * _taxRate) / 10000;
+        uint256 netWcbdcs = wcbdcs - taxAmount;
+        require(netWcbdcs > 0, "Net amount too small");
 
-        // Transfer tax to a designated address or burn it
+        // Calculate wrappers for tax and user
+
+        // Mint wrappers to tax recipient if tax > 0
         if (taxAmount > 0) {
-            IERC20(_cbdc).safeTransfer(taxRecipient, taxAmount);
+            _mint(taxRecipient, taxAmount);
         }
+
+        // Mint remaining wrappers to the user
+        _mint(to, netWcbdcs);
+
+        //emit Deposit(from, to, cbdcs, wcbdcs, taxAmount);
     }
 
-    /// @dev Internal helper function to handle withdraw state change.
     /// @param from The initiator wallet.
     /// @param to The beneficiary wallet.
     /// @param cbdcs The amount of CBDCs to withdraw.
@@ -293,11 +303,12 @@ contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable, OwnableUpgradeable {
         uint256 netcbdcs = cbdcs - taxAmount;
 
         _burn(from, wcbdcs);
-        IERC20(_cbdc).safeTransfer(to, netcbdcs);
+
+        IERC20(_cbdc).transfer(to, netcbdcs);
 
         // Transfer tax to a designated address or burn it
         if (taxAmount > 0) {
-            IERC20(_cbdc).safeTransfer(taxRecipient, taxAmount);
+            IERC20(_cbdc).transfer(taxRecipient, taxAmount);
         }
     }
 

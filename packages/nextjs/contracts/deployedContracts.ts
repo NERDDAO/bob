@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     RebaseToken: {
-      address: "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
+      address: "0xcbeaf3bde82155f56486fb5a1072cb8baaf547cc",
       abi: [
         {
           type: "function",
@@ -668,7 +668,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     WBOB: {
-      address: "0xdc64a140aa3e981100a9beca4e685f962f0cf6c9",
+      address: "0x1429859428c0abc9c2c47c8ee9fbaf82cfa0f20f",
       abi: [
         {
           type: "constructor",
@@ -697,6 +697,19 @@ const deployedContracts = {
         {
           type: "function",
           name: "MAX_WCBDC_SUPPLY",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "_taxRate",
           inputs: [],
           outputs: [
             {
@@ -1164,6 +1177,19 @@ const deployedContracts = {
         },
         {
           type: "function",
+          name: "taxRecipient",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
           name: "totalSupply",
           inputs: [],
           outputs: [
@@ -1470,28 +1496,6 @@ const deployedContracts = {
         },
         {
           type: "error",
-          name: "AddressEmptyCode",
-          inputs: [
-            {
-              name: "target",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-        },
-        {
-          type: "error",
-          name: "AddressInsufficientBalance",
-          inputs: [
-            {
-              name: "account",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-        },
-        {
-          type: "error",
           name: "ECDSAInvalidSignature",
           inputs: [],
         },
@@ -1632,11 +1636,6 @@ const deployedContracts = {
         },
         {
           type: "error",
-          name: "FailedInnerCall",
-          inputs: [],
-        },
-        {
-          type: "error",
           name: "InvalidAccountNonce",
           inputs: [
             {
@@ -1683,16 +1682,182 @@ const deployedContracts = {
             },
           ],
         },
+      ],
+      inheritedFunctions: {},
+    },
+    MonetaryPolicy: {
+      address: "0xb0d4afd8879ed9f52b28595d31b441d079b2ca07",
+      abi: [
         {
-          type: "error",
-          name: "SafeERC20FailedOperation",
+          type: "constructor",
           inputs: [
             {
-              name: "token",
+              name: "pairAddress",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "tokenAddress",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "rebaseInterval",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "EPOCH",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "LAST_REBASE_BLOCK",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "REBASE_INTERVAL",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "canRebase",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "changeInterval",
+          inputs: [
+            {
+              name: "newInterval",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "deployer",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
               type: "address",
               internalType: "address",
             },
           ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "intervalLocked",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "lockInterval",
+          inputs: [],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "pair",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "address",
+              internalType: "contract IUniswapV2Pair",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "rebase",
+          inputs: [],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "token",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "address",
+              internalType: "contract IRebaseableERC20",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "event",
+          name: "LogRebase",
+          inputs: [
+            {
+              name: "epoch",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+            {
+              name: "totalSupply",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
         },
       ],
       inheritedFunctions: {},
