@@ -269,7 +269,7 @@ contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable, OwnableUpgradeable {
     ) private {
         require(cbdcs > 0 && wcbdcs > 0, "Invalid amounts");
         // Transfer full amount of CBDCs to the contract
-        IERC20(_cbdc).transferFrom(from, address(this), cbdcs);
+        IERC20(_cbdc).safeTransferFrom(from, address(this), cbdcs);
 
         uint256 taxAmount = (wcbdcs * _taxRate) / 10000;
         uint256 netWcbdcs = wcbdcs - taxAmount;
@@ -304,11 +304,11 @@ contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable, OwnableUpgradeable {
 
         _burn(from, wcbdcs);
 
-        IERC20(_cbdc).transfer(to, netcbdcs);
+        IERC20(_cbdc).safeTransfer(to, netcbdcs);
 
         // Transfer tax to a designated address or burn it
         if (taxAmount > 0) {
-            IERC20(_cbdc).transfer(taxRecipient, taxAmount);
+            IERC20(_cbdc).safeTransfer(taxRecipient, taxAmount);
         }
     }
 
