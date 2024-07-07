@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Approve, WrapCBDC } from "./nerd-labs/Approve.tsx";
 import { useAccount } from "wagmi";
-import { useScaffoldContract, useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
+import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 const MintBurn = () => {
   const [percentages, setPercentages] = useState({ cBDC: 100n, wBOB: 100n });
@@ -76,13 +76,21 @@ const MintBurn = () => {
   };
 
   return (
-    <div className="card flex flex-row">
-      <div className="card-title p-12 flex flex-col">
-        <p>CBDC Treasury Balance: {Number(tBalanceRead?.data) * 1e-9}</p>
-
-        <p>WCBDC Treasury Balance: {Number(t2BalanceRead?.data) * 1e-18}</p>
-        <p>Tax Rate: {taxRate.data.toString()}bps</p>
-
+    <div className="card flex flex-col">
+      <div className="card-title flex-row">
+        <p className="stat">
+          <span className="stat-title">CBDC Treasury Balance:</span>{" "}
+          <span className="stat-value">{Number(tBalanceRead?.data) * 1e-9}</span>
+        </p>
+        <p className="stat">
+          <span className="stat-title">WCBDC Treasury Balance:</span>
+          <span className="stat-value"> {Number(t2BalanceRead?.data) * 1e-18}</span>
+        </p>
+        <p className="stat">
+          <span className="stat-title">Tax Rate:</span> {taxRate.data.toString()}bps
+        </p>
+      </div>
+      <div className="card-title p-12 flex flex-row">
         {["cBDC", "wBOB"].map(type => (
           <div className="card-body flex flex-col" key={type}>
             <WrapCBDC
@@ -90,31 +98,27 @@ const MintBurn = () => {
               fName={type === "cBDC" ? "deposit" : "burn"}
               balance={balances[type]}
             />
-            <p>Balance: {balances[type]?.toString()}</p>
             <div className="flex flex-row">{renderPercentageButtons(type)}</div>
           </div>
         ))}
-
-        <p>Address: {account.address}</p>
-
-        <div className="form-control">
-          <Approve onApproveSuccess={() => console.log("Approved")} />
-          <input
-            className="input"
-            type="number"
-            value={customPercentage}
-            onChange={handleCustomPercentageChange}
-            placeholder="Custom %"
-            min="0"
-            max="100"
-          />
-          <button className="btn" onClick={() => applyCustomPercentage("cBDC")}>
-            Apply to cBDC
-          </button>
-          <button className="btn" onClick={() => applyCustomPercentage("wBOB")}>
-            Apply to wBOB
-          </button>
-        </div>
+      </div>
+      <div className="form-control">
+        <Approve onApproveSuccess={() => console.log("Approved")} />
+        <input
+          className="input"
+          type="number"
+          value={customPercentage}
+          onChange={handleCustomPercentageChange}
+          placeholder="Custom %"
+          min="0"
+          max="100"
+        />
+        <button className="btn" onClick={() => applyCustomPercentage("cBDC")}>
+          Apply to cBDC
+        </button>
+        <button className="btn" onClick={() => applyCustomPercentage("wBOB")}>
+          Apply to wBOB
+        </button>
       </div>
     </div>
   );

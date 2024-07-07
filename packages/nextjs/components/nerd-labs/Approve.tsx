@@ -61,9 +61,9 @@ export function WrapCBDC(args: { balance: bigint; fName: string; onApproveSucces
       {isMining ? (
         <span className="loading loading-spinner loading-sm"></span>
       ) : functionName == "deposit" ? (
-        "Wrap 1"
+        `Wrap ${Number(balance) * 1e-9}`
       ) : (
-        "Burn 1"
+        `Burn ${Number(balance) * 1e-18}`
       )}
     </button>
   );
