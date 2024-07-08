@@ -1,4 +1,5 @@
 import FarmCard from "~~/components/FarmCard";
+import StakeCard from "~~/components/FarmCard";
 import MintBurn from "~~/components/MintBurn";
 
 const Farm = () => {
@@ -17,7 +18,7 @@ const Farm = () => {
         <div className="collapse-content flex flex-row space-x-2 p-6 justify-center">
           <FarmCard type="xWCBDC Staking" />
 
-          <FarmCard type="wCDBC/ETH Farm" />
+          <StakeCard type="wCDBC/ETH Farm" />
         </div>
       </div>
     </>
