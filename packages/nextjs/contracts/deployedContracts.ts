@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     RebaseToken: {
-      address: "0xcbeaf3bde82155f56486fb5a1072cb8baaf547cc",
+      address: "0x5fc8d32690cc91d4c39d9d3abcbd16989f875707",
       abi: [
         {
           type: "function",
@@ -668,7 +668,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     WBOB: {
-      address: "0x1429859428c0abc9c2c47c8ee9fbaf82cfa0f20f",
+      address: "0x0165878a594ca255338adfa4d48449f69242eb8f",
       abi: [
         {
           type: "constructor",
@@ -1496,6 +1496,28 @@ const deployedContracts = {
         },
         {
           type: "error",
+          name: "AddressEmptyCode",
+          inputs: [
+            {
+              name: "target",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
+        {
+          type: "error",
+          name: "AddressInsufficientBalance",
+          inputs: [
+            {
+              name: "account",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
+        {
+          type: "error",
           name: "ECDSAInvalidSignature",
           inputs: [],
         },
@@ -1636,6 +1658,11 @@ const deployedContracts = {
         },
         {
           type: "error",
+          name: "FailedInnerCall",
+          inputs: [],
+        },
+        {
+          type: "error",
           name: "InvalidAccountNonce",
           inputs: [
             {
@@ -1682,11 +1709,22 @@ const deployedContracts = {
             },
           ],
         },
+        {
+          type: "error",
+          name: "SafeERC20FailedOperation",
+          inputs: [
+            {
+              name: "token",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
       ],
       inheritedFunctions: {},
     },
     MonetaryPolicy: {
-      address: "0xb0d4afd8879ed9f52b28595d31b441d079b2ca07",
+      address: "0xa513e6e4b8f2a923d98304ec87f64353c4d5c853",
       abi: [
         {
           type: "constructor",
