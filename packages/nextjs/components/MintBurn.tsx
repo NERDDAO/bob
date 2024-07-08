@@ -87,7 +87,7 @@ const MintBurn = () => {
           <span className="stat-value"> {Number(t2BalanceRead?.data) * 1e-18}</span>
         </p>
         <p className="stat">
-          <span className="stat-title">Tax Rate:</span> {taxRate.data.toString()}bps
+          <span className="stat-title">Tax Rate:</span> {taxRate?.data?.toString()}bps
         </p>
       </div>
       <div className="card-title p-12 flex flex-row">
