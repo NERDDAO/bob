@@ -47,28 +47,23 @@ export const Footer = () => {
         <ul className="menu menu-horizontal w-full">
           <div className="flex justify-center items-center gap-2 text-sm w-full">
             <div className="text-center">
-              <a href="https://github.com/scaffold-eth/se-2" target="_blank" rel="noreferrer" className="link">
+              <a href="https://github.com/NERDDAO/bob" target="_blank" rel="noreferrer" className="link">
                 Fork me
               </a>
             </div>
             <span>·</span>
             <div className="flex justify-center items-center gap-2">
-              <p className="m-0 text-center">
-                Built with <HeartIcon className="inline-block h-4 w-4" /> at
-              </p>
-              <a
-                className="flex justify-center items-center gap-1"
-                href="https://buidlguidl.com/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <BuidlGuidlLogo className="w-3 h-5 pb-1" />
-                <span className="link">BuidlGuidl</span>
-              </a>
+              {" "}
+              Made with <span className="text-red-500">{"<3"}</span> by <span className="text-black">Plat0x.eth </span>
+              and the <span className="text-green-500">N</span>
+              <span className="text-red-500">E</span>
+              <span className="text-yellow-200">R</span>
+              <span className="text-purple-400">D</span>
+              <span className="text-blue-500">S</span>{" "}
             </div>
             <span>·</span>
             <div className="text-center">
-              <a href="https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA" target="_blank" rel="noreferrer" className="link">
+              <a href="https://t.me/thenerdlabs" target="_blank" rel="noreferrer" className="link">
                 Support
               </a>
             </div>
