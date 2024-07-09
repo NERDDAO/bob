@@ -1,8 +1,6 @@
 import LiquidityFarming from "./nerd-labs/LiquidityFarming";
 import Staking from "./nerd-labs/Staking.tsx";
 import BankOfBased from "~~/components/BankOfBased";
-import FarmCard from "~~/components/FarmCard";
-import StakeCard from "~~/components/FarmCard";
 import MintBurn from "~~/components/MintBurn";
 
 const Farm = () => {
