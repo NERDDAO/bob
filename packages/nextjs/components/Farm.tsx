@@ -45,7 +45,7 @@ const Farm = () => {
       <div className="collapse bg-base-200">
         <input type="radio" name="my-accordion-1" />
         <div className="collapse-title text-xl font-medium">FARMS</div>
-        <div className="collapse-content flex flex-row space-x-2 p-6 justify-center">
+        <div className="collapse-content flex flex-row space-x-12 p-4 justify-center">
           <Staking config={stakingConfig} FarmEarnings={OptionalFarmEarningsComponent} />
           <LiquidityFarming config={daiUsdcConfig} />
         </div>

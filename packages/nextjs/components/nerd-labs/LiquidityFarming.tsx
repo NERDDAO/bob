@@ -86,26 +86,26 @@ const LiquidityFarming = ({ config }) => {
   };
 
   return (
-    <div className="card w-96 bg-base-100 shadow-xl">
+    <div className="card w-96 bg-base-100 shadow-sm">
       <div className="card-body">
         <h2 className="card-title">{config.farmName} Liquidity Farm</h2>
         <div className="stats flex flex-col">
-          <div className="stat">
+          <div className="stat place-items-center">
             <div className="stat-title">{config.tokenSymbol} Balance:</div>
             <div className="stat-value">
-              {tokenBalance.toFixed(3)} {config.tokenSymbol}
+              {tokenBalance.toFixed(3)} <span className="stat-desc">{config.tokenSymbol}</span>
             </div>
           </div>
-          <div className="stat">
+          <div className="stat place-items-center">
             <div className="stat-title">Staked Balance:</div>
             <div className="stat-value">
-              {stakedBalance.toFixed(3)} {config.tokenSymbol}
+              {stakedBalance.toFixed(3)} <span className="stat-desc">{config.tokenSymbol}</span>
             </div>
           </div>
-          <div className="stat">
+          <div className="stat place-items-center">
             <div className="stat-title">Earned Rewards:</div>
             <div className="stat-value">
-              {earnedRewards.toFixed(3)} {config.rewardSymbol}
+              {earnedRewards.toFixed(3)} <span className="stat-desc">{config.tokenSymbol}</span>
             </div>
           </div>
         </div>
