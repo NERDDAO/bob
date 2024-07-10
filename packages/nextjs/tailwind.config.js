@@ -52,9 +52,9 @@ module.exports = {
       },
       {
         light: {
-          primary: "#21ff55",
+          primary: "#f9f9f9",
           "primary-content": "#000000",
-          secondary: "#f9f9f9",
+          secondary: "#dbdbdb",
           "secondary-content": "#000000",
           accent: "#21ff55",
           "accent-content": "#000000",

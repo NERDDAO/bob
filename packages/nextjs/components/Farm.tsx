@@ -1,8 +1,6 @@
 import LiquidityFarming from "./nerd-labs/LiquidityFarming";
 import Staking from "./nerd-labs/Staking";
 import BankOfBased from "~~/components/BankOfBased";
-import FarmCard from "~~/components/FarmCard";
-import StakeCard from "~~/components/FarmCard";
 import MintBurn from "~~/components/MintBurn";
 
 const Farm = () => {
@@ -47,9 +45,9 @@ const Farm = () => {
       <div className="collapse bg-base-200 border border-gray-300 mx-6">
         <input type="radio" name="my-accordion-1" />
         <div className="collapse-title text-xl font-medium">FARMS</div>
-        <div className="collapse-content flex flex-row space-x-2 justify-center p-6">
-            <Staking config={stakingConfig} FarmEarnings={OptionalFarmEarningsComponent} />
-            <LiquidityFarming config={daiUsdcConfig} />
+        <div className="collapse-content flex flex-row space-x-12 p-4 justify-center">
+          <Staking config={stakingConfig} FarmEarnings={OptionalFarmEarningsComponent} />
+          <LiquidityFarming config={daiUsdcConfig} />
         </div>
       </div>
     </>

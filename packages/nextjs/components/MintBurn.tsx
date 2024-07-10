@@ -48,23 +48,8 @@ const MintBurn = () => {
   }, [balanceRead.data, wrappedBalanceRead.data, percentages]);
 
   const handlePercentageChange = (type, value) => {
-    setPercentages(prev => ({ ...prev, [type]: BigInt(value) }));
-  };
-
-  const handleCustomPercentageChange = e => {
-    const value = e.target.value;
-    if (value === "" || (Number(value) >= 0 && Number(value) <= 100)) {
-      setCustomPercentage(value);
-    }
-  };
-
-  const applyCustomPercentage = type => {
-    if (customPercentage !== "") {
-      const newPercentage = BigInt(customPercentage);
-      if (newPercentage <= 100n) {
-        handlePercentageChange(type, newPercentage);
-      }
-    }
+    const newPercentage = BigInt(Math.min(Math.max(Number(value), 0), 100));
+    setPercentages(prev => ({ ...prev, [type]: newPercentage }));
   };
 
   const renderPercentageButtons = type => {
@@ -97,6 +82,8 @@ const MintBurn = () => {
               onApproveSuccess={() => console.log(`${type} success`)}
               fName={type === "cBDC" ? "deposit" : "burn"}
               balance={balances[type]}
+              percentage={percentages[type]}
+              onPercentageChange={value => handlePercentageChange(type, value)}
             />
             <div className="flex flex-row">{renderPercentageButtons(type)}</div>
           </div>
@@ -104,24 +91,8 @@ const MintBurn = () => {
       </div>
       <div className="form-control">
         <Approve onApproveSuccess={() => console.log("Approved")} />
-        <input
-          className="input"
-          type="number"
-          value={customPercentage}
-          onChange={handleCustomPercentageChange}
-          placeholder="Custom %"
-          min="0"
-          max="100"
-        />
-        <button className="btn" onClick={() => applyCustomPercentage("cBDC")}>
-          Apply to cBDC
-        </button>
-        <button className="btn" onClick={() => applyCustomPercentage("wBOB")}>
-          Apply to wBOB
-        </button>
       </div>
     </div>
   );
 };
-
 export default MintBurn;

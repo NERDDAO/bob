@@ -71,20 +71,20 @@ const Staking = ({ config, FarmEarnings }) => {
   };
 
   return (
-    <div className="card w-96 bg-base-100 shadow-xl ">
-      <div className="card-body ">
+    <div className="card w-96 bg-base-100 shadow-sm">
+      <div className="card-body">
         <h2 className="card-title">{config.tokenSymbol} Staking</h2>
         <div className="stats flex flex-col">
-          <div className="stat">
+          <div className="stat place-items-center">
             <div className="stat-title">{config.tokenSymbol} Balance:</div>
             <div className="stat-value">
-              {tokenBalance.toFixed(3)} {config.tokenSymbol}
+              {tokenBalance.toFixed(3)} <span className="stat-desc">{config.tokenSymbol}</span>
             </div>
           </div>
-          <div className="stat">
+          <div className="stat place-items-center">
             <div className="stat-title">Staked Balance:</div>
             <div className="stat-value">
-              {(stakedBalance * pricePerShare).toFixed(3)} {config.tokenSymbol}
+              {(stakedBalance * pricePerShare).toFixed(3)} <span className="stat-desc">{config.tokenSymbol}</span>{" "}
             </div>
           </div>
         </div>
