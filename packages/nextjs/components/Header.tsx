@@ -15,20 +15,20 @@ type HeaderMenuLink = {
 };
 
 export const menuLinks: HeaderMenuLink[] = [
-  {
-    label: "Home",
-    href: "/",
-  },
-  {
-    label: "Debug Contracts",
-    href: "/debug",
-    icon: <BugAntIcon className="h-4 w-4" />,
-  },
-  {
-    label: "CBDC Wrapper",
-    href: "/mintBurn",
-    icon: <BugAntIcon className="h-4 w-4" />,
-  },
+  // {
+  //   label: "Home",
+  //   href: "/",
+  // },
+  // {
+  //   label: "Debug Contracts",
+  //   href: "/debug",
+  //   icon: <BugAntIcon className="h-4 w-4" />,
+  // },
+  // {
+  //   label: "CBDC Wrapper",
+  //   href: "/mintBurn",
+  //   icon: <BugAntIcon className="h-4 w-4" />,
+  // },
   {
     label: "CBDC Farm",
     href: "/farm",

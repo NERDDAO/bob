@@ -76,7 +76,7 @@ const MintBurn = () => {
   };
 
   return (
-    <div className="card flex flex-col">
+    <div className="card flex flex-col p-6">
       <div className="card-title flex-row">
         <p className="stat">
           <span className="stat-title">CBDC Treasury Balance:</span>{" "}

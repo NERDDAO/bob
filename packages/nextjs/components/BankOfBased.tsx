@@ -1,6 +1,7 @@
 const BankOfBased = () => {
   return (
     <>
+    <div className="p-6">
       <h1 className="title_font">BANK OF BASED</h1>
       <h2>
         <u>Memorandum on the State of the Market</u>
@@ -104,6 +105,7 @@ const BankOfBased = () => {
           <p className="response">Well, what's the worse that could happen?</p>
         </div>
       </div>
+    </div>
     </>
   );
 };
