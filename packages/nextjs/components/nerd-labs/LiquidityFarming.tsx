@@ -123,11 +123,11 @@ const LiquidityFarming = ({ config }) => {
             value={amount}
             onChange={e => setAmount(Number(e.target.value))}
           />
+          <span className="underline cursor-pointer text-sm stat-desc" onClick={() => setIsStaking(!isStaking)}>
+            {isStaking ? "Switch to Unstake" : "Switch to Stake"}
+          </span>
         </div>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary" onClick={() => setIsStaking(!isStaking)}>
-            {isStaking ? "Switch to Unstake" : "Switch to Stake"}
-          </button>
           <button
             className="btn btn-secondary"
             onClick={isStaking ? handleStake : handleUnstake}

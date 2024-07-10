@@ -71,7 +71,7 @@ const Staking = ({ config, FarmEarnings }) => {
   };
 
   return (
-    <div className="card w-96 bg-base-100 shadow-sm w-full md:w-auto">
+    <div className="card w-96 bg-base-100 shadow-sm  md:w-auto">
       <div className="card-body">
         <h2 className="card-title">{config.tokenSymbol} Staking</h2>
         <div className="stats flex flex-col">
@@ -102,11 +102,12 @@ const Staking = ({ config, FarmEarnings }) => {
             value={amount}
             onChange={e => setAmount(Number(e.target.value))}
           />
+          <span className="underline cursor-pointer text-sm stat-desc" onClick={() => setIsStaking(!isStaking)}>
+            {isStaking ? "Switch to Unstake" : "Switch to Stake"}
+          </span>
         </div>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary" onClick={() => setIsStaking(!isStaking)}>
-            {isStaking ? "Switch to Unstake" : "Switch to Stake"}
-          </button>
+          <br />
           <button
             className="btn btn-secondary"
             onClick={isStaking ? handleStake : handleUnstake}
