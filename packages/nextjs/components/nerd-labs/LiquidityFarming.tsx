@@ -86,7 +86,7 @@ const LiquidityFarming = ({ config }) => {
   };
 
   return (
-    <div className="card w-96 bg-base-100 shadow-sm border-gray-300">
+    <div className="card w-96 bg-base-100 shadow-sm border-gray-300 w-full md:w-auto">
       <div className="card-body">
         <h2 className="card-title">{config.farmName} Liquidity Farm</h2>
         <div className="stats flex flex-col">

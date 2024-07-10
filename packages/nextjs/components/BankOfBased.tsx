@@ -1,7 +1,9 @@
 const BankOfBased = () => {
 
   return (
-    <><h1 className="title_font">BANK OF BASED</h1><h2>
+    <>
+    <div className="w-full md:w-auto">
+    <h1 className="title_font">BANK OF BASED</h1><h2>
       <u>Memorandum on the State of the Market</u>
     </h2><div className="chat chat-start">
         <div className="chat-bubble">
@@ -44,7 +46,10 @@ const BankOfBased = () => {
           <p className="response">Oh?</p>
         </div>
       </div>
-      </>
+      
+    </div>
+    
+    </>
   )
 }
 

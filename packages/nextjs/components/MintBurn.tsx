@@ -61,8 +61,8 @@ const MintBurn = () => {
   };
 
   return (
-    <div className="card flex flex-col p-6">
-      <div className="card-title flex-row">
+    <div className="card flex flex-col p-6 w-full md:w-auto">
+      <div className="card-title flex-row w-full md:w-auto">
         <p className="stat">
           <span className="stat-title">CBDC Treasury Balance:</span>{" "}
           <span className="stat-value">{Number(tBalanceRead?.data) * 1e-9}</span>
@@ -75,7 +75,7 @@ const MintBurn = () => {
           <span className="stat-title">Tax Rate:</span> {taxRate?.data?.toString()}bps
         </p>
       </div>
-      <div className="card-title p-12 flex flex-row">
+      <div className="card-title p-12 flex flex-row w-full md:w-auto">
         {["cBDC", "wBOB"].map(type => (
           <div className="card-body flex flex-col" key={type}>
             <WrapCBDC
@@ -89,7 +89,7 @@ const MintBurn = () => {
           </div>
         ))}
       </div>
-      <div className="form-control">
+      <div className="form-control w-full md:w-auto p-16">
         <Approve onApproveSuccess={() => console.log("Approved")} />
       </div>
     </div>

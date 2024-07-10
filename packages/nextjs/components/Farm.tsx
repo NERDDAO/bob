@@ -28,28 +28,30 @@ const Farm = () => {
   };
   return (
     <>
-      <div className="collapse bg-base-200 border border-gray-300 mx-6">
+    <div className="w-full md:w-auto">
+      <div className="collapse bg-base-200 border border-gray-300 mx-6 w-full md:w-auto">
         <input type="radio" name="my-accordion-1" defaultChecked />
         <div className="collapse-title text-xl font-medium">INFO</div>
-        <div className="collapse-content flex flex-col space-x-2 justify-center">
+        <div className="collapse-content flex flex-col space-x-2 justify-center w-full md:w-auto">
           <BankOfBased />
         </div>
       </div>
-      <div className="collapse bg-base-200 border border-gray-300 mx-6">
+      <div className="collapse bg-base-200 border border-gray-300 mx-6 w-full md:w-auto">
         <input type="radio" name="my-accordion-1" />
         <div className="collapse-title text-xl font-medium">WCBDC Staking</div>
-        <div className="collapse-content">
+        <div className="collapse-content flex flex-col space-x-2 justify-center w-full md:w-auto">
           <MintBurn />
         </div>
       </div>
-      <div className="collapse bg-base-200 border border-gray-300 mx-6">
+      <div className="collapse bg-base-200 border border-gray-300 mx-6 w-full md:w-auto">
         <input type="radio" name="my-accordion-1" />
         <div className="collapse-title text-xl font-medium">FARMS</div>
-        <div className="collapse-content flex flex-row space-x-12 p-4 justify-center">
+        <div className="collapse-content flex flex-row space-x-12 p-4 justify-center w-full md:w-auto">
           <Staking config={stakingConfig} FarmEarnings={OptionalFarmEarningsComponent} />
           <LiquidityFarming config={daiUsdcConfig} />
         </div>
       </div>
+    </div>
     </>
   );
 };

@@ -71,7 +71,7 @@ const Staking = ({ config, FarmEarnings }) => {
   };
 
   return (
-    <div className="card w-96 bg-base-100 shadow-sm">
+    <div className="card w-96 bg-base-100 shadow-sm w-full md:w-auto">
       <div className="card-body">
         <h2 className="card-title">{config.tokenSymbol} Staking</h2>
         <div className="stats flex flex-col">

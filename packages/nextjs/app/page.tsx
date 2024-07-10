@@ -13,12 +13,12 @@ const Home: NextPage = () => {
   return (
     <>
       <div className="flex-grow w-full mt-16 px-8 py-12">
-        <div className="flex items-center flex-col flex-grow pt-10">
-          <div className="px-5">
-            <h1 className="text-center"></h1>
+        <div className="flex items-center flex-col flex-grow pt-10 px-5">
+          <div className="w-full max-w-screen-lg">
+            <h1 className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl"></h1>
             <Farm />
-            <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
-              <p className="my-2 font-medium">Connected Address:</p>
+            <div className="flex justify-center items-center space-y-2 sm:space-y-0 sm:space-x-2 flex-col sm:flex-row">
+              <p className="my-2 font-medium text-center sm:text-left">Connected Address:</p>
               <Address address={connectedAddress} />
             </div>
           </div>
