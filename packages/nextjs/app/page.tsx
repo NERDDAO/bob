@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import BankOfBased from "~~/components/BankOfBased.tsx";
+import BankOfBased from "~~/components/BankOfBased";
 import Farm from "~~/components/Farm";
 import { Address } from "~~/components/scaffold-eth";
 
@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
   return (
     <>
-      <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
+      <div className="flex-grow w-full mt-16 px-8 py-12">
         <div className="flex items-center flex-col flex-grow pt-10">
           <div className="px-5">
             <h1 className="text-center"></h1>
@@ -24,8 +24,8 @@ const Home: NextPage = () => {
           </div>
         </div>
         <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-          <div class="details">
-            <p class="truncate-address">
+          <div className="details">
+            <p className="truncate-address">
               Token: <a href="{uniswap_link}" target="_blank" rel="noopener noreferrer"></a>
             </p>
             <p>
