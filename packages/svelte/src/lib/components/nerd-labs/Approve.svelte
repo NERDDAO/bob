@@ -2,14 +2,17 @@
   import { ethers } from "ethers";
   import { onMount } from "svelte";
   import { createScaffoldWriteContract } from "$lib/runes/scaffoldWriteContract.svelte.ts";
+  import { createAccount } from "@byteatatime/wagmi-svelte";
 
+  const { address } = $derived.by(createAccount());
 
   const contractName = "RebaseToken";
-  const spender = "0x..."; // Replace with the actual spender address
+
+
   const amount = ethers.MaxUint256;
 
   let writeContractAsync;
-  let isMining = false;
+  let isMining = $state(false);
 
   onMount(async () => {
     const { writeContractAsync: writeContract, isMining: mining } = await createScaffoldWriteContract(contractName);
@@ -20,7 +23,7 @@
   async function handleApprove() {
     const variables = {
       functionName: "approve",
-      args: [spender, amount],
+      args: [address, amount],
     };
 
     if (writeContractAsync) {
