@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Address } from "$lib/components/scaffold-eth";
+  import {Approve} from "$lib/components/nerd-labs"
   import { createAccount } from "@byteatatime/wagmi-svelte";
   import { BugAnt, Icon, MagnifyingGlass } from "svelte-hero-icons";
 
@@ -10,11 +11,12 @@
   <div class="px-5">
     <h1 class="text-center">
       <span class="mb-2 block text-2xl">Welcome to</span>
-      <span class="block text-4xl font-bold">Scaffold-ETH 2</span>
+      <span class="block text-4xl font-bold">Bank of Svelte</span>
     </h1>
     <div class="flex items-center justify-center space-x-2">
       <p class="my-2 font-medium">Connected Address:</p>
       <Address {address} />
+      <Approve/>
     </div>
     <p class="text-center text-lg">
       Get started by editing

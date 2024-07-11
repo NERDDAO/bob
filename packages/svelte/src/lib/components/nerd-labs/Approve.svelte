@@ -1,9 +1,8 @@
 <script lang="ts">
   import { ethers } from "ethers";
   import { onMount } from "svelte";
-  import { useScaffoldWriteContract } from "../../hooks/scaffold-eth";
+  import { createScaffoldWriteContract } from "$lib/runes/scaffoldWriteContract.svelte.ts";
 
-  export let onApproveSuccess: () => void;
 
   const contractName = "RebaseToken";
   const spender = "0x..."; // Replace with the actual spender address
@@ -13,7 +12,7 @@
   let isMining = false;
 
   onMount(async () => {
-    const { writeContractAsync: writeContract, isMining: mining } = await useScaffoldWriteContract(contractName);
+    const { writeContractAsync: writeContract, isMining: mining } = await createScaffoldWriteContract(contractName);
     writeContractAsync = writeContract;
     isMining = mining;
   });
@@ -26,7 +25,6 @@
 
     if (writeContractAsync) {
       await writeContractAsync(variables);
-      onApproveSuccess();
     }
   }
 </script>
