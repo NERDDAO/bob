@@ -1,6 +1,8 @@
 <script lang="ts">
   import { Address } from "$lib/components/scaffold-eth";
   import {Approve} from "$lib/components/nerd-labs"
+
+  import {LiquidityFarming} from "$lib/components/nerd-labs"
   import { createAccount } from "@byteatatime/wagmi-svelte";
   import { BugAnt, Icon, MagnifyingGlass } from "svelte-hero-icons";
 
@@ -17,6 +19,7 @@
       <p class="my-2 font-medium">Connected Address:</p>
       <Address {address} />
       <Approve/>
+      <LiquidityFarming/>
     </div>
     <p class="text-center text-lg">
       Get started by editing
