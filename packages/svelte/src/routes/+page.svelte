@@ -19,7 +19,15 @@
       <p class="my-2 font-medium">Connected Address:</p>
       <Address {address} />
       <Approve/>
-      <LiquidityFarming/>
+   <LiquidityFarming config={{
+  farmName: "WCBDC/ETH",
+  tokenContractName: "WCBDCETHLP",
+  farmContractName: "WCDBCETHFarm",
+  tokenSymbol: "WCDBC/ETH-UniV2",
+  rewardSymbol: "WCDBC",
+  tokenDecimals: 18,
+  rewardDecimals: 18,
+}} />
     </div>
     <p class="text-center text-lg">
       Get started by editing
