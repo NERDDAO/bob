@@ -1,8 +1,7 @@
 <script lang="ts">
   import { Address } from "$lib/components/scaffold-eth";
-  import {Approve} from "$lib/components/nerd-labs"
 
-  import {LiquidityFarming} from "$lib/components/nerd-labs"
+  import {LiquidityFarming, MintBurn, Approve} from "$lib/components/nerd-labs"
   import { createAccount } from "@byteatatime/wagmi-svelte";
   import { BugAnt, Icon, MagnifyingGlass } from "svelte-hero-icons";
 
@@ -17,6 +16,7 @@
     </h1>
     <div class="flex items-center justify-center space-x-2">
       <p class="my-2 font-medium">Connected Address:</p>
+      <MintBurn/>
       <Address {address} />
       <Approve/>
    <LiquidityFarming config={{
