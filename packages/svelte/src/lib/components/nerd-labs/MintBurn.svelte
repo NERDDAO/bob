@@ -1,6 +1,6 @@
 <script>
   import { createAccount, createReadContract, createWriteContract } from "@byteatatime/wagmi-svelte";
-  import { Approve, WrapCBDC } from "./nerd-labs/Approve.svelte";
+  import { Approve, WrapCBDC } from "./Approve.svelte";
 
   export let config;
 

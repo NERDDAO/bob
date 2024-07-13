@@ -59,13 +59,13 @@ export function WrapCBDC(args: { balance: bigint; fName: string; onApproveSucces
   return (
     <div className="form-control w-full md:w-auto p-4">
       <button className="btn btn-primary w-full md:w-auto" onClick={handleApprove} disabled={isMining}>
-      {isMining ? (
-        <span className="loading loading-spinner loading-sm"></span>
-      ) : functionName === "deposit" ? (
-        `Wrap ${(Number(balance) * 1e-9).toFixed(2)}`
-      ) : (
-        `Burn ${(Number(balance) * 1e-18).toFixed(2)}`
-      )}
+        {isMining ? (
+          <span className="loading loading-spinner loading-sm"></span>
+        ) : functionName === "deposit" ? (
+          `Wrap ${(Number(balance) * 1e-9).toFixed(2)}`
+        ) : (
+          `Burn ${(Number(balance) * 1e-18).toFixed(2)}`
+        )}
       </button>
     </div>
   );

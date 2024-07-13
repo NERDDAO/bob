@@ -1,6 +1,11 @@
+
+🌼   daisyUI 4.12.10
+├─ ✔︎ 3 themes added		https://daisyui.com/docs/themes
+╰─ ❤︎ Support daisyUI project:	https://opencollective.com/daisyui
+
 /** @type {import('tailwindcss').Config}*/
 const config = {
-  content: ["./src/**/*.{html,js,svelte,ts}"],
+  content: ["./src/**/*.{html,js,svel,ts}"],
 
   plugins: [require("daisyui")],
   darkTheme: "cyberpunk",

@@ -1,13 +1,12 @@
 <script lang="ts">
   import { ethers } from "ethers";
   import { onMount } from "svelte";
-  import { createScaffoldWriteContract } from "$lib/runes/scaffoldWriteContract.svelte.ts";
+  import { createScaffoldWriteContract } from "$lib/runes/scaffoldWriteContract.svelte";
   import { createAccount } from "@byteatatime/wagmi-svelte";
 
   const { address } = $derived.by(createAccount());
 
   const contractName = "RebaseToken";
-
 
   const amount = ethers.MaxUint256;
 
