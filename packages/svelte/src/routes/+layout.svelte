@@ -10,8 +10,8 @@
   const baseUrl = $derived(data.vercelUrl ? `https://${data.vercelUrl}` : `http://localhost:5173`);
 
   const metadata = $derived({
-    title: "Bank Of Base",
-    description: "Bank of Base",
+    title: "Bank Of Based (CBDC)",
+    description: "Bank of Based",
     thumbnail: `${baseUrl}/thumbnail.jpg`,
     favicon: "/favicon.png",
   });

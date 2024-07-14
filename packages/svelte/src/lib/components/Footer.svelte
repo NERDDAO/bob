@@ -25,10 +25,7 @@
         {/if}
         {#if isLocalNetwork}
           <Faucet />
-          <a href="/blockexplorer" class="btn btn-primary btn-sm gap-1 font-normal">
-            <Icon src={MagnifyingGlass} class="h-4 w-4" />
-            <span>Block Explorer</span>
-          </a>
+          
         {/if}
       </div>
       <SwitchTheme class="pointer-events-auto {isLocalNetwork && 'self-end md:self-auto'}" />
