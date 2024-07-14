@@ -3,6 +3,7 @@
   import Farm from "$lib/components/nerd-labs/Farm.svelte";
   import { createAccount } from "@byteatatime/wagmi-svelte";
   import { BugAnt, Icon, MagnifyingGlass } from "svelte-hero-icons";
+  
 
   const { address } = $derived.by(createAccount());
 </script>

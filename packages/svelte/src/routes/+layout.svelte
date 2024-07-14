@@ -1,6 +1,7 @@
 <script lang="ts">
   import { WagmiProvider } from "@byteatatime/wagmi-svelte";
   import "../app.pcss";
+  import "../global.css";
   import ScaffoldEthApp from "$lib/components/ScaffoldEthApp.svelte";
   import { wagmiConfig } from "$lib/wagmi";
   import { Toaster } from "@leodog896/svelte-french-toast";
