@@ -1,14 +1,13 @@
-const daisyui = require("daisyui");
-
 /** @type {import('tailwindcss').Config}*/
 const config = {
   content: ["./src/**/*.{html,js,svelte,ts}"],
 
-  plugins: [require("daisyui")],
+  plugins: [require(`daisyui`)],
   darkTheme: "cyberpunk",
   darkMode: ["selector", "[data-theme='cyberpunk']"],
   // DaisyUI theme colors
   daisyui: {
+    logs: false,
     themes: [
       {
         cyberpunk: {

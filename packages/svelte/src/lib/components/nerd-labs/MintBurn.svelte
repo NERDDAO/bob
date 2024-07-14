@@ -14,7 +14,7 @@
   let isMining = $state(false);
 
   onMount(async () => {
-    const { writeContractAsync: writeContract, isMining: mining } = await createScaffoldWriteContract(contractName);
+    const { writeContractAsync: writeContract, isMining: mining } = createScaffoldWriteContract(contractName);
     writeContractAsync = writeContract;
     isMining = mining;
   });
@@ -35,6 +35,6 @@
   {#if isMining}
     <span class="loading loading-spinner loading-sm"></span>
   {:else}
-    Approve
+    Mint/Burn
   {/if}
 </button>
