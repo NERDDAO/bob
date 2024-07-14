@@ -25,16 +25,20 @@
 </script>
 
 <header class="header">
-  <div class="brand title_font">BANK OF BASED</div>
-  <div class="nav">
-    {#each menuLinks as { label, href } (href)}
-      <a href={href} class:active={$isCurrentPage(href)}>{label}</a>
-    {/each}
+  <div class="wallet-section">
+    <ConnectButton />
   </div>
-  <ConnectButton />
+<div class="brand title_font">BANK OF BASED</div>
 </header>
 
 <style>
+  @font-face {
+    font-family: 'CloisterBlack';
+    src: url('/fonts/CloisterBlack.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
   .header {
     display: flex;
     justify-content: space-between;
@@ -48,13 +52,29 @@
     font-size: 1.5rem;
   }
 
+  .nav {
+    display: flex;
+    gap: 1rem;
+  }
+
   .nav a {
-    margin: 0 1rem;
     text-decoration: none;
     color: var(--text-color);
   }
 
   .nav a.active {
     font-weight: bold;
+  }
+
+  .wallet-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .balance {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-color);
   }
 </style>
