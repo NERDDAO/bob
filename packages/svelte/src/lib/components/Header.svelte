@@ -18,42 +18,39 @@
 
   export const menuLinks: HeaderMenuLink[] = [
 
-    {
+    { label: "Home", href: "/" },
 
-      label: "Home",
-      href: "/",
+    { label: "About", href: "/about" },
 
-    },
-
-    {
-
-      label: "About",
-
-      href: "/about",
-
-    },
+    { label: "Stake", href: "/stake" }, // Added Stake link
 
   ];
 
-  const isCurrentPage = derived(page, $page => (href: string) => {
-    return href === $page.url.pathname;
+  const isCurrentPage = derived(page, $page => {
 
+    return (href: string) => href === $page.url.pathname;
   });
-
 </script>
 
 
 <header class="header">
-
   <div class="header-content">
-
     <ConnectButton />
 
     <div class="brand title_font svelte-bioemj">BANK OF BASED</div>
 
   </div>
-
+ 
 </header>
+ <div class="nav svelte-bioemj">
+
+    {#each menuLinks as link}
+
+      <a href={link.href} class:active={$isCurrentPage(link.href)}>{link.label.toUpperCase()}</a>
+
+    {/each}
+
+  </div>
 
 <style>
 
@@ -61,7 +58,7 @@
 
     font-family: 'CloisterBlack';
 
-    src: url('/fonts/CloisterBlack.ttf') format('truetype');
+    src: url('CloisterBlack.ttf') format('truetype');
 
     font-weight: normal;
 
@@ -69,16 +66,14 @@
 
   }
 
-
-  .header {
+ .header {
 
     position: relative;
-    padding: 1rem;
 
+    padding: 1rem;
     background-color: var(--background-color);
 
   }
-
 
   .header-content {
 
@@ -89,16 +84,39 @@
     align-items: center;
   }
 
+  .nav {
+    display: flex;
+
+    gap: 1rem;
+
+    margin-left: auto; 
+
+  }
+
+
+  .nav a {
+
+    text-decoration: none;
+
+    color: var(--text-color);
+     font-size: 1.5rem;
+  }
+
+  .nav a.active {
+    font-weight: bold;
+
+  }
+
+
   .brand {
 
-    margin-left: auto; /* Pushes the brand to the right */
+    margin-left: 1rem;
 
     font-family: 'CloisterBlack', sans-serif;
 
     font-size: 1.5rem;
 
   }
-
 
   .header::after {
 
@@ -114,44 +132,16 @@
 
     height: 2px;
 
-    background-color: rgb(90, 90, 90); /* Border color */
+    background-color: rgb(90, 90, 90);
 
   }
-
-
-  .nav {
-
-    display: flex;
-
-    gap: 1rem;
-
-  }
-
-
-  .nav a {
-
-    text-decoration: none;
-
-    color: var(--text-color);
-
-  }
-
-
-  .nav a.active {
-
-    font-weight: bold;
-
-  }
-
 
   .balance {
 
     margin-top: 0.5rem;
-
     font-size: 0.875rem;
 
     color: var(--text-color);
-
   }
 
 
@@ -163,7 +153,5 @@
 
     color: #313131;
 
-
   }
-
 </style>
