@@ -1,48 +1,72 @@
-<script>
-  import { createWriteContract } from "@byteatatime/wagmi-svelte";
+<script lang="ts">
+  import { ethers } from "ethers";
+  import { createScaffoldWriteContract } from "$lib/runes/scaffoldWriteContract.svelte";
 
-   let {balance, fName} = $props();
+  let { fName, balance, percentage } = $props();
 
-  const contractName = "WBOB";
+  const contractName = fName === "deposit" ? "RebaseToken" : "WBOB";
 
-  function createWrapCBDC() {
-    let isMining = $state(false);
+  const { writeContractAsync, isMining } = $derived.by(createScaffoldWriteContract(contractName));
 
-    const { writeContractAsync, isPending } = $derived.by(() => 
-      createWriteContract(contractName)
-    );
+  let amount: bigint = $state(balance);
 
-    async function handleWCDBC() {
-      const variables = {
-        functionName: fName,
-        args: [balance] as const,
-      };
+  $effect(() => {
+    amount = balance;
+  });
 
-      if (writeContractAsync) {
-        isMining = true;
-        await writeContractAsync(variables);
-        isMining = false;
-      }
-    }
-
-
+  function handlePercentageChange(value: string) {
+    const newPercentage = BigInt(Math.min(Math.max(Number(value), 0), 100));
+    percentage = newPercentage;
   }
 
-  const { isMining, handleWCDBC } = createWrapCBDC();
+  async function handleWrap() {
+    const variables: any = {
+      contractName: <"WBOB">contractName,
+      functionName: <"Mint" | "Burn">fName,
+      args: [amount],
+    };
+
+    if (writeContractAsync) {
+      await writeContractAsync(variables);
+    }
+  }
 </script>
 
-<div class="form-control w-full md:w-auto p-4">
-  <button
-    class="btn btn-primary w-full md:w-auto"
-    on:click={handleWCDBC}
-    disabled={isMining}
-  >
-    {#if isMining}
-      <span class="loading loading-spinner loading-sm"></span>
-    {:else if fName === "deposit"}
-      Wrap {(Number(balance) * 1e-9).toFixed(2)}
-    {:else}
-      Burn {(Number(balance) * 1e-18).toFixed(2)}
-    {/if}
-  </button>
+<div class="form-control">
+  <label class="label">
+    <span class="label-text">Amount to {fName === "deposit" ? "Wrap" : "Unwrap"}</span>
+  </label>
+  <label class="input-group">
+    <input type="number" placeholder="0.01" class="input input-bordered" bind:value={amount} />
+    <span>{fName === "deposit" ? "cBDC" : "wBOB"}</span>
+  </label>
 </div>
+
+<div class="form-control">
+  <label class="label">
+    <span class="label-text">Percentage</span>
+  </label>
+  <input
+    type="range"
+    min="0"
+    max="100"
+    bind:value={percentage}
+    on:input={e => handlePercentageChange(e.target.value)}
+    class="range"
+  />
+  <div class="flex w-full justify-between px-2 text-xs">
+    <span>0%</span>
+    <span>25%</span>
+    <span>50%</span>
+    <span>75%</span>
+    <span>100%</span>
+  </div>
+</div>
+
+<button class="btn btn-primary mt-4" on:click={handleWrap} disabled={isMining}>
+  {#if isMining}
+    <span class="loading loading-spinner loading-sm"></span>
+  {:else}
+    {fName === "deposit" ? "Wrap" : "Unwrap"}
+  {/if}
+</button>

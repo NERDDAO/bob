@@ -21,12 +21,12 @@ const buildHardhatEslintCommand = (filenames) =>
 
 module.exports = {
   "packages/nextjs/**/*.{ts,tsx}": [
-    //buildNextEslintCommand,
+    buildNextEslintCommand,
     checkTypesNextCommand,
   ],
   "packages/svelte/**/*.{ts,tsx}": [
     // TODO: Figure out Prettier formatting error
-    // builtSvelteEslintCommand,
+    builtSvelteEslintCommand,
     checkTypesSvelteCommand,
   ],
   "packages/hardhat/**/*.{ts,tsx}": [buildHardhatEslintCommand],

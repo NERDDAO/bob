@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Address } from "$lib/components/scaffold-eth";
-  import { LiquidityFarming, MintBurn, Approve } from "$lib/components/nerd-labs";
+  import { LiquidityFarming, MintBurn, Approve, WrapCBDC } from "$lib/components/nerd-labs";
   import { createAccount } from "@byteatatime/wagmi-svelte";
   import { BugAnt, Icon, MagnifyingGlass } from "svelte-hero-icons";
 
@@ -13,11 +13,12 @@
       <span class="mb-2 block text-2xl">Welcome to</span>
       <span class="block text-4xl font-bold">Bank of Svelte</span>
     </h1>
-    <div class="flex items-center justify-center space-x-2">
+    <div class="flex flex-col items-center justify-center space-x-2">
       <p class="my-2 font-medium">Connected Address:</p>
       <MintBurn />
       <Address {address} />
       <Approve />
+      <WrapCBDC />
       <LiquidityFarming
         config={{
           farmName: "WCBDC/ETH",

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Approve, WrapCBDC } from "./nerd-labs/Approve.tsx";
+import Approve from "./nerd-labs/Approve.tsx";
+import WrapCBDC from "./nerd-labs/WrapCBDC.tsx";
 import { useAccount } from "wagmi";
 import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
