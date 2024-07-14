@@ -10,8 +10,8 @@
   const baseUrl = $derived(data.vercelUrl ? `https://${data.vercelUrl}` : `http://localhost:5173`);
 
   const metadata = $derived({
-    title: "Scaffold-ETH 2 App",
-    description: "Built with 🏗 Scaffold-ETH 2",
+    title: "Bank Of Base",
+    description: "Bank of Base",
     thumbnail: `${baseUrl}/thumbnail.jpg`,
     favicon: "/favicon.png",
   });
