@@ -10,19 +10,15 @@
 
   const amount = ethers.MaxUint256;
 
-  let writeContractAsync: any;
-  let isMining = $state(false);
+  const { writeContractAsync, isMining } = $derived.by(createScaffoldWriteContract(contractName));
 
-  onMount(async () => {
-    const { writeContractAsync: writeContract, isMining: mining } = createScaffoldWriteContract(contractName);
-    writeContractAsync = writeContract;
-    isMining = mining;
-  });
+  onMount(async () => {});
 
   async function handleApprove() {
     const variables = {
-      functionName: "approve",
-      args: [address, amount],
+      contractName: <"RebaseToken">contractName,
+      functionName: <"approve">"approve",
+      args: <any>[address, amount],
     };
 
     if (writeContractAsync) {
