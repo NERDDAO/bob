@@ -1,8 +1,7 @@
 <script>
   import { createAccount } from "@byteatatime/wagmi-svelte";
   import LiquidityFarming from "./LiquidityFarming.svelte";
-  import Staking from "./Staking.svelte";
-  import BankOfBased from "../components/BankOfBased.svelte";
+  // import BankOfBased from "./BankOfBased.svelte";
   import MintBurn from "./MintBurn.svelte";
 
   const account = $derived.by(createAccount());
@@ -32,26 +31,23 @@
 </script>
 
 <div class="w-full md:w-auto">
-  <div class="collapse bg-base-300 border border-gray-300 mx-6 w-full md:w-auto">
-    <input type="radio" name="my-accordion-1" checked>
-    <div class="collapse-title text-xl font-medium cursor-pointer">WCBDC Staking</div>
-    <div class="collapse-content flex flex-col space-x-2 justify-center w-full md:w-auto">
+  <div class="collapse mx-6 w-full border border-gray-300 bg-base-300 md:w-auto">
+    <input type="radio" name="my-accordion-1" checked />
+    <div class="collapse-title cursor-pointer text-xl font-medium">WCBDC Staking</div>
+    <div class="collapse-content flex w-full flex-col justify-center space-x-2 md:w-auto">
       <MintBurn />
     </div>
   </div>
-  <div class="collapse bg-base-300 border border-gray-300 mx-6 w-full md:w-auto">
-    <input type="radio" name="my-accordion-1">
-    <div class="collapse-title text-xl font-medium cursor-pointer">FARMS</div>
-    <div class="collapse-content flex flex-row space-x-12 p-4 justify-center w-full md:w-auto">
-      <Staking config={stakingConfig} FarmEarnings={OptionalFarmEarningsComponent} />
+  <div class="collapse mx-6 w-full border border-gray-300 bg-base-300 md:w-auto">
+    <input type="radio" name="my-accordion-1" />
+    <div class="collapse-title cursor-pointer text-xl font-medium">FARMS</div>
+    <div class="collapse-content flex w-full flex-row justify-center space-x-12 p-4 md:w-auto">
       <LiquidityFarming config={daiUsdcConfig} />
     </div>
   </div>
-  <div class="collapse bg-base-300 border border-gray-300 mx-6 w-full md:w-auto">
-    <input type="radio" name="my-accordion-1">
-    <div class="collapse-title text-xl font-medium cursor-pointer">INFO</div>
-    <div class="collapse-content flex flex-col space-x-2 justify-center w-full md:w-auto">
-      <BankOfBased />
-    </div>
+  <div class="collapse mx-6 w-full border border-gray-300 bg-base-300 md:w-auto">
+    <input type="radio" name="my-accordion-1" />
+    <div class="collapse-title cursor-pointer text-xl font-medium">INFO</div>
+    <div class="collapse-content flex w-full flex-col justify-center space-x-2 md:w-auto"></div>
   </div>
 </div>

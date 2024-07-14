@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Address } from "$lib/components/scaffold-eth";
-  import { LiquidityFarming, MintBurn, Approve, WrapCBDC } from "$lib/components/nerd-labs";
+  import Farm from "$lib/components/nerd-labs/Farm.svelte";
   import { createAccount } from "@byteatatime/wagmi-svelte";
   import { BugAnt, Icon, MagnifyingGlass } from "svelte-hero-icons";
 
@@ -15,21 +15,7 @@
     </h1>
     <div class="flex flex-col items-center justify-center space-x-2">
       <p class="my-2 font-medium">Connected Address:</p>
-      <MintBurn />
-      <Address {address} />
-      <Approve />
-      <WrapCBDC />
-      <LiquidityFarming
-        config={{
-          farmName: "WCBDC/ETH",
-          tokenContractName: "WCBDCETHLP",
-          farmContractName: "WCDBCETHFarm",
-          tokenSymbol: "WCDBC/ETH-UniV2",
-          rewardSymbol: "WCDBC",
-          tokenDecimals: 18,
-          rewardDecimals: 18,
-        }}
-      />
+      <Farm />
     </div>
     <p class="text-center text-lg">
       Get started by editing

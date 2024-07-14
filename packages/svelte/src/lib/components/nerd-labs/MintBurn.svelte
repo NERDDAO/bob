@@ -15,10 +15,9 @@
   onMount(async () => {});
 
   async function handleApprove() {
-    const variables = {
-      contractName: <"RebaseToken">contractName,
-      functionName: <"approve">"approve",
-      args: <any>[address, amount],
+    const variables: any = {
+      functionName: "approve",
+      args: [address, amount],
     };
 
     if (writeContractAsync) {

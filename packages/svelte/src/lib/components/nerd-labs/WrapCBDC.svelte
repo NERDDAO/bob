@@ -51,7 +51,10 @@
     min="0"
     max="100"
     bind:value={percentage}
-    on:input={e => handlePercentageChange(e.target.value)}
+    on:input={e => {
+      handlePercentageChange(e.target.value);
+      console.log(e.target.value);
+    }}
     class="range"
   />
   <div class="flex w-full justify-between px-2 text-xs">
