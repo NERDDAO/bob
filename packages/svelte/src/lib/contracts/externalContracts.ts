@@ -12,7 +12,7 @@ import type { GenericContractsDeclaration } from "$lib/utils/scaffold-eth/contra
  * } as const;
  */
 const externalContracts = {
-  31337: {
+  8453: {
     bonsai721NFT: {
       address: "0xE9d2FA815B95A9d087862a09079549F351DaB9bd",
       abi: [
