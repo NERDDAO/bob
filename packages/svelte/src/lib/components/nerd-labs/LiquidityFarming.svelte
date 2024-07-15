@@ -1,4 +1,3 @@
-
 <script>
   import { ethers } from "ethers";
   import { createAccount, createBalance, createReadContract, createWriteContract } from "@byteatatime/wagmi-svelte";
@@ -45,7 +44,7 @@
   }
 </script>
 
-<div class="card w-96 bg-base-100 shadow-sm border-gray-300 w-full md:w-auto">
+<div class="card w-96 w-full border-gray-300 bg-base-100 shadow-sm md:w-auto">
   <div class="card-body">
     <h2 class="card-title">{config.farmName} Liquidity Farm</h2>
     <div class="stats flex flex-col">
@@ -70,4 +69,3 @@
     </div>
   </div>
 </div>
-

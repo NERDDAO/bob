@@ -2,6 +2,7 @@
   import { ethers } from "ethers";
   import { onMount } from "svelte";
   import { createScaffoldWriteContract } from "$lib/runes/scaffoldWriteContract.svelte";
+
   import { createAccount } from "@byteatatime/wagmi-svelte";
   import { Address, Balance } from "$lib/components/scaffold-eth";
 
@@ -26,20 +27,11 @@
 </script>
 
 <div class="mx-auto mt-6 max-w-md rounded-lg bg-base-300 p-6">
-  <h2 class="mb-4 text-2xl font-bold">Wrap/Unwrap</h2>
-
-  <div class="mb-2 text-sm font-semibold">
-    Address: <Address {address} />
-  </div>
   <button class="btn btn-primary" on:click={handleApprove} disabled={isMining}>
     {#if isMining}
       <span class="loading loading-spinner loading-sm"></span>
     {:else}
-      Mint/Burn
+      Approve
     {/if}
   </button>
-
-  <div class="mb-2 text-sm font-semibold">
-    Balance: <Balance {address} />
-  </div>
 </div>

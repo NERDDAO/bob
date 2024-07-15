@@ -2,6 +2,8 @@
   import { ethers } from "ethers";
   import { createScaffoldWriteContract } from "$lib/runes/scaffoldWriteContract.svelte";
 
+  import { MintBurn } from "$lib/components/nerd-labs";
+
   let { fName, balance, percentage } = $props();
 
   const contractName = fName === "deposit" ? "RebaseToken" : "WBOB";
@@ -65,6 +67,7 @@
     <span>100%</span>
   </div>
 </div>
+<MintBurn fnName="deposit" {balance} />
 
 <button class="btn btn-primary mt-4" on:click={handleWrap} disabled={isMining}>
   {#if isMining}

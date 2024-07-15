@@ -4,32 +4,68 @@
   import { createScaffoldWriteContract } from "$lib/runes/scaffoldWriteContract.svelte";
   import { createAccount } from "@byteatatime/wagmi-svelte";
 
-  const address = $derived.by(createAccount());
+  import { Approve } from "$lib/components/nerd-labs";
+  import { createScaffoldReadContract } from "$lib/runes/scaffoldReadContract.svelte";
 
-  const contractName = "RebaseToken";
+  const account = $derived.by(createAccount());
 
-  const amount = ethers.MaxUint256;
+  const { fnName, balance } = $props();
+
+  const contractName = "WBOB";
 
   const { writeContractAsync, isMining } = $derived.by(createScaffoldWriteContract(contractName));
 
-  onMount(async () => {});
+  const { data: cbdcBalance } = $derived.by(
+    createScaffoldReadContract(() => ({ contractName, functionName: "balanceOf", args: [account.address] })),
+  );
 
-  async function handleApprove() {
+  async function handleMintBurn() {
     const variables: any = {
-      functionName: "approve",
-      args: [address, amount],
+      functionName: fnName,
+      args: [balance],
     };
 
     if (writeContractAsync) {
       await writeContractAsync(variables);
     }
   }
+
+  /*
+export function WrapCBDC(args: { balance: bigint; fName: string; onApproveSuccess: ERC20ApproveProps }) {
+  const contractName = "WBOB";
+  //const spender = externalContracts[31337].WBOB.address;
+  //const amount = ethers.MaxUint256;
+  // Adjusted to match the expected hook usage
+  const { writeContractAsync, isMining } = useScaffoldWriteContract(contractName);
+  const { fName: functionName, balance } = args;
+  console.log(functionName);
+
+  const handleApprove = async () => {
+    // Constructing the variables parameter correctly
+    const variables = {
+      functionName: functionName.toString(),
+      args: [balance] as const,
+    };
+
+    if (writeContractAsync) {
+      await writeContractAsync(variables);
+      args.onApproveSuccess();
+    }
+  };
+
+
+
+  */
 </script>
 
-<button class="btn btn-primary" on:click={handleApprove} disabled={isMining}>
-  {#if isMining}
-    <span class="loading loading-spinner loading-sm"></span>
-  {:else}
-    Mint/Burn
-  {/if}
-</button>
+<div>
+  Balance : {cbdcBalance}
+  <Approve />
+  <button class="btn btn-primary" on:click={handleMintBurn} disabled={isMining}>
+    {#if isMining}
+      <span class="loading loading-spinner loading-sm"></span>
+    {:else}
+      Mint/Burn
+    {/if}
+  </button>
+</div>
