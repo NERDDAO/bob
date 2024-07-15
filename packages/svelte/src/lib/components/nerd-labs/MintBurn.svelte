@@ -2,22 +2,14 @@
   import { ethers } from "ethers";
   import { onMount } from "svelte";
   import { createScaffoldWriteContract } from "$lib/runes/scaffoldWriteContract.svelte";
-  import { createAccount } from "@byteatatime/wagmi-svelte";
 
   import { Approve } from "$lib/components/nerd-labs";
-  import { createScaffoldReadContract } from "$lib/runes/scaffoldReadContract.svelte";
-
-  const account = $derived.by(createAccount());
 
   const { fnName, balance } = $props();
 
   const contractName = "WBOB";
 
   const { writeContractAsync, isMining } = $derived.by(createScaffoldWriteContract(contractName));
-
-  const { data: cbdcBalance } = $derived.by(
-    createScaffoldReadContract(() => ({ contractName, functionName: "balanceOf", args: [account.address] })),
-  );
 
   async function handleMintBurn() {
     const variables: any = {
@@ -59,7 +51,6 @@ export function WrapCBDC(args: { balance: bigint; fName: string; onApproveSucces
 </script>
 
 <div>
-  Balance : {cbdcBalance}
   <Approve />
   <button class="btn btn-primary" on:click={handleMintBurn} disabled={isMining}>
     {#if isMining}

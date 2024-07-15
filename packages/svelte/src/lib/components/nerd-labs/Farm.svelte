@@ -47,7 +47,7 @@
 
     <div class="collapse-title cursor-pointer text-xl font-medium">WCBDC Staking</div>
     <div class="collapse-content flex w-full flex-col justify-center space-x-2 md:w-auto">
-      <WrapCBDC />
+      <WrapCBDC fName="wrap" balance="0n" percentage="100" />
     </div>
   </div>
 

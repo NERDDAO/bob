@@ -1,35 +1,25 @@
 <script lang="ts">
   import { ethers } from "ethers";
   import { createScaffoldWriteContract } from "$lib/runes/scaffoldWriteContract.svelte";
+  import { onMount } from "svelte";
 
+  import { createAccount } from "@byteatatime/wagmi-svelte";
+  import { createScaffoldReadContract } from "$lib/runes/scaffoldReadContract.svelte";
   import { MintBurn } from "$lib/components/nerd-labs";
 
   let { fName, balance, percentage } = $props();
 
-  const contractName = fName === "deposit" ? "RebaseToken" : "WBOB";
-
-  const { writeContractAsync, isMining } = $derived.by(createScaffoldWriteContract(contractName));
-
-  let amount: bigint = $state(balance);
-
-  $effect(() => {
-    amount = balance;
-  });
+  const contractName = fName === "deposit" ? "WBOB" : "RebaseToken";
+  const { address } = $derived.by(createAccount());
+  const { data: cbdcBalance } = $derived.by(
+    createScaffoldReadContract(() => ({ contractName, functionName: "balanceOf", args: [address] })),
+  );
 
   function handlePercentageChange(value: string) {
     const newPercentage = BigInt(Math.min(Math.max(Number(value), 0), 100));
     percentage = newPercentage;
-  }
-
-  async function handleWrap() {
-    const variables: any = {
-      contractName: <"WBOB">contractName,
-      functionName: <"Mint" | "Burn">fName,
-      args: [amount],
-    };
-
-    if (writeContractAsync) {
-      await writeContractAsync(variables);
+    if (cbdcBalance) {
+      balance = (BigInt(cbdcBalance) * newPercentage) / 100n;
     }
   }
 </script>
@@ -39,7 +29,7 @@
     <span class="label-text">Amount to {fName === "deposit" ? "Wrap" : "Unwrap"}</span>
   </label>
   <label class="input-group">
-    <input type="number" placeholder="0.01" class="input input-bordered" bind:value={amount} />
+    <input type="number" placeholder={cbdcBalance} class="input input-bordered" bind:value={balance} />
     <span>{fName === "deposit" ? "cBDC" : "wBOB"}</span>
   </label>
 </div>
@@ -55,7 +45,8 @@
     bind:value={percentage}
     on:input={e => {
       handlePercentageChange(e.target.value);
-      console.log(e.target.value);
+
+      console.log(balance, cbdcBalance, percentage, address);
     }}
     class="range"
   />
@@ -67,12 +58,4 @@
     <span>100%</span>
   </div>
 </div>
-<MintBurn fnName="deposit" {balance} />
-
-<button class="btn btn-primary mt-4" on:click={handleWrap} disabled={isMining}>
-  {#if isMining}
-    <span class="loading loading-spinner loading-sm"></span>
-  {:else}
-    {fName === "deposit" ? "Wrap" : "Unwrap"}
-  {/if}
-</button>
+<MintBurn fnName="deposit" balance />

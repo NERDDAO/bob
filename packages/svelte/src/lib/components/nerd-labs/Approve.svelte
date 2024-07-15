@@ -4,7 +4,6 @@
   import { createScaffoldWriteContract } from "$lib/runes/scaffoldWriteContract.svelte";
 
   import { createAccount } from "@byteatatime/wagmi-svelte";
-  import { Address, Balance } from "$lib/components/scaffold-eth";
 
   const contractName = "RebaseToken";
   const { address } = $derived.by(createAccount());
