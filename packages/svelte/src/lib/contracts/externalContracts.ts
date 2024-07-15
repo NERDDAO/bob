@@ -13,6 +13,18 @@ import type { GenericContractsDeclaration } from "$lib/utils/scaffold-eth/contra
  */
 const externalContracts = {
   8453: {
+    CBDC: {
+      address: "0x6c841c51233d2eCD2485a574111aBa2C27dc3BC5",
+      abi: [],
+    },
+    WCBDC: {
+      address: "0x6c841c51233d2eCD2485a574111aBa2C27dc3BC5",
+      abi: [],
+    },
+    wCBDCwETHfarm: {
+      address: "0x6c841c51233d2eCD2485a574111aBa2C27dc3BC5",
+      abi: [],
+    },
     xStakingPool: {
       address: "0xf095d985F937bf22f6B28AfA0A1D4D5E2789B8e8",
       abi: [
