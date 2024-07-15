@@ -11,7 +11,7 @@
   let balance: BigInt = $state(0n);
   let toggleState: Boolean = $state(true);
 
-  const contractName: "CBDC" | "WCBDC" = toggleState === true ? "CBDC" : "WBOB";
+  const contractName: "WCBDC" | "xStakingPool" = $derived(toggleState === true ? "WCBDC" : "xStakingPool");
 
   const { address } = $derived.by(createAccount());
   const { data: cbdcBalance, refetch } = $derived.by(
@@ -31,24 +31,21 @@
   }
 </script>
 
-<label class="text-xs"
+<label class="p-1 text-xs"
   ><input type="checkbox" class="toggle" on:click={() => toggle()} />
-  {toggleState === true ? "Wrap" : "Unwrap"} Mode</label
+  {toggleState === true ? "Stake" : "Withdraw"} Mode</label
 >
 <div class="form-control">
-  <label class="label"> </label>
-
-  <span class="label-text">Amount to {toggleState === true ? "Wrap" : "Unwrap"}</span>
+  <span class="label-text">Amount to {toggleState === true ? "stake" : "withdraw"}</span>
   <label class="input-group">
     <input type="number" placeholder="" class="input input-bordered" bind:value={balance} />
-    <span>{toggleState === true ? "cBDC" : "wBOB"}</span>
+    <span>{toggleState === true ? "WCBDC" : "XWCBDC"}</span>
   </label>
 </div>
 
 <div class="form-control">
-  <label class="label">
-    <span class="label-text">Percentage</span>
-  </label>
+  <span class="label-text p-2">Percentage</span>
+
   <input
     type="range"
     min="0"
@@ -57,7 +54,7 @@
     on:input={e => {
       handlePercentageChange(e.target.value);
 
-      console.log(balance, cbdcBalance, percentage, address);
+      console.log(balance, cbdcBalance, percentage, address, contractName);
     }}
     class="range"
   />
@@ -69,4 +66,4 @@
     <span>100%</span>
   </div>
 </div>
-<MintBurn contractName="WCBDC" functionName={toggleState === true ? "deposit" : "burn"} {balance} />
+<MintBurn contractName="xStakingPool" functionName={toggleState === true ? "stake" : "withdraw"} {balance} />

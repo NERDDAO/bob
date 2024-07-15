@@ -3,6 +3,8 @@
 
   import LiquidityFarming from "./LiquidityFarming.svelte";
 
+  import XwCBDCWrapper from "./XwCBDCWrapper.svelte";
+
   // import BankOfBased from "./BankOfBased.svelte";
 
   import WrapCBDC from "./WrapCBDC.svelte";
@@ -41,20 +43,29 @@
   };
 </script>
 
-<div class="w-full md:w-auto">
+<div class="w-auto md:w-auto">
   <div class="collapse mx-6 w-full border border-gray-300 bg-base-300 md:w-auto">
     <input type="radio" name="my-accordion-1" checked />
 
-    <div class="collapse-title cursor-pointer text-xl font-medium">WCBDC Staking</div>
+    <div class="collapse-title cursor-pointer text-xl font-medium">CBDC Wrapper</div>
     <div class="collapse-content flex w-full flex-col justify-center space-x-2 md:w-auto">
       <WrapCBDC />
+    </div>
+  </div>
+  <div class="collapse mx-6 w-full border border-gray-300 bg-base-300 md:w-auto">
+    <input type="radio" name="my-accordion-1" />
+
+    <div class="collapse-title cursor-pointer text-xl font-medium">wCBDC Yield</div>
+
+    <div class="collapse-content flex w-full flex-col justify-center space-x-2 md:w-auto">
+      <XwCBDCWrapper />
     </div>
   </div>
 
   <div class="collapse mx-6 w-full border border-gray-300 bg-base-300 md:w-auto">
     <input type="radio" name="my-accordion-1" />
 
-    <div class="collapse-title cursor-pointer text-xl font-medium">FARMS</div>
+    <div class="collapse-title cursor-pointer text-xl font-medium">Liquidity Mining</div>
 
     <div class="collapse-content flex w-full flex-row justify-center space-x-12 p-4 md:w-auto">
       <LiquidityFarming config={daiUsdcConfig} />

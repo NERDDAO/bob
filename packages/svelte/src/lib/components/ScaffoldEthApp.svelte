@@ -28,7 +28,7 @@
   });
 </script>
 
-<div class="flex min-h-screen flex-col">
+<div class="flex min-h-screen w-screen flex-col">
   <Header />
 
   <main class="relative flex flex-1 flex-col"><slot /></main>

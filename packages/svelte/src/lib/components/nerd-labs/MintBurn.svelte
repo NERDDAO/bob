@@ -5,12 +5,11 @@
 
   import { Approve } from "$lib/components/nerd-labs";
 
-  let { functionName, balance } = $props<{
-    functionName: "deposit" | "burn";
+  let { functionName, balance, contractName } = $props<{
+    functionName: "deposit" | "burn" | "stake" | "withdraw";
     balance: BigInt;
+    contractName: "WCBDC" | "xStakingPool" | "LPStakingPool";
   }>();
-
-  const contractName = "WBOB";
 
   const { writeContractAsync, isMining } = $derived.by(createScaffoldWriteContract(contractName));
 
@@ -27,12 +26,12 @@
 </script>
 
 <div>
-  <Approve contractName="RebaseToken" spender="WBOB" />
+  <Approve contractName={contractName == "WCBDC" ? "CBDC" : "WCBDC"} spender={contractName} />
   <button class="btn btn-primary w-full" on:click={handleMintBurn} disabled={isMining}>
     {#if isMining}
       <span class="loading loading-spinner loading-sm"></span>
     {:else}
-      {functionName === "deposit" ? "Wrap" : "Unwrap"}
+      {functionName}
     {/if}
   </button>
 </div>
