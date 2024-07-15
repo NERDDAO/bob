@@ -1364,7 +1364,7 @@ const externalContracts = {
         }
       ],
     },
-    wCBDCwETHfarm: {
+    wCBDCwETHLP: {
       address: "0x6c841c51233d2eCD2485a574111aBa2C27dc3BC5",
       abi: [],
     },
