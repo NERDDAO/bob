@@ -51,7 +51,7 @@ export function WrapCBDC(args: { balance: bigint; fName: string; onApproveSucces
 </script>
 
 <div>
-  <Approve />
+  <Approve contractName="RebaseToken" spender="Wrapper" />
   <button class="btn btn-primary" on:click={handleMintBurn} disabled={isMining}>
     {#if isMining}
       <span class="loading loading-spinner loading-sm"></span>
