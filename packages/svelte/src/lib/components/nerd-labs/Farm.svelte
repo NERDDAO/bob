@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { createAccount } from "@byteatatime/wagmi-svelte";
 
   import LiquidityFarming from "./LiquidityFarming.svelte";
@@ -47,7 +47,7 @@
 
     <div class="collapse-title cursor-pointer text-xl font-medium">WCBDC Staking</div>
     <div class="collapse-content flex w-full flex-col justify-center space-x-2 md:w-auto">
-      <WrapCBDC fName="wrap" balance="0n" percentage="100" />
+      <WrapCBDC />
     </div>
   </div>
 

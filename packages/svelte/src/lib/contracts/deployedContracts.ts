@@ -668,7 +668,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     WBOB: {
-      address: "0x0165878a594ca255338adfa4d48449f69242eb8f",
+      address: "0x6c841c51233d2eCD2485a574111aBa2C27dc3BC5",
       abi: [
         {
           type: "constructor",

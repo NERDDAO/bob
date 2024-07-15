@@ -7,8 +7,8 @@
   import { createAccount } from "@byteatatime/wagmi-svelte";
 
   let { contractName, spender } = $props<{
-    contractName: "RebaseToken" | "WBOB";
-    spender: "Wrapper" | "Farm";
+    contractName: "RebaseToken" | "RebaseToken";
+    spender: "WBOB" | "WBOB";
   }>();
 
   const { data: contract, isLoading } = $derived.by(() => createScaffoldContract({ contractName }));
@@ -31,10 +31,14 @@
   const amount = ethers.MaxUint256;
 
   async function handleApprove() {
-    const variables = {
-      contractName: <"RebaseToken">"RebaseToken",
-      functionName: <"approve">"approve",
-      args: <any>[spenderContract?.address, amount],
+    const variables: {
+      contractName: "RebaseToken";
+      functionName: "approve";
+      args: any[];
+    } = {
+      contractName: "RebaseToken",
+      functionName: "approve",
+      args: [spenderContract?.address, amount],
     };
 
     if (writeContractAsync) {
@@ -47,7 +51,7 @@
   {#if !isLoading}
     {console.log(contract)}
   {/if}
-  {#if !cbdcAllowance}
+  {#if !cbdcAllowance || cbdcAllowance <= 0n}
     {console.log(cbdcAllowance, contract)}
     <button class="btn btn-primary" on:click={handleApprove} disabled={isMining}>
       {#if isMining}

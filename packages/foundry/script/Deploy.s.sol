@@ -18,22 +18,22 @@ contract DeployScript is ScaffoldETHDeploy {
         }
         vm.startBroadcast(deployerPrivateKey);
 
-        RebaseToken Bob = new RebaseToken();
+        //RebaseToken Bob = new RebaseToken();
 
-        WBOB BOBWrapper = new WBOB(address(Bob));
+        WBOB BOBWrapper = new WBOB(0xBA5eDF631828EBbe81B850F476FA5936e3C15783);
 
-        MonetaryPolicy Mpol = new MonetaryPolicy(
+        /*MonetaryPolicy Mpol = new MonetaryPolicy(
             address(Bob), //token address
             address(Bob), // Univ2 Pair
             1000 // Rebase period
-        );
+        );*/
 
         console.logString(
             string.concat(
                 "YourContract deployed at: ",
-                vm.toString(address(Bob)),
-                vm.toString(address(BOBWrapper)),
-                vm.toString(address(Mpol))
+                //vm.toString(address(Bob)),
+                vm.toString(address(BOBWrapper))
+                //vm.toString(address(Mpol))
             )
         );
 
@@ -49,4 +49,3 @@ contract DeployScript is ScaffoldETHDeploy {
 
     function test() public {}
 }
-

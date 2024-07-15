@@ -7,11 +7,14 @@
   import { createScaffoldReadContract } from "$lib/runes/scaffoldReadContract.svelte";
   import { MintBurn } from "$lib/components/nerd-labs";
 
-  let { fName, balance, percentage } = $props();
+  let percentage: BigInt = $state(0n);
+  let balance: BigInt = $state(0n);
+  let toggleState: Boolean = $state(true);
 
-  const contractName = fName === "deposit" ? "WBOB" : "RebaseToken";
+  const contractName: "RebaseToken" | "WBOB" = toggleState === true ? "RebaseToken" : "WBOB";
+
   const { address } = $derived.by(createAccount());
-  const { data: cbdcBalance } = $derived.by(
+  const { data: cbdcBalance, refetch } = $derived.by(
     createScaffoldReadContract(() => ({ contractName, functionName: "balanceOf", args: [address] })),
   );
 
@@ -19,18 +22,26 @@
     const newPercentage = BigInt(Math.min(Math.max(Number(value), 0), 100));
     percentage = newPercentage;
     if (cbdcBalance) {
-      balance = (BigInt(cbdcBalance) * newPercentage) / 100n;
+      balance = (cbdcBalance * newPercentage) / 100n;
     }
+  }
+  function toggle() {
+    refetch();
+    return (toggleState = !toggleState);
   }
 </script>
 
+<label class="text-xs"
+  ><input type="checkbox" class="toggle" on:click={() => toggle()} />
+  {toggleState === true ? "Wrap" : "Unwrap"} Mode</label
+>
 <div class="form-control">
-  <label class="label">
-    <span class="label-text">Amount to {fName === "deposit" ? "Wrap" : "Unwrap"}</span>
-  </label>
+  <label class="label"> </label>
+
+  <span class="label-text">Amount to {toggleState === true ? "Wrap" : "Unwrap"}</span>
   <label class="input-group">
-    <input type="number" placeholder={cbdcBalance} class="input input-bordered" bind:value={balance} />
-    <span>{fName === "deposit" ? "cBDC" : "wBOB"}</span>
+    <input type="number" placeholder="" class="input input-bordered" bind:value={balance} />
+    <span>{toggleState === true ? "cBDC" : "wBOB"}</span>
   </label>
 </div>
 
@@ -58,4 +69,4 @@
     <span>100%</span>
   </div>
 </div>
-<MintBurn fnName="deposit" balance />
+<MintBurn functionName={toggleState === true ? "deposit" : "burn"} {balance} />
