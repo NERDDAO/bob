@@ -31,7 +31,7 @@
   }
 </script>
 
-<label class="text-xs"
+<label class="checkbox-wrapper"
   ><input type="checkbox" class="toggle" on:click={() => toggle()} />
   {toggleState === true ? "Wrap" : "Unwrap"} Mode</label
 >

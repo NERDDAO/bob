@@ -25,12 +25,12 @@
   }
 </script>
 
-<div>
+<div class="farm-buttons">
   <Approve
     contractName={contractName == "lpStakingPool" ? "UniV2-LP" : "WCBDC" ? "CBDC" : "WCBDC"}
     spender={contractName}
   />
-  <button class="btn btn-primary w-full" on:click={handleMintBurn} disabled={isMining}>
+  <button class="primary" on:click={handleMintBurn} disabled={isMining}>
     {#if isMining}
       <span class="loading loading-spinner loading-sm"></span>
     {:else}
@@ -38,3 +38,9 @@
     {/if}
   </button>
 </div>
+
+<style>
+	button{
+		margin-top: 1rem;
+	}
+</style>

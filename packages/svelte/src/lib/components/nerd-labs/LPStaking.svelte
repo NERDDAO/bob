@@ -33,7 +33,7 @@
   }
 </script>
 
-<label class="p-1 text-xs"
+<label class="checkbox-wrapper"
   ><input type="checkbox" class="toggle" on:click={() => toggle()} />
   {toggleState === true ? "Stake" : "Withdraw"} Mode</label
 >

@@ -47,13 +47,12 @@
   }
 </script>
 
-<div class="mx-auto mt-6 max-w-md rounded-lg bg-base-300 p-6">
   {#if !isLoading}
     {console.log(contract)}
   {/if}
   {#if !cbdcAllowance || cbdcAllowance <= 0n}
     {console.log(cbdcAllowance, contract)}
-    <button class="btn btn-primary" on:click={handleApprove} disabled={isMining}>
+    <button class="secondary" on:click={handleApprove} disabled={isMining}>
       {#if isMining}
         <span class="loading loading-spinner loading-sm"></span>
       {:else}
@@ -61,4 +60,3 @@
       {/if}
     </button>
   {/if}
-</div>

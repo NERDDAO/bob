@@ -1,4 +1,4 @@
-<h1>Tokenomics of $CBDC</h1>
+<h1><u>Tokenomics of $CBDC</u></h1>
 <hr>
 <div class="outlined">
 

@@ -8,18 +8,23 @@
   const treasury = "0x8B2ABC599dF495016dd5a43d4acFffaaB5666c75";
 </script>
 
+<div class="border">
+	<h1 >
+		<u>Flawless Staking Policy</u>
+	</h1>
+	<hr>
+	<Farm />
+</div>
 
-<h1 class="text-center">
-	<span class="">Bank of Based</span>
-	<br>
-	<span class="">burn the state</span>
-</h1>
 
-<p class="my-2 font-medium">Connected Address:</p>
-<Farm />
 
 
 
 <style>
+	.border{
+		border: 1px dashed rgb(211, 211, 211);
+		border-radius: 0;
+		padding: 20px;
+	}
 
 </style>

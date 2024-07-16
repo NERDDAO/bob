@@ -31,7 +31,7 @@
   }
 </script>
 
-<label class="p-1 text-xs"
+<label class="checkbox-wrapper"
   ><input type="checkbox" class="toggle" on:click={() => toggle()} />
   {toggleState === true ? "Stake" : "Withdraw"} Mode</label
 >
@@ -44,7 +44,7 @@
 </div>
 
 <div class="form-control">
-  <span class="label-text p-2">Percentage</span>
+  <span class="label-text">Percentage</span>
 
   <input
     type="range"

@@ -47,15 +47,16 @@
   <div class="collapse w-full  ">
     <input type="radio" name="my-accordion-1" checked />
 
-    <div class="collapse-title cursor-pointer text-xl font-medium">CBDC Wrapper</div>
+    <h2 class="collapse-title cursor-pointer">CBDC Wrapper</h2>
     <div class="collapse-content flex w-full flex-col justify-center space-x-2 ">
       <WrapCBDC />
     </div>
   </div>
+  
   <div class="collapse w-full  ">
     <input type="radio" name="my-accordion-1" />
 
-    <div class="collapse-title cursor-pointer text-xl font-medium">wCBDC Yield</div>
+    <h2 class="collapse-title cursor-pointer">wCBDC Yield</h2>
 
     <div class="collapse-content flex w-full flex-col justify-center space-x-2 ">
       <XwCBDCWrapper />
@@ -64,7 +65,7 @@
   <div class="collapse w-full  ">
     <input type="radio" name="my-accordion-1" />
 
-    <div class="collapse-title cursor-pointer text-xl font-medium">Liquidity Mining</div>
+    <h2 class="collapse-title cursor-pointer">Liquidity Mining</h2>
 
     <div class="collapse-content flex w-full flex-col justify-center space-x-2 ">
       <LPStaking />
@@ -74,7 +75,7 @@
   <div class="collapse w-full  ">
     <input type="radio" name="my-accordion-1" />
 
-    <div class="collapse-title cursor-pointer text-xl font-medium">INFO</div>
+    <h2 class="collapse-title cursor-pointer">INFO</h2>
 
     <div class="collapse-content flex w-full flex-col justify-center space-x-2 "></div>
   </div>
@@ -84,11 +85,12 @@
 	.farm-container{
 		display: flex;
 		flex-direction: column;
+		margin: 0 auto;
 	}
 	.farm-container > div{
-		border: 1px dashed rgb(211, 211, 211);
+		margin-bottom: 1rem;
 		border-radius: 0;
-		padding: 20px;
+		background-color: var(--light-gray);
 	}
 
 </style>
