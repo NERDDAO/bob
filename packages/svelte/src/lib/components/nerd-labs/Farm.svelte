@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createAccount } from "@byteatatime/wagmi-svelte";
 
-  import LiquidityFarming from "./LiquidityFarming.svelte";
+  import LPStaking from "./LPStaking.svelte";
 
   import XwCBDCWrapper from "./XwCBDCWrapper.svelte";
 
@@ -43,7 +43,7 @@
   };
 </script>
 
-<div class="w-auto md:w-auto">
+<div class="card relative w-1/3 items-center md:w-auto">
   <div class="collapse mx-6 w-full border border-gray-300 bg-base-300 md:w-auto">
     <input type="radio" name="my-accordion-1" checked />
 
@@ -61,14 +61,13 @@
       <XwCBDCWrapper />
     </div>
   </div>
-
   <div class="collapse mx-6 w-full border border-gray-300 bg-base-300 md:w-auto">
     <input type="radio" name="my-accordion-1" />
 
     <div class="collapse-title cursor-pointer text-xl font-medium">Liquidity Mining</div>
 
-    <div class="collapse-content flex w-full flex-row justify-center space-x-12 p-4 md:w-auto">
-      <LiquidityFarming config={daiUsdcConfig} />
+    <div class="collapse-content flex w-full flex-col justify-center space-x-2 md:w-auto">
+      <LPStaking />
     </div>
   </div>
 

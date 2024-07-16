@@ -7,8 +7,8 @@
   import { createAccount } from "@byteatatime/wagmi-svelte";
 
   let { contractName, spender } = $props<{
-    contractName: "CBDC" | "WCBDC";
-    spender: "WCBDC" | "xStakingPool";
+    contractName: "CBDC" | "WCBDC" | "UniV2-LP";
+    spender: "WCBDC" | "xStakingPool" | "LPStakingPool";
   }>();
 
   const { data: contract, isLoading } = $derived.by(() => createScaffoldContract({ contractName }));

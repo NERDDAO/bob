@@ -41,7 +41,7 @@
   <span class="label-text">Amount to {toggleState === true ? "stake" : "withdraw"}</span>
   <label class="input-group">
     <input type="number" placeholder="" class="input input-bordered" bind:value={balance} />
-    <span>{"UniV2LP"}</span>
+    <span>{"LPTs"}</span>
   </label>
 </div>
 
@@ -68,4 +68,6 @@
     <span>100%</span>
   </div>
 </div>
-<MintBurn contractName="LPStakingPool" functionName={toggleState === true ? "stake" : "withdraw"} {balance} />
+
+<MintBurn contractName="lpStakingPool" functionName="getReward" {balance} />
+<MintBurn contractName="lpStakingPool" functionName={toggleState === true ? "stake" : "withdraw"} {balance} />

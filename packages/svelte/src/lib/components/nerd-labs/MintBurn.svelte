@@ -6,9 +6,9 @@
   import { Approve } from "$lib/components/nerd-labs";
 
   let { functionName, balance, contractName } = $props<{
-    functionName: "deposit" | "burn" | "stake" | "withdraw";
+    functionName: "deposit" | "burn" | "stake" | "withdraw" | "getReward";
     balance: BigInt;
-    contractName: "WCBDC" | "xStakingPool" | "LPStakingPool";
+    contractName: "WCBDC" | "xStakingPool" | "lpStakingPool";
   }>();
 
   const { writeContractAsync, isMining } = $derived.by(createScaffoldWriteContract(contractName));
@@ -16,7 +16,7 @@
   async function handleMintBurn() {
     const variables: any = {
       functionName,
-      args: [balance],
+      args: functionName == "getReward" ? [] : [balance],
     };
 
     if (writeContractAsync) {
@@ -26,7 +26,10 @@
 </script>
 
 <div>
-  <Approve contractName={contractName == "WCBDC" ? "CBDC" : "WCBDC"} spender={contractName} />
+  <Approve
+    contractName={contractName == "lpStakingPool" ? "UniV2-LP" : "WCBDC" ? "CBDC" : "WCBDC"}
+    spender={contractName}
+  />
   <button class="btn btn-primary w-full" on:click={handleMintBurn} disabled={isMining}>
     {#if isMining}
       <span class="loading loading-spinner loading-sm"></span>
