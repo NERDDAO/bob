@@ -19,10 +19,11 @@
   export const menuLinks: HeaderMenuLink[] = [
 
     { label: "Home", href: "/" },
+	{ label: "Stake", href: "/app" },
 
     { label: "About", href: "/about" },
 
-    { label: "Stake", href: "/stake" }, // Added Stake link
+
 
   ];
 
@@ -53,18 +54,6 @@
   </div>
 
 <style>
-
-  @font-face {
-
-    font-family: 'CloisterBlack';
-
-    src: url('CloisterBlack.ttf') format('truetype');
-
-    font-weight: normal;
-
-    font-style: normal;
-
-  }
 
  .header {
 

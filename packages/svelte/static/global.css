@@ -19,17 +19,9 @@ p {
   margin: 1rem 0;
 }
 
-.btn {
-  @apply shadow-md;
-}
-
-.btn.btn-ghost {
-  @apply shadow-none;
-}
-
 @font-face {
   font-family: "CloisterBlack";
-  src: url("/fonts/CloisterBlack.ttf") format("truetype");
+  src: url("CloisterBlack.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
