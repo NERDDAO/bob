@@ -20,9 +20,11 @@
 
     { label: "Home", href: "/" },
 
+	{ label: "Stake", href: "/stake" }, // Added Stake link
+
     { label: "About", href: "/about" },
 
-    { label: "Stake", href: "/stake" }, // Added Stake link
+
 
   ];
 
