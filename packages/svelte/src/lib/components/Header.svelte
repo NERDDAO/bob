@@ -55,18 +55,6 @@
 
 <style>
 
-  @font-face {
-
-    font-family: 'CloisterBlack';
-
-    src: url('CloisterBlack.ttf') format('truetype');
-
-    font-weight: normal;
-
-    font-style: normal;
-
-  }
-
  .header {
 
     position: relative;
