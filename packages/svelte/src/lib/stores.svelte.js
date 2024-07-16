@@ -1,3 +1,4 @@
+/*
 import { writable, derived , get } from 'svelte/store';
 import { persisted } from 'svelte-persisted-store'
 import testnet from '$lib/testnet.js'
@@ -77,3 +78,7 @@ export const secondsToNextRebase = derived(
         if (interval) clearInterval(interval);
     };
 }, 0);
+
+*/
+
+export const EPOCH = $state(0)

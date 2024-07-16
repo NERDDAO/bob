@@ -1,6 +1,6 @@
 import { ethers } from "ethers"
 import { get } from 'svelte/store'
-import * as stores from "$lib/stores.js"
+import * as stores from "$lib/stores.svelte.js"
 import * as utils from '$lib/utils.js'
 
 export async function connectWallet(){

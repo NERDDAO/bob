@@ -48,3 +48,12 @@ export function formatTime(seconds) {
     return `${minutes} minutes ${remainingSeconds} seconds`;
 }
 
+
+export function calculatePercentageRemoved(currentSupply, originalSupply){
+	const current = parseFloat(currentSupply);
+	const original = parseFloat(originalSupply);
+	const percentageRemoved = ((original - current) / original) * 100;
+
+	const strPercent = String(percentageRemoved)
+	return strPercent.slice(0, 11)
+}

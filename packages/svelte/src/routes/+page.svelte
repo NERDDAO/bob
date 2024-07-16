@@ -1,41 +1,132 @@
 
 <script>
-	/*
+	import { createScaffoldContract } from "$lib/runes/scaffoldContract.svelte";
+	import { createScaffoldReadContract } from "$lib/runes/scaffoldReadContract.svelte";
+	import { createScaffoldWriteContract } from "$lib/runes/scaffoldWriteContract.svelte";
+	import { createAccount } from "@byteatatime/wagmi-svelte";
 	import * as utils from '$lib/utils.js'
-	import * as crypto from '$lib/crypto.js'
-	import { connected, installed, selectedAccount, currentContract, EPOCH, sending_tx, disableButton, secondsToNextRebase, percentDestroyed } from '$lib/stores.js'
-	import { onMount } from 'svelte';
-	*/
+	import * as crypto from '$lib/crypto_v2.svelte.js'
+	import mainnet from '$lib/mainnet.js'
+	import { createBalance } from "@byteatatime/wagmi-svelte";
 
-	/*
-	$: mounted = false
-	$: connected_to_wallet = $connected
-	$: block_explorer = $currentContract ? $currentContract.chainInfo.blockExplorerUrls[0] : ""
-	$: uniswap_link = `https://app.uniswap.org/explore/tokens/base/${$currentContract.token_address}`
-	*/
 	
-	/*
+	let interval = null
+	let hasBalance = $state(false)
+
 	function addTokenToWallet(event) {
         event.preventDefault();
-		crypto.addTokenToWallet($currentContract.token_address)
-    }*/
+		crypto.addTokenToWallet(tokenAddress)
+    }
 
-	//onMount(() => mounted = true)
+	const { data: rebaseContract, isLoading: rebaseLoaded } = $derived.by(() => createScaffoldContract({ contractName: "rebaseContract" }));
+	const { data: cbdcContract, isLoading: cbdcLoaded } = $derived.by(() => createScaffoldContract({ contractName: "CBDC" }));
+	const { writeContractAsync, isMining } = $derived.by(createScaffoldWriteContract("rebaseContract"));
 
+
+	let uniswap_link = $derived.by(() => {
+		return `https://app.uniswap.org/explore/tokens/base/${cbdcContract?.address}`
+	})
+
+	let tokenAddress = $derived.by(() => {
+		return cbdcContract?.address
+	})
+
+	const { address: connectedAddress } = $derived.by(createAccount());
+
+	const walletAddress = $derived.by(() => {
+		return connectedAddress
+	});
+
+	let secondsToNextRebase = $state(0)
+	const sending_tx = $state(false)
+
+	
+	const { data: currentEPOCH } = $derived.by(
+		createScaffoldReadContract(() => ({
+		  contractName: "rebaseContract",
+		  functionName: "EPOCH"
+		}))
+	);
+
+	const { data: lastRebaseDateTime } = $derived.by(
+		createScaffoldReadContract(() => ({
+		  contractName: "rebaseContract",
+		  functionName: "LAST_REBASE_BLOCK"
+		}))
+	);
+
+	async function handleRebase() {
+		const variables = {
+			functionName: "rebase"
+		};
+
+		if (writeContractAsync) {
+			await writeContractAsync(variables);
+		}
+	}
+
+	const percentDestroyed = $derived.by(() => {
+		if (!currentEPOCH) return "0"
+
+		const originalSupply = mainnet.original_supply
+		const newSupply = utils.calculateNewSupply(originalSupply, currentEPOCH)
+
+		const percentage = utils.calculatePercentageRemoved(newSupply, originalSupply)
+		
+		return percentage.toString();
+	})
+
+	const nextRebaseDelaySec = $derived.by(() => {
+		if (!lastRebaseDateTime) return null
+
+		const rebaseAvailable = utils.getNextRebaseAvailable(lastRebaseDateTime, mainnet.rebase_delay_sec)
+		const delay = utils.calculateDelay(rebaseAvailable)
+
+		if (delay > 0){
+			return delay / 1000
+		}else{
+			return null
+		}
+	})
+
+	const disableButton = $derived.by(() => {
+		return nextRebaseDelaySec ? true : false;
+	})
+
+	$effect(() => {
+		if (nextRebaseDelaySec > 0) {
+			if (interval) {
+				clearInterval(interval)
+			}
+			startCountdown(nextRebaseDelaySec)
+		}
+
+	})
+
+	function startCountdown(seconds) {
+		interval = setInterval(() => {
+			if (seconds > 0) {
+				seconds--;
+				secondsToNextRebase = seconds
+			} else {
+				clearInterval(interval);
+				secondsToNextRebase = 0
+			}
+		}, 1000);
+	}
 </script>
 
 <div class="dialogue">
 	<h1><u>Memorandum on the State of the Market</u></h1>
-	<!--
 	<div class="details">
-		{#if $connected}<p class="add_token"><a href="#" on:click={addTokenToWallet}>{`>> ADD CBDC TOKEN TO WALLET <<`}</a></p>{/if}
-		<p class="truncate-address">Token: <a href="{uniswap_link}" target="_blank" rel="noopener noreferrer">{$currentContract.token_address}</a></p>
-		<p>Chart: <a href="{`https://dexscreener.com/base/${$currentContract.token_address}`}" target="_blank" rel="noopener noreferrer">www.dexscreener.com</a></p>
+		{#if walletAddress}<p class="add_token"><a href="#" on:click={addTokenToWallet}>{`>> ADD CBDC TOKEN TO WALLET <<`}</a></p>{/if}
+		<p class="truncate-address">Token: <a href="{uniswap_link}" target="_blank" rel="noopener noreferrer">{tokenAddress}</a></p>
+		<p>Chart: <a href="{`https://dexscreener.com/base/${tokenAddress}`}" target="_blank" rel="noopener noreferrer">www.dexscreener.com</a></p>
 		<p>Warpcast: <a href="https://warpcast.com/bankofbased" target="_blank" rel="noopener noreferrer">warpcast.com/bankofbased</a></p>
 		<p>Telegram: <a href="https://t.me/bankofbased" target="_blank" rel="noopener noreferrer">t.me/bankofbased</a></p>
 		<p>Created By: <a href="https://x.com/burn_the_state" target="_blank" rel="noopener noreferrer">@burn_the_state</a></p>
 	</div>
--->
+
 	<hr>
 	<div class="text" >
 		<p class="name" >AGENT B</p>
@@ -77,24 +168,25 @@
 		<p class="response">Oh?</p>
 	</div>
 </div>
-	<!--
+
 	<div class="buttons">
 		<div class="button_row"> 
 			<button class="buy_token" on:click={() => utils.openSite(uniswap_link)}>
 				<span class="token_spin"></span>
 				<span class="button_text">BUY CBDC TOKEN</span>
 			</button>
-			<button class="rebase" disabled={!connected_to_wallet || $disableButton} on:click={crypto.callRebase}>
-				{#if $disableButton}
+			
+			<button class="rebase" disabled={!walletAddress || disableButton} on:click={handleRebase}>
+				{#if disableButton}
 					<span class="clock_loader loader"></span>
 					<div class="button_text unavailable">
 						UPPIFIER UNAVAILABLE
-						{#if $secondsToNextRebase > 0}
-							<span class="seconds">{utils.formatTime(parseInt($secondsToNextRebase))}</span>
+						{#if secondsToNextRebase > 0}
+							<span class="seconds">{utils.formatTime(parseInt(secondsToNextRebase))}</span>
 						{/if}
 					</div>
 				{:else}
-					{#if $sending_tx}
+					{#if sending_tx}
 						<span class="circle_loader loader"></span>
 					{:else}
 						<span class="arrow_loader loader"></span> 
@@ -102,27 +194,20 @@
 					<div class="button_text">MAKE CBDC GO UP</div>
 				{/if}
 			</button>
+			
 		</div>
-		<div class="info_row">
-			{#if $installed}
-				{#if !connected_to_wallet}
-					<button class="text" on:click={crypto.connectWallet}>Connect Wallet</button>
-				{:else}
-					<div class="contract_info">
-						<span class="need_token_text">CBDC Token Balance required to Use UPPIFIER Button</span>
-						<a href="{`${block_explorer}/address/${$selectedAccount}`}" class="selected_account" target="_blank" rel="noopener noreferrer">
-							{$selectedAccount}
-						</a>
-						<span class="supply">{`The supply has been reduced by ${$percentDestroyed}%`}</span>
-					</div>
-				{/if}
-			{:else}
-				<a href="https://metamask.io/download/" class="install_link" target="_blank" rel="noopener noreferrer">Install a Web3 Wallet</a>
-			{/if}
 
+		<div class="info_row">
+			<div class="contract_info">
+				<span class="need_token_text">CBDC Token Balance required to Use UPPIFIER Button</span>
+				{#if percentDestroyed}
+				<span class="supply">{`The supply has been reduced by ${percentDestroyed}%`}</span>
+				{/if}
+			</div>
 		</div>
+		
 	</div>
-	-->
+
 	
 <div class="dialogue">
 	<div class="text">
