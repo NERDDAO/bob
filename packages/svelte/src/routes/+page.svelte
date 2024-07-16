@@ -365,7 +365,7 @@
 	.dialogue {
 		border: 1px dashed rgb(211, 211, 211);
 		padding: 20px;
-		background-color: #f9f9f9;
+		background-color: var(--bg-color);
 		font-family: "Courier New", sans-serif;
 		text-align: left;
 		font-weight: bold;

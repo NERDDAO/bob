@@ -4,9 +4,7 @@
   import { createAccount, createEnsName, createEnsAvatar } from "@byteatatime/wagmi-svelte";
 
   import WrongNetworkDropdown from "./WrongNetworkDropdown.svelte";
-  import { Balance } from "$lib/components/scaffold-eth";
 
-  import type { Address } from "viem/accounts";
 
   import { createNetworkColor } from "$lib/runes/networkColor.svelte";
 
@@ -46,7 +44,7 @@
 
 {#if !connected}
 
-  <button class="btn btn-primary btn-sm" onclick={() => modal.open()} type="button"> Connect Wallet </button>
+  <button class="" onclick={() => modal.open()} type="button"> Connect Wallet </button>
 {:else if isChainUnsupported}
 
   <WrongNetworkDropdown />
@@ -56,70 +54,25 @@
 
   {#if address}
 
-    <div class="connected-info">
+    <div class="">
 
       <AddressInfoDropdown
-
         {address}
-
         displayName={ensName.data ? formatENS(ensName.data) : formatAddress(address)}
-
         ensAvatar={ensAvatar.data ?? undefined}
-
         {blockExplorerAddressLink}
-
       />
-
-      <div class="balance-chain-info">
-
-        <div class="balance-info">
-
-          <Balance address={address as Address} class="h-auto min-h-0" />
-
-        </div>
-
-        <div class="chain-info">
-
-          <span class="text-xs" style:color={networkColor}>
-
-            {chain?.name}
-
-          </span>
-        </div>
-
-      </div>
     </div>
   {/if}
 {/if}
 
 
 <style>
-  .connected-info {
-    display: flex;
-    align-items: center; /* Align items horizontally */
-
-  }
-
-  .balance-chain-info {
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center; 
-
-    margin-left: 1rem;
-
-  }
-
-
-  .balance-info {
-
-  }
-
-  .chain-info {
-
-    text-align: center;
-
-  }
+	button{
+		min-width: fit-content;
+	}
+	button:hover{
+		text-decoration: underline;
+		color: gray;
+	}
 </style>

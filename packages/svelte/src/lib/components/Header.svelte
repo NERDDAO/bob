@@ -17,15 +17,9 @@
 
 
   export const menuLinks: HeaderMenuLink[] = [
-
     { label: "Home", href: "/" },
-
 	{ label: "Stake", href: "/stake" }, // Added Stake link
-
     { label: "About", href: "/about" },
-
-
-
   ];
 
   const isCurrentPage = derived(page, $page => {
@@ -36,107 +30,82 @@
 
 
 <header class="header">
-  <div class="header-content">
+  <div class="header-top">
     <ConnectButton />
-
     <div class="brand title_font svelte-bioemj">BANK OF BASED</div>
-
   </div>
- 
-</header>
- <div class="nav svelte-bioemj">
-
+  <div class="nav">
     {#each menuLinks as link}
-
       <a href={link.href} class:active={$isCurrentPage(link.href)}>{link.label.toUpperCase()}</a>
-
     {/each}
-
   </div>
+</header>
 
 <style>
 
-  @font-face {
-
-    font-family: 'CloisterBlack';
-
-    src: url('CloisterBlack.ttf') format('truetype');
-
-    font-weight: normal;
-
-    font-style: normal;
-
-  }
-
  .header {
+	display: flex;
+	flex-direction: column;
 
     position: relative;
 
     padding: 1rem;
-    background-color: var(--background-color);
+    background-color: var(--bg-color);
 
   }
 
-  .header-content {
+  .header-top{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
 
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
+	border-bottom: 2px solid rgb(90, 90, 90);
   }
 
-  .nav {
-    display: flex;
-
-    gap: 1rem;
-
-    margin-left: auto; 
-
+  .nav{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
   }
 
+  div.brand{
+		width: 100%;
+		font-size: xx-large;
+		text-align: center;
+		color: rgb(49, 49, 49);
+		margin-bottom: 0.5rem;
+		padding-bottom: 0.5em;
 
-  .nav a {
+	}
+	.nav{
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+	}
+	.nav a{
+		font-size: large;
+		cursor: pointer;
+		text-decoration: none;
 
-    text-decoration: none;
+		color: gray;
+		font-weight: bold;
+	}
+	.nav a:nth-child(even) {
+		margin: 0 1em;
+	}
+	.nav a:visited{
+		color: gray;
+	}
+	.nav a.active{
+		color: #000;
+	}
 
-    color: var(--text-color);
-     font-size: 1.5rem;
-  }
+	.nav a:hover{
+			color: #000;
+			filter: unset;
+		}
 
-  .nav a.active {
-    font-weight: bold;
-
-  }
-
-
-  .brand {
-
-    margin-left: 1rem;
-
-    font-family: 'CloisterBlack', sans-serif;
-
-    font-size: 1.5rem;
-
-  }
-
-  .header::after {
-
-    content: "";
-
-    position: absolute;
-
-    bottom: 0;
-
-    left: 0;
-
-    width: 100%;
-
-    height: 2px;
-
-    background-color: rgb(90, 90, 90);
-
-  }
 
   .balance {
 
@@ -156,4 +125,16 @@
     color: #313131;
 
   }
+
+  @media (min-width: 768px) {
+		div.brand{
+			text-align: right;
+		}
+		.nav{
+			justify-content: right;
+		}
+		.nav a{
+			font-size: x-large;
+		}
+	}
 </style>

@@ -1,21 +1,22 @@
 <script lang="ts">
-  import { BlockieAvatar } from "$lib/components/scaffold-eth";
-  import { isENS } from "$lib/components/scaffold-eth/inputs";
-  import { getAddress, type Address } from "viem";
-  import {
-    Icon,
-    ChevronDown,
-    CheckCircle,
-    DocumentDuplicate,
-    QrCode,
-    ArrowTopRightOnSquare,
-    ArrowLeftOnRectangle,
-    ArrowsRightLeft,
-  } from "svelte-hero-icons";
-  import NetworkOptions from "./NetworkOptions.svelte";
-  import { getTargetNetworks } from "$lib/utils/scaffold-eth/networks";
-  import { createDisconnect } from "@byteatatime/wagmi-svelte";
-  import { createOutsideClick } from "$lib/runes/outsideClick.svelte";
+	import { BlockieAvatar } from "$lib/components/scaffold-eth";
+	import { isENS } from "$lib/components/scaffold-eth/inputs";
+	import { getAddress, type Address } from "viem";
+	import {
+		Icon,
+		ChevronDown,
+		CheckCircle,
+		DocumentDuplicate,
+		QrCode,
+		ArrowTopRightOnSquare,
+		ArrowLeftOnRectangle,
+		ArrowsRightLeft,
+	} from "svelte-hero-icons";
+	import NetworkOptions from "./NetworkOptions.svelte";
+	import { getTargetNetworks } from "$lib/utils/scaffold-eth/networks";
+	import { createDisconnect } from "@byteatatime/wagmi-svelte";
+	import { createOutsideClick } from "$lib/runes/outsideClick.svelte";
+	import { Balance } from "$lib/components/scaffold-eth";
 
   const {
     address,
@@ -48,16 +49,22 @@
 </script>
 
 <details class="dropdown dropdown-end leading-3" bind:this={dropdown}>
-  <summary tabIndex={0} class="dropdown-toggle btn btn-secondary btn-sm !h-auto gap-0 pl-0 pr-2 shadow-md">
+  <summary tabIndex={0} class="dropdown-toggle">
     <BlockieAvatar address={checkSumAddress} size={30} ensImage={ensAvatar} />
-    <span class="ml-2 mr-1">
-      {isENS(displayName) ? displayName : checkSumAddress?.slice(0, 6) + "..." + checkSumAddress?.slice(-4)}
-    </span>
-    <Icon src={ChevronDown} class="ml-2 h-6 w-4 sm:ml-0" />
+	<div class="details">
+		<span class="address-text">
+			{isENS(displayName) ? displayName : checkSumAddress?.slice(0, 6) + "..." + checkSumAddress?.slice(-4)}
+		  </span>
+		  <Balance address={address as Address}  />
+	</div>
+	<div class="icon">
+		<Icon src={ChevronDown} class="w-6" />
+	</div>
+
   </summary>
   <ul
     tabIndex={0}
-    class="menu dropdown-content z-[2] mt-2 gap-1 rounded-box bg-base-200 p-2 shadow-center shadow-accent"
+    class="menu dropdown-content z-[2] mt-2 gap-1 p-2"
   >
     <NetworkOptions hidden={!selectingNetwork} />
     <li class={selectingNetwork ? "hidden" : ""}>
@@ -128,3 +135,28 @@
     </li>
   </ul>
 </details>
+
+
+<style>
+	.dropdown-toggle{
+		display: flex;
+		flex-direction: row;
+		cursor: pointer;
+
+	}
+	.address-text:hover {
+		text-decoration: underline;
+	}
+	.details{
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: flex-start;
+		padding: 0 0.5em;
+	}
+	.dropdown-content{
+		position: relative;
+		background-color: var(--bg-color);
+	}
+
+</style>

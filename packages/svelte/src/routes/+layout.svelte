@@ -33,8 +33,10 @@
 
 <Toaster />
 
+
 <WagmiProvider config={wagmiConfig}>
-  <ScaffoldEthApp>
-    <slot />
-  </ScaffoldEthApp>
-</WagmiProvider>
+	<ScaffoldEthApp>
+		<slot />
+	</ScaffoldEthApp>
+	</WagmiProvider>
+
