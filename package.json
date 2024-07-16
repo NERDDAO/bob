@@ -28,14 +28,13 @@
     "next:serve": "yarn workspace @se-2/nextjs serve",
     "precommit": "lint-staged",
     "svelte:format": "yarn workspace @se-2/svelte format",
-    "svelte:start": "yarn workspace @se-2/svelte dev",
+    "start": "yarn workspace @se-2/svelte dev",
     "svelte:lint": "yarn workspace @se-2/svelte lint",
     "svelte:check": "yarn workspace @se-2/svelte check",
     "svelte:build": "yarn workspace @se-2/svelte build",
-    "start": "yarn workspace @se-2/nextjs dev",
     "test": "yarn foundry:test",
-    "vercel": "yarn workspace @se-2/nextjs vercel",
-    "vercel:yolo": "yarn workspace @se-2/nextjs vercel:yolo",
+    "vercel": "yarn workspace @se-2/svelte vercel",
+    "vercel:yolo": "yarn workspace @se-2/svelte vercel:yolo",
     "verify": "yarn workspace @se-2/foundry verify"
   },
   "devDependencies": {
