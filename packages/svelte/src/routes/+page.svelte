@@ -1,26 +1,32 @@
 
 <script>
+	/*
 	import * as utils from '$lib/utils.js'
 	import * as crypto from '$lib/crypto.js'
 	import { connected, installed, selectedAccount, currentContract, EPOCH, sending_tx, disableButton, secondsToNextRebase, percentDestroyed } from '$lib/stores.js'
 	import { onMount } from 'svelte';
+	*/
 
+	/*
 	$: mounted = false
 	$: connected_to_wallet = $connected
 	$: block_explorer = $currentContract ? $currentContract.chainInfo.blockExplorerUrls[0] : ""
 	$: uniswap_link = `https://app.uniswap.org/explore/tokens/base/${$currentContract.token_address}`
-
+	*/
+	
+	/*
 	function addTokenToWallet(event) {
         event.preventDefault();
 		crypto.addTokenToWallet($currentContract.token_address)
-    }
+    }*/
 
-	onMount(() => mounted = true)
+	//onMount(() => mounted = true)
 
 </script>
 
 <div class="dialogue">
 	<h1><u>Memorandum on the State of the Market</u></h1>
+	<!--
 	<div class="details">
 		{#if $connected}<p class="add_token"><a href="#" on:click={addTokenToWallet}>{`>> ADD CBDC TOKEN TO WALLET <<`}</a></p>{/if}
 		<p class="truncate-address">Token: <a href="{uniswap_link}" target="_blank" rel="noopener noreferrer">{$currentContract.token_address}</a></p>
@@ -29,7 +35,7 @@
 		<p>Telegram: <a href="https://t.me/bankofbased" target="_blank" rel="noopener noreferrer">t.me/bankofbased</a></p>
 		<p>Created By: <a href="https://x.com/burn_the_state" target="_blank" rel="noopener noreferrer">@burn_the_state</a></p>
 	</div>
-
+-->
 	<hr>
 	<div class="text" >
 		<p class="name" >AGENT B</p>
@@ -71,7 +77,7 @@
 		<p class="response">Oh?</p>
 	</div>
 </div>
-
+	<!--
 	<div class="buttons">
 		<div class="button_row"> 
 			<button class="buy_token" on:click={() => utils.openSite(uniswap_link)}>
@@ -116,6 +122,7 @@
 
 		</div>
 	</div>
+	-->
 	
 <div class="dialogue">
 	<div class="text">
