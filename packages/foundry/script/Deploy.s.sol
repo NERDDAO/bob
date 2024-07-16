@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import {WBOB} from "../contracts/WBOB.sol";
+import {WCBDC} from "../contracts/WCBDC.sol";
 import "../contracts/RebaseToken.sol";
 import "./DeployHelpers.s.sol";
 import "../contracts/MonetaryPolicy.sol";
@@ -20,7 +20,9 @@ contract DeployScript is ScaffoldETHDeploy {
 
         //RebaseToken Bob = new RebaseToken();
 
-        WBOB BOBWrapper = new WBOB(0xBA5eDF631828EBbe81B850F476FA5936e3C15783);
+        WCBDC BOBWrapper = new WCBDC(
+            0xBA5eDF631828EBbe81B850F476FA5936e3C15783
+        );
 
         /*MonetaryPolicy Mpol = new MonetaryPolicy(
             address(Bob), //token address

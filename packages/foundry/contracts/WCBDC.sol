@@ -27,7 +27,7 @@ import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/Own
  *
  *      We call wCBDC the "wrapper" token and CBDC the "underlying" or "wrapped" token.
  */
-contract WBOB is ERC20Upgradeable, ERC20PermitUpgradeable, OwnableUpgradeable {
+contract WCBDC is ERC20Upgradeable, ERC20PermitUpgradeable, OwnableUpgradeable {
     using SafeERC20 for IERC20;
 
     //--------------------------------------------------------------------------
