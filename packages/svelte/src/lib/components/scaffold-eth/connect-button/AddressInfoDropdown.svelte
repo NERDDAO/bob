@@ -93,12 +93,14 @@
         <span class=" whitespace-nowrap">Copy address</span>
       </button>
     </li>
+	<!--
     <li class={selectingNetwork ? "hidden" : ""}>
       <label for="qrcode-modal" class="btn-sm flex gap-3 !rounded-xl py-3">
         <Icon src={QrCode} class="ml-2 h-6 w-4 sm:ml-0" />
         <span class="whitespace-nowrap">View QR Code</span>
       </label>
     </li>
+	-->
     <li class={selectingNetwork ? "hidden" : ""}>
       <a
         target="_blank"
@@ -164,4 +166,9 @@
 		background-color: var(--bg-color);
 	}
 
+	@media (min-width: 768px) {
+		.dropdown-content {
+			margin-left: 2em;
+		}
+	}
 </style>

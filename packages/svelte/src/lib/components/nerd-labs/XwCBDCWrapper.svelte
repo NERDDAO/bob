@@ -47,7 +47,7 @@
   <span class="label-text">Percentage</span>
 
   <input
-    type="range"
+    type="range"I t
     min="0"
     max="100"
     bind:value={percentage}
