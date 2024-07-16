@@ -254,14 +254,12 @@
 <style>
 
 	h1{
-		margin-bottom: 0.5rem;
-		font-size: 1.4em;
+		margin-bottom: 1rem;
 	}
 
 	p.add_token{
 		font-weight: 400;
 		margin: 0.5rem 0!important;
-		font-size: 0.9em;
 	}
 	.buttons{
 		display: flex;
@@ -294,7 +292,6 @@
 	}
 	.contract_info{
 		font-family: "Courier New", sans-serif;
-		font-size: smaller;
 		display: flex;
 		flex-direction: column;
 		color: rgb(114, 114, 114);
@@ -303,28 +300,6 @@
 	span.need_token_text{
 		margin-top: 1rem;
 	}
-	
-	a.selected_account{
-		font-size: smaller;
-		color: rgb(114, 114, 114);
-
-	}
-	a.selected_account:hover{
-		color: rgb(45, 45, 45);
-		text-decoration: underline;
-	}
-	a.selected_account:active{
-		color: rgb(184, 184, 184);
-	}
-	a.install_link{
-		margin-top: 0.5rem;
-		font-size: smaller;
-		font-family: "Courier New", sans-serif;
-		color: #343434;
-	}
-	a.install_link:visited{
-		color: #343434;
-	}
 	div.buttons{
 		display: flex;
 		flex-direction: column;
@@ -332,14 +307,11 @@
 		margin-top: 1em;
 		text-align: center;
 	}
-	button.text{
-		margin-top: 0.5rem;
-	}
+
 	.details{
-		font-size: small;
 		font-weight: bold;
 		margin-bottom: 1rem;
-
+		line-height: 1.2;
 		max-width: 100%; 
 	}
 	.details > p{
@@ -369,11 +341,6 @@
 		font-family: "Courier New", sans-serif;
 		text-align: left;
 		font-weight: bold;
-		font-size: small;
-	}
-
-	.dialogue > .text {
-		padding: 0.25em 0.25em;
 	}
 
 	.grey {
@@ -399,9 +366,6 @@
 
 
 	@media (min-width: 768px) {
-		h1{
-			font-size: 1.5em;
-		}
 		p.add_token{
 			font-size: medium;
 			text-align: left;
@@ -411,12 +375,6 @@
 		}
 		.rebase{
 			margin-left: 2em;
-		}
-		.details{
-			font-size:medium;
-		}
-		.dialogue{
-			font-size: medium;
 		}
 		.contract_info{
     		padding: 0;

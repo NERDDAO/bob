@@ -155,7 +155,12 @@
 		padding: 0 0.5em;
 	}
 	.dropdown-content{
-		position: relative;
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%)!important;
+		z-index: 100;
+		min-width: fit-content;
+		border: 1px solid grey;
 		background-color: var(--bg-color);
 	}
 

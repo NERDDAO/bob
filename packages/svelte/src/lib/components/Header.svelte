@@ -51,6 +51,7 @@
 
     padding: 1rem;
     background-color: var(--bg-color);
+	margin-bottom: 2rem;
 
   }
 
@@ -59,9 +60,15 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
 
 	border-bottom: 2px solid rgb(90, 90, 90);
   }
+
+  .header-top > div{
+		width: 100%;
+	}
 
   .nav{
 	display: flex;
@@ -69,13 +76,14 @@
 	justify-content: flex-end;
   }
 
-  div.brand{
+	div.brand{
+		max-width: fit-content;
 		width: 100%;
 		font-size: xx-large;
 		text-align: center;
 		color: rgb(49, 49, 49);
-		margin-bottom: 0.5rem;
 		padding-bottom: 0.5em;
+		margin-top: 1rem;
 
 	}
 	.nav{
@@ -106,16 +114,6 @@
 			filter: unset;
 		}
 
-
-  .balance {
-
-    margin-top: 0.5rem;
-    font-size: 0.875rem;
-
-    color: var(--text-color);
-  }
-
-
   .svelte-bioemj {
 
     font-size: xx-large;
@@ -136,5 +134,12 @@
 		.nav a{
 			font-size: x-large;
 		}
-	}
+		.header-top > div{
+			width: unset;
+		}
+		.header-top{
+			flex-wrap: nowrap;
+			justify-content: space-between;
+		}
+  }
 </style>

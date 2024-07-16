@@ -70,9 +70,10 @@
 <style>
 	button{
 		min-width: fit-content;
+		font-weight: bold;
+		text-decoration: underline;
 	}
 	button:hover{
-		text-decoration: underline;
 		color: gray;
 	}
 </style>

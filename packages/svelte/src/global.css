@@ -10,6 +10,7 @@
 
 body {
   min-height: 100vh;
+  font-size: 16px;
 }
 
 h1,
@@ -20,6 +21,14 @@ h4 {
   line-height: 1;
 }
 
+h1{
+	font-size: 32px;
+	font-weight: 700;
+}
+h2{
+	font-size: 24px;
+	font-weight: 600;
+}
 p {
   margin: 1rem 0;
 }
