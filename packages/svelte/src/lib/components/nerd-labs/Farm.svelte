@@ -43,50 +43,52 @@
   };
 </script>
 
-<div class="card relative w-1/3 items-center md:w-auto">
-  <div class="collapse mx-6 w-full border border-gray-300 bg-base-300 md:w-auto">
+<div class="farm-container">
+  <div class="collapse w-full  ">
     <input type="radio" name="my-accordion-1" checked />
 
     <div class="collapse-title cursor-pointer text-xl font-medium">CBDC Wrapper</div>
-    <div class="collapse-content flex w-full flex-col justify-center space-x-2 md:w-auto">
+    <div class="collapse-content flex w-full flex-col justify-center space-x-2 ">
       <WrapCBDC />
     </div>
   </div>
-  <div class="collapse mx-6 w-full border border-gray-300 bg-base-300 md:w-auto">
+  <div class="collapse w-full  ">
     <input type="radio" name="my-accordion-1" />
 
     <div class="collapse-title cursor-pointer text-xl font-medium">wCBDC Yield</div>
 
-    <div class="collapse-content flex w-full flex-col justify-center space-x-2 md:w-auto">
+    <div class="collapse-content flex w-full flex-col justify-center space-x-2 ">
       <XwCBDCWrapper />
     </div>
   </div>
-  <div class="collapse mx-6 w-full border border-gray-300 bg-base-300 md:w-auto">
+  <div class="collapse w-full  ">
     <input type="radio" name="my-accordion-1" />
 
     <div class="collapse-title cursor-pointer text-xl font-medium">Liquidity Mining</div>
 
-    <div class="collapse-content flex w-full flex-col justify-center space-x-2 md:w-auto">
+    <div class="collapse-content flex w-full flex-col justify-center space-x-2 ">
       <LPStaking />
     </div>
   </div>
 
-  <div class="collapse mx-6 w-full border border-gray-300 bg-base-300 md:w-auto">
+  <div class="collapse w-full  ">
     <input type="radio" name="my-accordion-1" />
 
     <div class="collapse-title cursor-pointer text-xl font-medium">INFO</div>
 
-    <div class="collapse-content flex w-full flex-col justify-center space-x-2 md:w-auto"></div>
+    <div class="collapse-content flex w-full flex-col justify-center space-x-2 "></div>
   </div>
 </div>
 
 <style>
-  .collapse,
-  .collapse-content {
-    border-radius: 0; /* Remove border radius */
-  }
+	.farm-container{
+		display: flex;
+		flex-direction: column;
+	}
+	.farm-container > div{
+		border: 1px dashed rgb(211, 211, 211);
+		border-radius: 0;
+		padding: 20px;
+	}
 
-  .collapse {
-    margin-bottom: 1rem; /* Add vertical spacing between sections */
-  }
 </style>
