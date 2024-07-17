@@ -472,6 +472,22 @@ button.secondary:active:not(:disabled) {
   }
 }
 
+.pulsing {
+	animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+	0% {
+		color: black;
+	}
+	50% {
+		color: grey;
+	}
+	100% {
+		color: black;
+	}
+}
+
 @media (min-width: 768px) {
   .rebase {
     font-size: larger;

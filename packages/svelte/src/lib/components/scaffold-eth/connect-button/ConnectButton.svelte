@@ -44,7 +44,7 @@
 
 {#if !connected}
 
-  <button class="" onclick={() => modal.open()} type="button"> Connect Wallet </button>
+  <button class="pulsing" onclick={() => modal.open()} type="button">{">> Connect Wallet << "}</button>
 {:else if isChainUnsupported}
 
   <WrongNetworkDropdown />
@@ -71,9 +71,12 @@
 	button{
 		min-width: fit-content;
 		font-weight: bold;
-		text-decoration: underline;
+		font-size: larger;
+
+		padding-bottom: 0.2em;
 	}
 	button:hover{
 		color: gray;
+		border-bottom: 1px solid gray;
 	}
 </style>

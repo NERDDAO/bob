@@ -135,7 +135,7 @@
 			width: unset;
 		}
 		.header-top{
-			padding: 0 2em;
+
 		}
   }
 
