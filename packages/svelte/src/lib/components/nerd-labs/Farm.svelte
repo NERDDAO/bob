@@ -45,8 +45,8 @@
 
     <h2 class="collapse-title cursor-pointer">INFO</h2>
 
-    <div class="collapse-content flex w-full flex-row justify-center space-x-2">
-      <img class="ml-32 h-[600px] w-[400px]" alt="The project logo" src={diagram} />
+    <div class="collapse-content flex w-full flex-row">
+      <img class="flow-diagram ml-32 h-[600px] w-[400px]" alt="The project logo" src={diagram} />
       <p class="dialogue text grey card border-2 p-12">
         <span class="title">ABOUT:</span>
         - Wrap your CBDC to get WCBDC which represents a share of the market cap you own.
