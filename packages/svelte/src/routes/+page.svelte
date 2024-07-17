@@ -7,7 +7,7 @@
 	import * as utils from '$lib/utils.js'
 	import * as crypto from '$lib/crypto_v2.svelte.js'
 	import mainnet from '$lib/mainnet.js'
-	import { createBalance } from "@byteatatime/wagmi-svelte";
+	import toast from "@leodog896/svelte-french-toast";
 
 	
 	let interval = null
@@ -54,16 +54,6 @@
 		  functionName: "LAST_REBASE_BLOCK"
 		}))
 	);
-
-	async function handleRebase() {
-		const variables = {
-			functionName: "rebase"
-		};
-
-		if (writeContractAsync) {
-			await writeContractAsync(variables);
-		}
-	}
 
 	const percentDestroyed = $derived.by(() => {
 		if (!currentEPOCH) return "0"
@@ -113,6 +103,16 @@
 				secondsToNextRebase = 0
 			}
 		}, 1000);
+	}
+
+	async function handleRebase() {
+		const variables = {
+			functionName: "rebase"
+		};
+
+		if (writeContractAsync) {
+			await writeContractAsync(variables);
+		}
 	}
 </script>
 
