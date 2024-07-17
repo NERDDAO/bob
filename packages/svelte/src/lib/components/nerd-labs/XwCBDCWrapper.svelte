@@ -56,7 +56,7 @@
 <div class="form-control">
   <span class="label-text">Amount to {toggleState === true ? "stake" : "withdraw"}</span>
 
-  <stat class="stat-title text-xs">price per share:{Number(pricePerShare) * 1e-18}</stat>
+  <stat class=" text-xs">price per share:{Number(pricePerShare) * 1e-18}</stat>
   <label class="input-group">
     <input
       type="number"
