@@ -58,7 +58,7 @@
         bind:value={humanBalance}
         on:change={handleInputChange}
       />
-      <span>{toggleState === true ? "cBDC" : "wBOB"}</span>
+      <span>{toggleState === true ? "CBDC" : "wCBDC"}</span>
     </label>
   </div>
 </div>
