@@ -48,7 +48,7 @@
 		}))
 	);
 
-	const { data: lastRebaseDateTime } = $derived.by(
+	let { data: lastRebaseDateTime, refetch: refetchLastRebaseDateTime } = $derived.by(
 		createScaffoldReadContract(() => ({
 		  contractName: "rebaseContract",
 		  functionName: "LAST_REBASE_BLOCK"
@@ -89,6 +89,8 @@
 				clearInterval(interval)
 			}
 			startCountdown(nextRebaseDelaySec)
+		}else{
+			refetchLastRebaseDateTime()
 		}
 
 	})
@@ -99,8 +101,10 @@
 				seconds--;
 				secondsToNextRebase = seconds
 			} else {
+				console.log("CLEARING INTEVAL")
 				clearInterval(interval);
 				secondsToNextRebase = 0
+				refetchLastRebaseDateTime()
 			}
 		}, 1000);
 	}
@@ -112,10 +116,14 @@
 
 		if (writeContractAsync) {
 			await writeContractAsync(variables);
+
+			setTimeout(() => {
+				refetchLastRebaseDateTime()
+			}, 5000);
 		}
 	}
 </script>
-
+{lastRebaseDateTime}
 <div class="dialogue">
 	<h1><u>Memorandum on the State of the Market</u></h1>
 	<div class="details">
@@ -171,12 +179,12 @@
 
 	<div class="buttons">
 		<div class="button_row"> 
-			<button class="buy_token" on:click={() => utils.openSite(uniswap_link)}>
+			<button class="buy_token secondary" on:click={() => utils.openSite(uniswap_link)}>
 				<span class="token_spin"></span>
 				<span class="button_text">BUY CBDC TOKEN</span>
 			</button>
 			
-			<button class="rebase" disabled={!walletAddress || disableButton} on:click={handleRebase}>
+			<button class="rebase primary" disabled={!walletAddress || disableButton} on:click={handleRebase}>
 				{#if disableButton}
 					<span class="clock_loader loader"></span>
 					<div class="button_text unavailable">
@@ -268,7 +276,14 @@
 		align-items: center;
 	}
 	.rebase{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
 		margin-left: 0;
+		margin-top: 1rem;
+	}
+	.rebase > span.loader{
+		margin-right: 0.25em;
 	}
 	.button_row{
 		display: flex;
@@ -376,6 +391,7 @@
 		}
 		.rebase{
 			margin-left: 2em;
+			margin-top: 0;
 		}
 		.contract_info{
     		padding: 0;
