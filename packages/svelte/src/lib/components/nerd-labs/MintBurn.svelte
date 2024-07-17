@@ -30,8 +30,6 @@
 
   const { data: contract } = $derived.by(createDeployedContractInfo(contractName));
 
-  const { data: spenderContract } = $derived.by(createDeployedContractInfo(approvedContractName));
-
   const { data: cbdcAllowance } = $derived.by(
     createScaffoldReadContract(() => ({
       contractName: approvedContractName,
@@ -42,13 +40,14 @@
 </script>
 
 <div class="farm-buttons">
-  <Approve
-    contractName={contractName == "lpStakingPool" ? "UniV2-LP" : "WCBDC" ? "CBDC" : "WCBDC"}
-    spender={contractName}
-  />
+  {#if functionName !== "getReward"}
+    <Approve
+      contractName={contractName == "lpStakingPool" ? "UniV2-LP" : "WCBDC" ? "CBDC" : "WCBDC"}
+      spender={contractName}
+    />
+  {/if}
 
-  {console.log(cbdcAllowance, contract?.address, "lmak", approvedContractName, contractName)}
-  {#if cbdcAllowance && cbdcAllowance >= 0n}
+  {#if (cbdcAllowance && cbdcAllowance >= 0n) || functionName == "getReward"}
     <button class="primary" on:click={handleMintBurn} disabled={isMining}>
       {#if isMining}
         <span class="loading loading-spinner loading-sm"></span>

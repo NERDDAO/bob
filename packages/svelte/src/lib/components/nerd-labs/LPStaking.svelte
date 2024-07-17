@@ -45,6 +45,7 @@
   </label>
 </div>
 
+<MintBurn contractName="lpStakingPool" functionName={toggleState === true ? "stake" : "withdraw"} {balance} />
 <div class="form-control">
   <span class="label-text p-2">Percentage</span>
 
@@ -70,4 +71,3 @@
 </div>
 
 <MintBurn contractName="lpStakingPool" functionName="getReward" {balance} />
-<MintBurn contractName="lpStakingPool" functionName={toggleState === true ? "stake" : "withdraw"} {balance} />
