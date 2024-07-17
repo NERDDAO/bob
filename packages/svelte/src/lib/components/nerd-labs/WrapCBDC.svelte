@@ -9,6 +9,7 @@
 
   let percentage: BigInt = $state(0n);
   let balance: BigInt = $state(0n);
+  let humanBalance: number = $state(0);
   let toggleState: Boolean = $state(true);
 
   const contractName: "CBDC" | "WCBDC" = toggleState === true ? "CBDC" : "WCBDC";
@@ -20,41 +21,53 @@
   const { data: wcbdcBalance } = $derived.by(
     createScaffoldReadContract(() => ({ contractName: "WCBDC", functionName: "balanceOf", args: [address] })),
   );
-  const { data: cbdcAllowance } = $derived.by(
-    createScaffoldReadContract(() => ({
-      contractName,
-      functionName: "balanceOf",
-      args: [address, "0x6c841c51233d2eCD2485a574111aBa2C27dc3BC5"],
-    })),
-  );
-
   function handlePercentageChange(value: string) {
     const newPercentage = BigInt(Math.min(Math.max(Number(value), 0), 100));
     percentage = newPercentage;
-    if (cbdcBalance) {
-      balance = (cbdcBalance * newPercentage) / 100n;
+    let currentBalance = toggleState == true ? cbdcBalance : wcbdcBalance;
+    if (currentBalance) {
+      balance = (currentBalance * newPercentage) / 100n;
+      humanBalance = Number(balance) * (toggleState == true ? 1e-9 : 1e-18);
     }
   }
+  function handleInputChange() {
+    balance = BigInt(humanBalance);
+  }
+
   function toggle() {
     refetch();
     return (toggleState = !toggleState);
   }
 </script>
 
-<label class="checkbox-wrapper"
-  ><input type="checkbox" class="toggle" on:click={() => toggle()} />
-  {toggleState === true ? "Wrap" : "Unwrap"} Mode</label
->
-<div class="form-control">
-  <label class="label"> </label>
-
-  <span class="label-text">Amount to {toggleState === true ? "Wrap" : "Unwrap"}</span>
-  <label class="input-group">
-    <input type="number" placeholder="" class="input input-bordered" bind:value={balance} />
-    <span>{toggleState === true ? "cBDC" : "wBOB"}</span>
-  </label>
+<div class="flex flex-col">
+  <label class="checkbox-wrapper"
+    ><input type="checkbox" class="toggle" on:click={() => toggle()} />
+    {toggleState === true ? "Wrap" : "Unwrap"} Mode</label
+  >
+  <div class="form-control">
+    <span class="label-text">Amount to {toggleState === true ? "Wrap" : "Unwrap"}</span>
+    <label class="input-group">
+      <input
+        type="number"
+        placeholder=""
+        class="input input-bordered"
+        bind:value={humanBalance}
+        on:change={handleInputChange}
+      />
+      <span>{toggleState === true ? "cBDC" : "wBOB"}</span>
+    </label>
+  </div>
 </div>
+<div class="stats">
+  <span class="stat-title">CBDC Balance</span><span class="stat-value"
+    >{(Number(cbdcBalance?.toString()) * 10e-9).toFixed(5)}</span
+  >
 
+  <span class="stat-title">wCBDC Balance</span><span class="stat-value"
+    >{(Number(wcbdcBalance) * 10e-18).toFixed(3)}</span
+  >
+</div>
 <div class="form-control">
   <label class="label">
     <span class="label-text">Percentage</span>
@@ -79,4 +92,11 @@
     <span>100%</span>
   </div>
 </div>
+
 <MintBurn contractName="WCBDC" functionName={toggleState === true ? "deposit" : "burn"} {balance} />
+
+<style>
+  .statsDisplay {
+    justify-content: flex-end;
+  }
+</style>

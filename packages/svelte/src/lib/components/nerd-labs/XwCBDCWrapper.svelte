@@ -18,6 +18,10 @@
     createScaffoldReadContract(() => ({ contractName, functionName: "balanceOf", args: [address] })),
   );
 
+  const { data: xcbdcBalance } = $derived.by(
+    createScaffoldReadContract(() => ({ contractName: "xStakingPool", functionName: "balanceOf", args: [address] })),
+  );
+
   function handlePercentageChange(value: string) {
     const newPercentage = BigInt(Math.min(Math.max(Number(value), 0), 100));
     percentage = newPercentage;
@@ -42,12 +46,20 @@
     <span>{toggleState === true ? "WCBDC" : "XWCBDC"}</span>
   </label>
 </div>
+<div class="stats">
+  <span class="stat-title">wCBDC Balance</span><span class="stat-value"
+    >{(Number(cbdcBalance?.toString()) * 10e-18).toFixed(4)}</span
+  >
 
+  <span class="stat-title">xwCBDC Balance</span><span class="stat-value"
+    >{(Number(xcbdcBalance) * 10e-18).toFixed(4)}</span
+  >
+</div>
 <div class="form-control">
   <span class="label-text">Percentage</span>
 
   <input
-    type="range"I t
+    type="range"
     min="0"
     max="100"
     bind:value={percentage}
