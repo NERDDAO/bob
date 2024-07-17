@@ -368,6 +368,11 @@
 		padding: 0;
 	}
 
+	.text {
+		line-height: 1.2;
+		padding: 0.3em 0;
+	}
+
 	.dialogue p.name {
 		text-align: left;
 	}
