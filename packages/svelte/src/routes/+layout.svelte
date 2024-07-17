@@ -1,7 +1,6 @@
 <script lang="ts">
   import { WagmiProvider } from "@byteatatime/wagmi-svelte";
   import "../app.pcss";
-  import "../global.css";
   import ScaffoldEthApp from "$lib/components/ScaffoldEthApp.svelte";
   import { wagmiConfig } from "$lib/wagmi";
   import { Toaster } from "@leodog896/svelte-french-toast";
@@ -10,25 +9,27 @@
 
   const baseUrl = $derived(data.vercelUrl ? `https://${data.vercelUrl}` : `http://localhost:5173`);
 
-  const metadata = $derived({
-    title: "Bank Of Based (CBDC)",
-    description: "Bank of Based",
-    thumbnail: `${baseUrl}/thumbnail.jpg`,
-    favicon: "/favicon.png",
-  });
+  const DESCRIPTION = "Bank of Based (CBDC) - Flawless monetary policy."
+  const useLink = "https://www.bankofbased.com"
 </script>
 
 <svelte:head>
-  <title>{metadata.title}</title>
-  <meta name="description" content={metadata.description} />
-  <meta property="og:title" content={metadata.title} />
-  <meta property="og:description" content={metadata.description} />
-  <meta property="og:image:url" content={metadata.thumbnail} />
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:image" content={metadata.thumbnail} />
-  <meta property="twitter:title" content={metadata.title} />
-  <meta property="twitter:description" content={metadata.description} />
-  <link rel="icon" type="image/png" href={metadata.favicon} sizes="32x32" />
+	<link rel="stylesheet" href="/global.css?v=4.0">
+	
+    <title>Bank of Based (CBDC)</title>
+    <meta name="description" content={DESCRIPTION}>
+    <link rel="icon" href="/images/logo-large.png">
+	<meta property="og:site_name" content="Bank of Based (CBDC)">
+    <meta property="og:title" content="Bank of Based (CBDC)">
+    <meta property="og:description" content={DESCRIPTION}>
+    <meta property="og:image" content={`${useLink}/images/logo-large.png`}>
+    <meta property="og:url" content={useLink}>
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Bank of Based (CBDC)">
+    <meta name="twitter:description" content={DESCRIPTION}>
+    <meta name="twitter:image" content={`${useLink}/images/logo-large.png`}>
+	
 </svelte:head>
 
 <Toaster />
