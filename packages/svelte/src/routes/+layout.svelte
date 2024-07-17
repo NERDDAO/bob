@@ -38,5 +38,5 @@
 	<ScaffoldEthApp>
 		<slot />
 	</ScaffoldEthApp>
-	</WagmiProvider>
+</WagmiProvider>
 
