@@ -2,7 +2,6 @@
   import { createAccount } from "@byteatatime/wagmi-svelte";
 
   import LPStaking from "./LPStaking.svelte";
-  import diagram from "$lib/assets/diagram.jpg";
 
   import XwCBDCWrapper from "./XwCBDCWrapper.svelte";
 
@@ -57,7 +56,7 @@
         <br />Farm and enjoy.
 	</span>
       </p>
-	  <img class="flow-diagram" alt="The project logo" src={diagram} />
+	  <img class="flow-diagram" alt="The project logo" src="/images/diagram.png" />
     </div>
   </div>
 </div>
