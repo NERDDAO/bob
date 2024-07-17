@@ -76,7 +76,9 @@
 		padding-bottom: 0.2em;
 	}
 	button:hover{
+		position: relative;
 		color: gray;
-		border-bottom: 1px solid gray;
+		animation: none;
+
 	}
 </style>

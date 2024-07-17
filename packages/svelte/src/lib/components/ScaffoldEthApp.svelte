@@ -19,6 +19,7 @@
   	const { data: cbdcContract, isLoading: cbdcLoaded } = $derived.by(() => createScaffoldContract({ contractName: "CBDC" }));
 
 	let tokenAddress = $derived.by(() => {
+		if (!cbdcContract?.address) return null
 		return cbdcContract?.address
 	})
 
@@ -57,15 +58,15 @@
   <footer>
 	<div class="right">
 		<div class="social_bar">
+			{#if tokenAddress}
 			<!--
 			<a href="https://x.com/x_based_god_x" target="_blank" rel="noopener noreferrer"><Fa icon={faSquareXTwitter} /></a> 
-			
 			-->
 			<a href="https://t.me/bankofbased" target="_blank" rel="noopener noreferrer"><TelegramIcon /></a> 
 			<a href="https://warpcast.com/bankofbased" target="_blank" rel="noopener noreferrer"><WarpedCast /></a> 
 			<a href="{uniswap_link}" target="_blank" rel="noopener noreferrer"><UniswapIcon /></a> 
 			<a href="{chart_link}" target="_blank" rel="noopener noreferrer"><DexScannerIcon /></a> 
-
+			{/if}
 		</div>
 		<a class="twitter_handle" href="https://x.com/burn_the_state" target="_blank" rel="noopener noreferrer">@burn_the_state</a> 
 		

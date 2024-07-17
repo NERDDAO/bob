@@ -134,9 +134,6 @@
 		.header-top > div{
 			width: unset;
 		}
-		.header-top{
-
-		}
   }
 
   @media (min-width: 630px) {

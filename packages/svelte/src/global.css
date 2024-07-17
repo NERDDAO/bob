@@ -478,13 +478,13 @@ button.secondary:active:not(:disabled) {
 
 @keyframes pulse {
 	0% {
-		color: black;
-	}
-	50% {
 		color: grey;
 	}
-	100% {
+	50% {
 		color: black;
+	}
+	100% {
+		color: grey;
 	}
 }
 

@@ -166,6 +166,10 @@
 		background-color: var(--bg-color);
 	}
 
+	.icon:hover{
+		animation: pulse 1s infinite;
+	}
+
 	@media (min-width: 768px) {
 		.dropdown-content {
 			margin-left: 2em;
