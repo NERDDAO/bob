@@ -57,13 +57,14 @@
 
   .header-top{
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
 	justify-content: center;
 	flex-wrap: wrap;
 
 	border-bottom: 2px solid rgb(90, 90, 90);
+
   }
 
   .header-top > div{
@@ -74,6 +75,8 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
+
+	padding: 0 0em;
   }
 
 	div.brand{
@@ -128,18 +131,28 @@
 		div.brand{
 			text-align: right;
 		}
+		.header-top > div{
+			width: unset;
+		}
+		.header-top{
+			padding: 0 2em;
+		}
+  }
+
+  @media (min-width: 630px) {
+		.header-top > div{
+			width: unset;
+		}
 		.nav{
 			justify-content: right;
 		}
 		.nav a{
 			font-size: x-large;
 		}
-		.header-top > div{
-			width: unset;
-		}
 		.header-top{
-			flex-wrap: nowrap;
+			flex-direction: row;
 			justify-content: space-between;
 		}
   }
+  
 </style>

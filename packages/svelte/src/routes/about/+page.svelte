@@ -1,6 +1,7 @@
+<div class="outlined">
 <h1><u>Tokenomics of $CBDC</u></h1>
 <hr>
-<div class="outlined">
+
 
 <p >
 $CBDC is a rebase token that negatively rebases whenever an Ethereum wallet with more than - CBDC tokens clicks on the rebase button on the homepage. Every time the button is pressed, 1% of the total supply is reduced equally across all wallets. This causes an imbalance in the liquidity pool on Uniswap V2, causing the price of each token to increase.
@@ -52,7 +53,7 @@ $CBDC is a rebase token that negatively rebases whenever an Ethereum wallet with
 
 <style>
     h1{
-        margin: 1rem 0;
+        margin: 2rem 0 2rem;
         text-align: center;
     }
     hr{

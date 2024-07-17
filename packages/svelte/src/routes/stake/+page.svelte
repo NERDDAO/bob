@@ -21,6 +21,9 @@
 
 
 <style>
+	h1{
+		margin: 1rem 0;
+	}
 	.border{
 		border: 1px dashed rgb(211, 211, 211);
 		border-radius: 0;
