@@ -16,7 +16,8 @@
   }>();
 
   const { writeContractAsync, isMining } = $derived.by(createScaffoldWriteContract(contractName));
-  const approvedContractName = contractName == "lpStakingPool" ? "wCBDCwETHLP" : "WCBDC" ? "CBDC" : "WCBDC";
+  const approvedContractName =
+    contractName == "lpStakingPool" ? "wCBDCwETHLP" : contractName == "WCBDC" ? "CBDC" : "WCBDC";
   async function handleMintBurn() {
     const variables: any = {
       functionName,
@@ -42,7 +43,7 @@
 <div class="farm-buttons">
   {#if functionName !== "getReward"}
     <Approve
-      contractName={contractName == "lpStakingPool" ? "UniV2-LP" : "WCBDC" ? "CBDC" : "WCBDC"}
+      contractName={contractName == "lpStakingPool" ? "wCBDCwETHLP" : contractName == "WCBDC" ? "CBDC" : "WCBDC"}
       spender={contractName}
     />
   {/if}

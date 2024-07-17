@@ -9,6 +9,7 @@
 
   let percentage: BigInt = $state(0n);
   let balance: BigInt = $state(0n);
+  let humanBalance: number = $state(0);
   let toggleState: Boolean = $state(true);
 
   const contractName: "WCBDC" | "xStakingPool" = $derived(toggleState === true ? "WCBDC" : "xStakingPool");
@@ -22,12 +23,25 @@
     createScaffoldReadContract(() => ({ contractName: "xStakingPool", functionName: "balanceOf", args: [address] })),
   );
 
+  const { data: pricePerShare } = $derived.by(
+    createScaffoldReadContract(() => ({
+      contractName: "xStakingPool",
+      functionName: "getPricePerFullShare",
+      args: [],
+    })),
+  );
+
   function handlePercentageChange(value: string) {
     const newPercentage = BigInt(Math.min(Math.max(Number(value), 0), 100));
     percentage = newPercentage;
-    if (cbdcBalance) {
-      balance = (cbdcBalance * newPercentage) / 100n;
+    let currentBalance = toggleState == true ? cbdcBalance : xcbdcBalance;
+    if (currentBalance) {
+      balance = (currentBalance * newPercentage) / 100n;
+      humanBalance = Number(balance) * 1e-18;
     }
+  }
+  function handleInputChange() {
+    balance = BigInt(humanBalance);
   }
   function toggle() {
     refetch();
@@ -41,18 +55,29 @@
 >
 <div class="form-control">
   <span class="label-text">Amount to {toggleState === true ? "stake" : "withdraw"}</span>
+
+  <stat class="stat-title text-xs">price per share:{Number(pricePerShare) * 1e-18}</stat>
   <label class="input-group">
-    <input type="number" placeholder="" class="input input-bordered" bind:value={balance} />
+    <input
+      type="number"
+      placeholder=""
+      class="input input-bordered"
+      bind:value={humanBalance}
+      on:change={handleInputChange}
+    />
     <span>{toggleState === true ? "WCBDC" : "XWCBDC"}</span>
   </label>
 </div>
-<div class="stats">
+<div class="stats p-2">
   <span class="stat-title">wCBDC Balance</span><span class="stat-value"
-    >{(Number(cbdcBalance?.toString()) * 10e-18).toFixed(4)}</span
+    >{(Number(cbdcBalance?.toString()) * 1e-18).toFixed(4)}</span
   >
 
   <span class="stat-title">xwCBDC Balance</span><span class="stat-value"
-    >{(Number(xcbdcBalance) * 10e-18).toFixed(4)}</span
+    >{(Number(xcbdcBalance) * 1e-18).toFixed(4)}</span
+  >
+  <span class="stat-title"
+    >underlying wCBDC: <br />{(Number(xcbdcBalance) * 1e-18 * (Number(pricePerShare) * 1e-18)).toFixed(4)}</span
   >
 </div>
 <div class="form-control">

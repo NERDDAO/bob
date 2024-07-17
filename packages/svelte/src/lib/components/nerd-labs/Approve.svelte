@@ -9,15 +9,15 @@
   const { address } = $derived.by(createAccount());
 
   let { contractName, spender } = $props<{
-    contractName: "CBDC" | "WCBDC" | "UniV2-LP";
-    spender: "WCBDC" | "xStakingPool" | "LPStakingPool";
+    contractName: "CBDC" | "WCBDC" | "wCBDCwETHLP";
+    spender: "WCBDC" | "xStakingPool" | "lpStakingPool";
   }>();
 
   const { data: contract } = $derived.by(createDeployedContractInfo(contractName));
 
   const { data: spenderContract } = $derived.by(createDeployedContractInfo(spender));
 
-  const { data: cbdcAllowance } = $derived.by(
+  const { data: cbdcAllowance, refetch } = $derived.by(
     createScaffoldReadContract(() => ({
       contractName,
       functionName: "allowance",
@@ -30,18 +30,15 @@
   const amount = ethers.MaxUint256;
 
   async function handleApprove() {
-    const variables: {
-      contractName: "RebaseToken";
-      functionName: "approve";
-      args: any[];
-    } = {
-      contractName: "RebaseToken",
+    const variables = {
+      contractName,
       functionName: "approve",
       args: [spenderContract?.address, amount],
     };
 
     if (writeContractAsync) {
       await writeContractAsync(variables);
+      refetch();
     }
   }
 </script>

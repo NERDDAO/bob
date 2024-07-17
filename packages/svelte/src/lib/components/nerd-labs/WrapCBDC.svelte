@@ -15,12 +15,14 @@
   const contractName: "CBDC" | "WCBDC" = toggleState === true ? "CBDC" : "WCBDC";
 
   const { address } = $derived.by(createAccount());
+
   const { data: cbdcBalance, refetch } = $derived.by(
     createScaffoldReadContract(() => ({ contractName: "CBDC", functionName: "balanceOf", args: [address] })),
   );
   const { data: wcbdcBalance } = $derived.by(
     createScaffoldReadContract(() => ({ contractName: "WCBDC", functionName: "balanceOf", args: [address] })),
   );
+
   function handlePercentageChange(value: string) {
     const newPercentage = BigInt(Math.min(Math.max(Number(value), 0), 100));
     percentage = newPercentage;
@@ -47,6 +49,7 @@
   >
   <div class="form-control">
     <span class="label-text">Amount to {toggleState === true ? "Wrap" : "Unwrap"}</span>
+    <stat class="stat-title text-xs">Tax: 1%</stat>
     <label class="input-group">
       <input
         type="number"
@@ -59,13 +62,11 @@
     </label>
   </div>
 </div>
-<div class="stats">
-  <span class="stat-title">CBDC Balance</span><span class="stat-value"
-    >{(Number(cbdcBalance?.toString()) * 10e-9).toFixed(5)}</span
-  >
+<div class="stats p-2">
+  <span class="stat-title">CBDC Balance</span><span class="stat-value">{(Number(cbdcBalance) * 1e-9).toFixed(5)}</span>
 
   <span class="stat-title">wCBDC Balance</span><span class="stat-value"
-    >{(Number(wcbdcBalance) * 10e-18).toFixed(3)}</span
+    >{(Number(wcbdcBalance) * 1e-18).toFixed(3)}</span
   >
 </div>
 <div class="form-control">
@@ -94,9 +95,3 @@
 </div>
 
 <MintBurn contractName="WCBDC" functionName={toggleState === true ? "deposit" : "burn"} {balance} />
-
-<style>
-  .statsDisplay {
-    justify-content: flex-end;
-  }
-</style>
