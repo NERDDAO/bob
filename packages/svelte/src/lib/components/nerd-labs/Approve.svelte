@@ -3,21 +3,20 @@
   import { createScaffoldWriteContract } from "$lib/runes/scaffoldWriteContract.svelte";
   import { createScaffoldReadContract } from "$lib/runes/scaffoldReadContract.svelte";
 
-  import { createScaffoldContract } from "$lib/runes/scaffoldContract.svelte";
+  import { createDeployedContractInfo } from "$lib/runes/deployedContractInfo.svelte";
   import { createAccount } from "@byteatatime/wagmi-svelte";
+
+  const { address } = $derived.by(createAccount());
 
   let { contractName, spender } = $props<{
     contractName: "CBDC" | "WCBDC" | "UniV2-LP";
     spender: "WCBDC" | "xStakingPool" | "LPStakingPool";
   }>();
 
-  const { data: contract, isLoading } = $derived.by(() => createScaffoldContract({ contractName }));
+  const { data: contract } = $derived.by(createDeployedContractInfo(contractName));
 
-  const { data: spenderContract, isLoading: isSpenderLoading } = $derived.by(() =>
-    createScaffoldContract({ contractName: spender }),
-  );
+  const { data: spenderContract } = $derived.by(createDeployedContractInfo(spender));
 
-  const { address } = $derived.by(createAccount());
   const { data: cbdcAllowance } = $derived.by(
     createScaffoldReadContract(() => ({
       contractName,
@@ -47,16 +46,13 @@
   }
 </script>
 
-  {#if !isLoading}
-    {console.log(contract)}
-  {/if}
-  {#if !cbdcAllowance || cbdcAllowance <= 0n}
-    {console.log(cbdcAllowance, contract)}
-    <button class="secondary" on:click={handleApprove} disabled={isMining}>
-      {#if isMining}
-        <span class="loading loading-spinner loading-sm"></span>
-      {:else}
-        Approve
-      {/if}
-    </button>
-  {/if}
+{#if !cbdcAllowance || cbdcAllowance <= 0n}
+  {console.log(cbdcAllowance, contract?.address)}
+  <button class="secondary" on:click={handleApprove} disabled={isMining}>
+    {#if isMining}
+      <span class="loading loading-spinner loading-sm"></span>
+    {:else}
+      Approve
+    {/if}
+  </button>
+{/if}

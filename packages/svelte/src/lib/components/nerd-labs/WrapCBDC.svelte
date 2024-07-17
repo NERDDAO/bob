@@ -11,11 +11,21 @@
   let balance: BigInt = $state(0n);
   let toggleState: Boolean = $state(true);
 
-  const contractName: "CBDC" | "WCBDC" = toggleState === true ? "CBDC" : "WBOB";
+  const contractName: "CBDC" | "WCBDC" = toggleState === true ? "CBDC" : "WCBDC";
 
   const { address } = $derived.by(createAccount());
   const { data: cbdcBalance, refetch } = $derived.by(
-    createScaffoldReadContract(() => ({ contractName, functionName: "balanceOf", args: [address] })),
+    createScaffoldReadContract(() => ({ contractName: "CBDC", functionName: "balanceOf", args: [address] })),
+  );
+  const { data: wcbdcBalance } = $derived.by(
+    createScaffoldReadContract(() => ({ contractName: "WCBDC", functionName: "balanceOf", args: [address] })),
+  );
+  const { data: cbdcAllowance } = $derived.by(
+    createScaffoldReadContract(() => ({
+      contractName,
+      functionName: "balanceOf",
+      args: [address, "0x6c841c51233d2eCD2485a574111aBa2C27dc3BC5"],
+    })),
   );
 
   function handlePercentageChange(value: string) {
