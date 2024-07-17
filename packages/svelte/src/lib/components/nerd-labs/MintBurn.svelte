@@ -48,7 +48,7 @@
     />
   {/if}
 
-  {#if (cbdcAllowance && cbdcAllowance >= 0n) || functionName == "getReward"}
+  {#if (cbdcAllowance && cbdcAllowance >= balance) || functionName == "getReward"}
     <button class="primary" on:click={handleMintBurn} disabled={isMining}>
       {#if isMining}
         <span class="loading loading-spinner loading-sm"></span>
