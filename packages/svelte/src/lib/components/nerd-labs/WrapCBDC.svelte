@@ -49,7 +49,7 @@
   >
   <div class="form-control">
     <span class="label-text">Amount to {toggleState === true ? "Wrap" : "Unwrap"}</span>
-    <stat class="stat-title text-xs">Tax: 1%</stat>
+    <stat class="text-xs">Tax: 1%</stat>
     <label class="input-group">
       <input
         type="number"

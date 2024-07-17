@@ -45,8 +45,8 @@
 
     <h2 class="collapse-title cursor-pointer">INFO</h2>
 
-    <div class="collapse-content flex w-full flex-col justify-center space-x-2">
-      <img class="ml-32 h-[600px] w-[400px]" alt="The project logo" src={diagram} />
+    <div class="collapse-content w-full">
+      <img class="flow-diagram" alt="The project logo" src={diagram} />
     </div>
   </div>
 </div>
@@ -61,5 +61,9 @@
     margin-bottom: 1rem;
     border-radius: 0;
     background-color: var(--light-gray);
+  }
+  .flow-diagram{
+ 	width: 100%;
+	height: auto; 
   }
 </style>

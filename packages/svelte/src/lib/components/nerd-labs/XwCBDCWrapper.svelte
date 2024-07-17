@@ -76,8 +76,10 @@
   <span class="stat-title">xwCBDC Balance</span><span class="stat-value"
     >{(Number(xcbdcBalance) * 1e-18).toFixed(4)}</span
   >
-  <span class="stat-title"
-    >underlying wCBDC: <br />{(Number(xcbdcBalance) * 1e-18 * (Number(pricePerShare) * 1e-18)).toFixed(4)}</span
+  <span class="stat-title">
+		Underlying wCBDC: <br />
+		<span class="stat-value">{(Number(xcbdcBalance) * 1e-18 * (Number(pricePerShare) * 1e-18)).toFixed(4)}</span>
+	</span
   >
 </div>
 <div class="form-control">

@@ -169,6 +169,22 @@ button.rebase:active:not(:disabled) {
 	max-width: 250px;
 }
 
+.stats{
+	border-radius: 0!important;
+	margin: 1rem 0 0!important;
+
+}
+.stat-title{
+	font-size: large !important;
+    font-weight: bold;
+    color: var(--dark-gray) !important;
+}
+.stat-value{
+	font-size: x-large !important;
+    font-weight: 200;
+    color: black !important;
+}
+
 label.checkbox-wrapper{
 	display: flex;
     align-items: center;
