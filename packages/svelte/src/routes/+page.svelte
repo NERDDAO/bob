@@ -281,7 +281,7 @@
 		align-items: center;
 		margin-left: 0;
 		margin-top: 1rem;
-	}
+	} 
 	.rebase > span.loader{
 		margin-right: 0.25em;
 	}
