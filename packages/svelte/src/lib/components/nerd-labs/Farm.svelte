@@ -45,8 +45,18 @@
 
     <h2 class="collapse-title cursor-pointer">INFO</h2>
 
-    <div class="collapse-content w-full">
-      <img class="flow-diagram" alt="The project logo" src={diagram} />
+    <div class="collapse-content flex w-full flex-row justify-center space-x-2">
+      <img class="ml-32 h-[600px] w-[400px]" alt="The project logo" src={diagram} />
+      <p class="dialogue text grey card border-2 p-12">
+        <span class="title">ABOUT:</span>
+        - Wrap your CBDC to get WCBDC which represents a share of the market cap you own.
+        <br />- Stake wCBDC to get xWCBDC which earns yield.
+        <br />- If you're feeling extra sassy, you can instead deposit you Uniswap V2 wCBDC / WETH tokens to earn yield
+        as well.
+        <br /> - 1% of supply was put into the WCBDC contract for this period. 2% of supply was put into the LP staking
+        contract.
+        <br />Farm and enjoy.
+      </p>
     </div>
   </div>
 </div>
@@ -62,9 +72,9 @@
     border-radius: 0;
     background-color: var(--light-gray);
   }
-  .flow-diagram{
- 	width: 100%;
-	height: auto; 
-	max-width: 400px;
+  .flow-diagram {
+    width: 100%;
+    height: auto;
+    max-width: 400px;
   }
 </style>
