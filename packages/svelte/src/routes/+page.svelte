@@ -275,7 +275,7 @@
 		flex-direction: column;
 		align-items: center;
 	}
-	.rebase{
+	.rebase{ 
 		display: flex;
 		flex-direction: row;
 		align-items: center;
