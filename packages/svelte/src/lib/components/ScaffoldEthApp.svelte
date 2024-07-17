@@ -82,7 +82,9 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		margin-bottom: 2rem;
+		justify-content: flex-end;
+		padding: 4rem 0;
+		flex-grow: 1;
 	}
 
 	.right{
@@ -116,7 +118,8 @@
 		footer{
 			padding: 3em;
 			flex-direction: row;
-			align-items: right;
+			align-items: flex-end;
+			justify-content: flex-start;
 		}
 
 		.right{

@@ -123,7 +123,7 @@
 		}
 	}
 </script>
-{lastRebaseDateTime}
+
 <div class="dialogue">
 	<h1><u>Memorandum on the State of the Market</u></h1>
 	<div class="details">
