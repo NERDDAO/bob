@@ -2,6 +2,7 @@
   import { createAccount } from "@byteatatime/wagmi-svelte";
 
   import LPStaking from "./LPStaking.svelte";
+  import diagram from "$lib/assets/diagram.jpg";
 
   import XwCBDCWrapper from "./XwCBDCWrapper.svelte";
 
@@ -44,7 +45,9 @@
 
     <h2 class="collapse-title cursor-pointer">INFO</h2>
 
-    <div class="collapse-content flex w-full flex-col justify-center space-x-2"></div>
+    <div class="collapse-content flex w-full flex-col justify-center space-x-2">
+      <img class="ml-32 h-[600px] w-[400px]" alt="The project logo" src={diagram} />
+    </div>
   </div>
 </div>
 
