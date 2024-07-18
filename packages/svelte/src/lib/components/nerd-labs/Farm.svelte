@@ -8,85 +8,84 @@
   // import BankOfBased from "./BankOfBased.svelte";
 
   import WrapCBDC from "./WrapCBDC.svelte";
-
-  const account = $derived.by(createAccount());
-
-  const stakingConfig = {
-    tokenContractName: "MyToken",
-
-    tokenAddress: "0x...",
-
-    stakingPoolName: "Wrapped CBDC Staking",
-
-    stakingPoolAddress: "0x...",
-
-    tokenSymbol: "WCBDC",
-
-    tokenDecimals: 18,
-  };
-
-  const daiUsdcConfig = {
-    farmName: "WCBDC/ETH",
-
-    tokenContractName: "WCBDCETHLP",
-
-    farmContractName: "WCDBCETHFarm",
-
-    tokenSymbol: "WCDBC/ETH-UniV2",
-    rewardSymbol: "WCDBC",
-    tokenDecimals: 18,
-    rewardDecimals: 18,
-  };
-
-  const OptionalFarmEarningsComponent = () => {
-    return "<p>lmao</p>";
-  };
 </script>
 
-<div class="card relative w-1/3 items-center md:w-auto">
-  <div class="collapse mx-6 w-full border border-gray-300 bg-base-300 md:w-auto">
+<div class="farm-container">
+  <div class="collapse w-full">
     <input type="radio" name="my-accordion-1" checked />
 
-    <div class="collapse-title cursor-pointer text-xl font-medium">CBDC Wrapper</div>
-    <div class="collapse-content flex w-full flex-col justify-center space-x-2 md:w-auto">
+    <h2 class="collapse-title cursor-pointer">CBDC Wrapper</h2>
+    <div class="collapse-content flex w-full flex-col justify-center space-x-2">
       <WrapCBDC />
     </div>
   </div>
-  <div class="collapse mx-6 w-full border border-gray-300 bg-base-300 md:w-auto">
+
+  <div class="collapse w-full">
     <input type="radio" name="my-accordion-1" />
 
-    <div class="collapse-title cursor-pointer text-xl font-medium">wCBDC Yield</div>
+    <h2 class="collapse-title cursor-pointer">wCBDC Yield</h2>
 
-    <div class="collapse-content flex w-full flex-col justify-center space-x-2 md:w-auto">
+    <div class="collapse-content flex w-full flex-col justify-center space-x-2">
       <XwCBDCWrapper />
     </div>
   </div>
-  <div class="collapse mx-6 w-full border border-gray-300 bg-base-300 md:w-auto">
+  <div class="collapse w-full">
     <input type="radio" name="my-accordion-1" />
 
-    <div class="collapse-title cursor-pointer text-xl font-medium">Liquidity Mining</div>
+    <h2 class="collapse-title cursor-pointer">Liquidity Mining</h2>
 
-    <div class="collapse-content flex w-full flex-col justify-center space-x-2 md:w-auto">
+    <div class="collapse-content flex w-full flex-col justify-center space-x-2">
       <LPStaking />
     </div>
   </div>
 
-  <div class="collapse mx-6 w-full border border-gray-300 bg-base-300 md:w-auto">
+  <div class="collapse w-full">
     <input type="radio" name="my-accordion-1" />
 
-    <div class="collapse-title cursor-pointer text-xl font-medium">INFO</div>
+    <h2 class="collapse-title cursor-pointer">INFO</h2>
 
-    <div class="collapse-content flex w-full flex-col justify-center space-x-2 md:w-auto"></div>
+    <div class="info-box collapse-content w-full">
+      <p class="info-text p-12">
+        <span class="">
+        - Wrap your CBDC to get WCBDC which represents a share of the market cap you own.
+        <br />- Stake wCBDC to get xWCBDC which earns yield.
+        <br />- If you're feeling extra sassy, you can instead deposit you Uniswap V2 wCBDC / WETH tokens to earn yield
+        as well.
+        <br /> - 1% of supply was put into the WCBDC contract for this period. 2% of supply was put into the LP staking
+        contract.
+        <br />Farm and enjoy.
+	</span>
+      </p>
+	  <img class="flow-diagram" alt="The project logo" src="/images/diagram.png" />
+    </div>
   </div>
 </div>
 
 <style>
-  .collapse,
-  .collapse-content {
-    border-radius: 0; /* Remove border radius */
+  .farm-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
   }
-
-  .collapse {
-    margin-bottom: 1rem; /* Add vertical spacing between sections */
+  .farm-container > div {
+    margin-bottom: 1rem;
+    border-radius: 0;
+    background-color: var(--light-gray);
+  }
+  .flow-diagram {
+    width: 100%;
+    height: auto;
+    max-width: 400px;
+  }
+  .info-box{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	
+  }
+  .info-text{
+	background: var(--bg-color);
+	padding: 1em;
+	margin-bottom: 1rem;
   }
 </style>

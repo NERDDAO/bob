@@ -9,9 +9,8 @@
 
   const {
     address,
-    class: className = "",
     usdMode = false,
-  }: { address?: Address; class?: string; usdMode?: boolean } = $props();
+  }: { address?: Address; usdMode?: boolean } = $props();
 
   const targetNetwork = $derived.by(createTargetNetwork());
   const queryClient = useQueryClient();
@@ -51,18 +50,23 @@
     <div class="text-warning">Error</div>
   </div>
 {:else}
-  <button
-    class="btn btn-ghost btn-sm flex flex-col items-center font-normal hover:bg-transparent {className}"
+  <button class="balance_price"
     on:click={toggleBalanceMode}
   >
-    <div class="flex w-full items-center justify-center">
+    <div>
       {#if displayUsdMode}
-        <span class="mr-1 text-[0.8em] font-bold">$</span>
+        <span>$</span>
         <span>{(formattedBalance * nativeCurrencyPrice.price).toFixed(2)}</span>
       {:else}
         <span>{formattedBalance.toFixed(4)}</span>
-        <span class="ml-1 text-[0.8em] font-bold">{targetNetwork.nativeCurrency.symbol}</span>
+        <span>{targetNetwork.nativeCurrency.symbol}</span>
       {/if}
     </div>
   </button>
 {/if}
+
+<style>
+	.balance_price:hover > *{
+		text-decoration: underline;
+	}
+</style>

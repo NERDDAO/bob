@@ -17,13 +17,9 @@
 
 
   export const menuLinks: HeaderMenuLink[] = [
-
     { label: "Home", href: "/" },
-
+	{ label: "Stake", href: "/stake" }, // Added Stake link
     { label: "About", href: "/about" },
-
-    { label: "Stake", href: "/stake" }, // Added Stake link
-
   ];
 
   const isCurrentPage = derived(page, $page => {
@@ -34,116 +30,92 @@
 
 
 <header class="header">
-  <div class="header-content">
+  <div class="header-top">
     <ConnectButton />
-
     <div class="brand title_font svelte-bioemj">BANK OF BASED</div>
-
   </div>
- 
-</header>
- <div class="nav svelte-bioemj">
-
+  <div class="nav">
     {#each menuLinks as link}
-
       <a href={link.href} class:active={$isCurrentPage(link.href)}>{link.label.toUpperCase()}</a>
-
     {/each}
-
   </div>
+</header>
 
 <style>
 
-  @font-face {
-
-    font-family: 'CloisterBlack';
-
-    src: url('CloisterBlack.ttf') format('truetype');
-
-    font-weight: normal;
-
-    font-style: normal;
-
-  }
-
  .header {
+	display: flex;
+	flex-direction: column;
 
     position: relative;
 
     padding: 1rem;
-    background-color: var(--background-color);
+    background-color: var(--bg-color);
+	margin-bottom: 2rem;
 
   }
 
-  .header-content {
+  .header-top{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
 
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-  }
-
-  .nav {
-    display: flex;
-
-    gap: 1rem;
-
-    margin-left: auto; 
+	border-bottom: 2px solid rgb(90, 90, 90);
 
   }
 
+  .header-top > div{
+		width: 100%;
+	}
 
-  .nav a {
+  .nav{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
 
-    text-decoration: none;
-
-    color: var(--text-color);
-     font-size: 1.5rem;
+	padding: 0 0em;
   }
 
-  .nav a.active {
-    font-weight: bold;
+	div.brand{
+		max-width: fit-content;
+		width: 100%;
+		font-size: xx-large;
+		text-align: center;
+		color: rgb(49, 49, 49);
+		padding-bottom: 0.5em;
+		margin-top: 1rem;
 
-  }
+	}
+	.nav{
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+	}
+	.nav a{
+		font-size: large;
+		cursor: pointer;
+		text-decoration: none;
 
+		color: gray;
+		font-weight: bold;
+	}
+	.nav a:nth-child(even) {
+		margin: 0 1em;
+	}
+	.nav a:visited{
+		color: gray;
+	}
+	.nav a.active{
+		color: #000;
+	}
 
-  .brand {
-
-    margin-left: 1rem;
-
-    font-family: 'CloisterBlack', sans-serif;
-
-    font-size: 1.5rem;
-
-  }
-
-  .header::after {
-
-    content: "";
-
-    position: absolute;
-
-    bottom: 0;
-
-    left: 0;
-
-    width: 100%;
-
-    height: 2px;
-
-    background-color: rgb(90, 90, 90);
-
-  }
-
-  .balance {
-
-    margin-top: 0.5rem;
-    font-size: 0.875rem;
-
-    color: var(--text-color);
-  }
-
+	.nav a:hover{
+			color: #000;
+			filter: unset;
+		}
 
   .svelte-bioemj {
 
@@ -154,4 +126,30 @@
     color: #313131;
 
   }
+
+  @media (min-width: 768px) {
+		div.brand{
+			text-align: right;
+		}
+		.header-top > div{
+			width: unset;
+		}
+  }
+
+  @media (min-width: 630px) {
+		.header-top > div{
+			width: unset;
+		}
+		.nav{
+			justify-content: right;
+		}
+		.nav a{
+			font-size: x-large;
+		}
+		.header-top{
+			flex-direction: row;
+			justify-content: space-between;
+		}
+  }
+  
 </style>

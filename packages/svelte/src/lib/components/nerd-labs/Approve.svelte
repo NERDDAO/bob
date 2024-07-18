@@ -3,22 +3,21 @@
   import { createScaffoldWriteContract } from "$lib/runes/scaffoldWriteContract.svelte";
   import { createScaffoldReadContract } from "$lib/runes/scaffoldReadContract.svelte";
 
-  import { createScaffoldContract } from "$lib/runes/scaffoldContract.svelte";
+  import { createDeployedContractInfo } from "$lib/runes/deployedContractInfo.svelte";
   import { createAccount } from "@byteatatime/wagmi-svelte";
 
+  const { address } = $derived.by(createAccount());
+
   let { contractName, spender } = $props<{
-    contractName: "CBDC" | "WCBDC" | "UniV2-LP";
-    spender: "WCBDC" | "xStakingPool" | "LPStakingPool";
+    contractName: "CBDC" | "WCBDC" | "wCBDCwETHLP";
+    spender: "WCBDC" | "xStakingPool" | "lpStakingPool";
   }>();
 
-  const { data: contract, isLoading } = $derived.by(() => createScaffoldContract({ contractName }));
+  const { data: contract } = $derived.by(createDeployedContractInfo(contractName));
 
-  const { data: spenderContract, isLoading: isSpenderLoading } = $derived.by(() =>
-    createScaffoldContract({ contractName: spender }),
-  );
+  const { data: spenderContract } = $derived.by(createDeployedContractInfo(spender));
 
-  const { address } = $derived.by(createAccount());
-  const { data: cbdcAllowance } = $derived.by(
+  const { data: cbdcAllowance, refetch } = $derived.by(
     createScaffoldReadContract(() => ({
       contractName,
       functionName: "allowance",
@@ -31,34 +30,26 @@
   const amount = ethers.MaxUint256;
 
   async function handleApprove() {
-    const variables: {
-      contractName: "RebaseToken";
-      functionName: "approve";
-      args: any[];
-    } = {
-      contractName: "RebaseToken",
+    const variables = {
+      contractName,
       functionName: "approve",
       args: [spenderContract?.address, amount],
     };
 
     if (writeContractAsync) {
       await writeContractAsync(variables);
+      refetch();
     }
   }
 </script>
 
-<div class="mx-auto mt-6 max-w-md rounded-lg bg-base-300 p-6">
-  {#if !isLoading}
-    {console.log(contract)}
-  {/if}
-  {#if !cbdcAllowance || cbdcAllowance <= 0n}
-    {console.log(cbdcAllowance, contract)}
-    <button class="btn btn-primary" on:click={handleApprove} disabled={isMining}>
-      {#if isMining}
-        <span class="loading loading-spinner loading-sm"></span>
-      {:else}
-        Approve
-      {/if}
-    </button>
-  {/if}
-</div>
+{#if !cbdcAllowance || cbdcAllowance <= 0n}
+  {console.log(cbdcAllowance, contract?.address)}
+  <button class="secondary" on:click={handleApprove} disabled={isMining}>
+    {#if isMining}
+      <span class="loading loading-spinner loading-sm"></span>
+    {:else}
+      Approve
+    {/if}
+  </button>
+{/if}
