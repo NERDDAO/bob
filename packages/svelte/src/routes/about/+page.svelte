@@ -48,7 +48,7 @@ $CBDC is a rebase token that negatively rebases whenever an Ethereum wallet with
 
 <h2>End Game</h2>
 <p>
-    The theoretical maximum value of CBDC is unreasonably high. There is no mathematical reason that each token can be $1,000,000. Because no one has ever seen a token perform like this before, our goal is to shock the crypto world with the most degenerate stunt ever performed. <br><br>We want to get CBDC into the minds of every trader and initiate the 'meltup' scenario where the price of the token goes to ridiculous heights. The spectacle of it all will bring attention and hopefully buy volume into the token as we all ride the most degenerate rollercoaster to exist in crypto so far.</p>
+    The theoretical maximum value of CBDC is unreasonably high. There is no mathematical reason that each token can't be $1,000,000. Because no one has ever seen a token perform like this before, our goal is to shock the crypto world with the most degenerate stunt ever performed. <br><br>We want to get CBDC into the minds of every trader and initiate the 'meltup' scenario where the price of the token goes to ridiculous heights. The spectacle of it all will bring attention and hopefully buy volume into the token as we all ride the most degenerate rollercoaster to exist in crypto so far.</p>
 </div>
 
 <style>
